@@ -1,0 +1,46 @@
+#pragma once
+#include <SDL.h>
+#include <SDL_ttf.h>
+#include <string>
+#include <SDL_mixer.h>
+#include "Programm_state.h"
+#include "tools.h"
+#include "media.h"
+
+
+
+//Screen dimension constants
+const int SCREEN_WIDTH = 1600;
+const int SCREEN_HEIGHT = 900;
+
+//Window position
+const int WINDOW_START_X = (1920 - SCREEN_WIDTH) / 2;
+const int WINDOW_START_Y = (1080 - SCREEN_HEIGHT) / 2;
+
+//Game states
+enum GameStates {
+	STATE_NULL,
+	STATE_MENU,
+	STATE_GAME,
+	STATE_EXIT,
+};
+
+//State variables
+extern int state_id;
+extern int next_state;
+
+//Game state object
+extern Programm_state* current_state;
+
+//Event handler
+extern SDL_Event event;
+
+//The window we'll be rendering to
+extern SDL_Window* main_window;
+
+//The window renderer
+extern SDL_Renderer* main_renderer;
+
+bool init();
+
+void close();
