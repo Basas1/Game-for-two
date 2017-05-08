@@ -8,6 +8,9 @@
 #include "tools.h"
 #include "media.h"
 
+//TEST
+int test = 0;
+
 
 int main(int argc, char* args[]) {
 
