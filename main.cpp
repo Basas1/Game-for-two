@@ -8,10 +8,6 @@
 #include "tools.h"
 #include "media.h"
 
-//TEST
-int test = 0;
-
-
 int main(int argc, char* args[]) {
 
 	SDL_Surface* screen_surface = NULL;
