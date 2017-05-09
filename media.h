@@ -7,6 +7,7 @@ extern SDL_Texture* background_texture;
 
 //Globally used textures
 extern SDL_Texture* map;
+extern SDL_Texture* player_texture;
 
 
 //Map surface

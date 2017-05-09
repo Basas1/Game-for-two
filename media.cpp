@@ -9,6 +9,7 @@ SDL_Texture* background_texture = NULL;
 
 //Globally used textures
 SDL_Texture* map = NULL;
+SDL_Texture* player_texture = NULL;
 
 
 //Map surface
@@ -33,6 +34,7 @@ bool load_media() {
 	}
 	//Loading other textures
 	map = load_texture("Images/map.jpg");
+	player_texture = load_texture("Images/Human1.png");
 	
 	//Open fonts
 	//font1 = TTF_OpenFont("Fonts/arial.ttf", 28);

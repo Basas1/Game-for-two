@@ -7,6 +7,7 @@
 #include <SDL_ttf.h>
 #include <SDL_mixer.h>
 #include "Menu.h"
+#include "Game.h"
 
 int state_id = STATE_NULL;
 int next_state = STATE_NULL;
@@ -81,7 +82,7 @@ bool init() {
 
 	//Set start programm state
 	state_id = STATE_MENU;
-	current_state = new Menu();
+	current_state = new Game();
 
 
 	return success;

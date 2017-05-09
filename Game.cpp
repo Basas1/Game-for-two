@@ -1,12 +1,15 @@
 #include "Game.h"
 #include "media.h"
 #include "init.h"
+#include "Player.h"
 
 
 
 Game::Game() {
 	//Load the background
 	background = map;
+	player_1 = new Player();
+	
 }
 
 
@@ -29,10 +32,14 @@ void Game::handle_events() {
 			//Move to the title screen
 			set_next_state(STATE_MENU);
 		}
+
+		player_1->handle_events(event);
+
 	}
 }
 
 void Game::logic() {
+	player_1->move();
 }
 
 void Game::render() {
@@ -47,4 +54,7 @@ void Game::render() {
 	SDL_Rect rQuad = { 200, 200, 200, 200 };
 	SDL_SetRenderDrawColor(main_renderer, 0, 255, 255, 255);
 	SDL_RenderFillRect(main_renderer, &rQuad);
+	
+	player_1->render();
+
 }

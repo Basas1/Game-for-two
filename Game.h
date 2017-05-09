@@ -1,5 +1,6 @@
 #include "Programm_state.h"
 #include <SDL.h>
+#include "Player.h"
 #pragma once
 class Game : public Programm_state {
 public:
@@ -11,5 +12,6 @@ public:
 
 private:
 	SDL_Texture* background;
+	Player* player_1;
 };
 
