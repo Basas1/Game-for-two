@@ -39,7 +39,23 @@ void Player::move() {
 
 
 void Player::handle_events(SDL_Event& e) {
-	
+	//If a key is pressed
+	const Uint8* currentKeyStates = SDL_GetKeyboardState(NULL);
+	if (currentKeyStates[SDL_SCANCODE_UP]) {
+	}
+	if (currentKeyStates[SDL_SCANCODE_DOWN]) {
+	}
+	if (currentKeyStates[SDL_SCANCODE_LEFT]) {
+	}
+	if (currentKeyStates[SDL_SCANCODE_RIGHT]) {
+	}
+
+	//If a key was pressed
+	if (e.type == SDL_KEYDOWN && e.key.repeat == 0) {
+		switch (e.key.keysym.sym) {
+		//case SDLK_SPACE: vel_y = -16; break;
+		}
+	}
 }
 
 
