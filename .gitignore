@@ -1,3 +1,5 @@
-.vs/
 Images/
+Debug/
 SDL-project.props
+Game1.vcxproj.filters
+Game1.vcxproj
