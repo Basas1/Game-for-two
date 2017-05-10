@@ -43,8 +43,4 @@ void Menu::render() {
 	//Render background
 	SDL_RenderCopy(main_renderer, background, NULL, NULL);
 
-	//Render rectangle
-	SDL_Rect rQuad = { 100, 100, 100, 100 };
-	SDL_SetRenderDrawColor(main_renderer, 0, 0, 255, 255);
-	SDL_RenderFillRect(main_renderer, &rQuad);
 }

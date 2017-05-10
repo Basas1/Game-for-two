@@ -14,16 +14,6 @@ Player::Player() : Movable_object() {
 }
 
 
-Player::~Player() {
-	delete texture;
-}
-
-
-void Player::move() {
-
-}
-
-
 void Player::handle_events(SDL_Event& event) {
 	//If a key is pressed
 	const Uint8* currentKeyStates = SDL_GetKeyboardState(NULL);
@@ -44,9 +34,16 @@ void Player::handle_events(SDL_Event& event) {
 	}
 }
 
+void Player::move() {
+
+}
 
 void Player::render() {
 	texture->render(pos_x, pos_y);
+}
+
+Player::~Player() {
+	delete texture;
 }
 
 

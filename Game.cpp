@@ -49,11 +49,6 @@ void Game::render() {
 
 	//Render background
 	SDL_RenderCopy(main_renderer, background, NULL, NULL);
-
-	//Render rectangle
-	SDL_Rect rQuad = { 200, 200, 200, 200 };
-	SDL_SetRenderDrawColor(main_renderer, 0, 255, 255, 255);
-	SDL_RenderFillRect(main_renderer, &rQuad);
 	
 	player_1->render();
 
