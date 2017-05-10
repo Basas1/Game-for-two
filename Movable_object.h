@@ -5,6 +5,8 @@
 
 class Movable_object {
 public:
+	Movable_object();
+
 	//Move method
 	virtual void move() = 0;
 

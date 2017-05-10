@@ -9,7 +9,7 @@ public:
 
 
 	//Event handler
-	void handle_events(SDL_Event& e);
+	void handle_events(SDL_Event& event);
 
 	//Move method
 	void move();
