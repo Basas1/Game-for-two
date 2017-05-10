@@ -34,12 +34,12 @@ bool load_media() {
 	}
 	//Loading other textures
 	map = load_texture("Images/map.jpg");
-	if (background_texture == NULL) {
+	if (map == NULL) {
 		printf("Failed to load map texture!\n");
 		success = false;
 	}
 	player_texture = load_texture("Images/player.png");
-	if (background_texture == NULL) {
+	if (player_texture == NULL) {
 		printf("Failed to load player texture!\n");
 		success = false;
 	}

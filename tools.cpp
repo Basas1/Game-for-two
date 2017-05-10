@@ -18,6 +18,7 @@ SDL_Texture* load_texture(std::string path) {
 		printf("Unable to load image %s! SDL_image Error: %s\n", path.c_str(), IMG_GetError());
 	}
 	else {
+		SDL_SetHint(SDL_HINT_RENDER_SCALE_QUALITY, "0");
 		//Create texture from surface pixels
 		new_texture = SDL_CreateTextureFromSurface(main_renderer, loaded_surface);
 		if (new_texture == NULL) {
