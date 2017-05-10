@@ -29,12 +29,20 @@ bool load_media() {
 	//Load background texture
 	background_texture = load_texture("Images/background.jpg");
 	if (background_texture == NULL) {
-		printf("Failed to load arrow texture!\n");
+		printf("Failed to load bg texture!\n");
 		success = false;
 	}
 	//Loading other textures
 	map = load_texture("Images/map.jpg");
-	player_texture = load_texture("Images/Human1.png");
+	if (background_texture == NULL) {
+		printf("Failed to load map texture!\n");
+		success = false;
+	}
+	player_texture = load_texture("Images/player.png");
+	if (background_texture == NULL) {
+		printf("Failed to load player texture!\n");
+		success = false;
+	}
 	
 	//Open fonts
 	//font1 = TTF_OpenFont("Fonts/arial.ttf", 28);
