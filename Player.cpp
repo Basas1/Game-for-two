@@ -33,7 +33,7 @@ void Player::handle_events(SDL_Event& event) {
 	//If a key was pressed
 	if (event.type == SDL_KEYDOWN && event.key.repeat == 0) {
 		switch (event.key.keysym.sym) {
-		//case SDLK_SPACE: vel_y = -16; break;
+		case SDLK_SPACE: vel_y = -16; break;
 		}
 	}
 
@@ -44,13 +44,13 @@ void Player::move() {
 	vel_x += acc_x;
 
 	//Calculate friction
-	if (vel_x > 0) { vel_x -= friction; }
-	else if (vel_x < 0) { vel_x += friction; }
-	if (-friction <= vel_x && vel_x <= friction) { vel_x = 0; }
+	if (vel_x > 0) vel_x -= friction;
+	else if (vel_x < 0) vel_x += friction;
+	if (-friction <= vel_x && vel_x <= friction) vel_x = 0;
 
 	//Speed limit
-	if (vel_x > 0 && vel_x > max_vel_x) { vel_x = max_vel_x; }
-	if (vel_x < 0 && vel_x < -max_vel_x) { vel_x = -max_vel_x; }
+	if (vel_x > max_vel_x) vel_x = max_vel_x;
+	if (vel_x < -max_vel_x) vel_x = -max_vel_x;
 	
 	//Gravity effect
 	vel_y += gravity;

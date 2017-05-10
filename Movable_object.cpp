@@ -9,7 +9,7 @@ Movable_object::Movable_object() {
 	vel_x = 0;
 	vel_y = 0;
 
-	max_vel_x = 20;
+	max_vel_x = 10;
 	max_vel_y = 20;
 
 	acc_x = 0;
