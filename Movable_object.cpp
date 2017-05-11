@@ -15,7 +15,7 @@ Movable_object::Movable_object() {
 	acc_x = 0;
 	acc_y = 0;
 
-	acceleration = 5;
+	acceleration = 23;
 	gravity = 0.8;
 	friction = 0.5;
 }

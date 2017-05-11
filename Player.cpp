@@ -7,6 +7,7 @@ Player::Player() : Movable_object() {
 	height = 128;
 	pos_x = 500;
 	pos_y = 900;
+	t = pos_x;
 
 	jump_vel = 15;
 
@@ -86,10 +87,10 @@ void Player::move() {
 	vel_x += acc_x;
 
 	//Calculate friction
-	if (vel_x > 0) vel_x -= friction;
-	else if (vel_x < 0) vel_x += friction;
-	else if (-friction <= vel_x && vel_x <= friction) vel_x = 0;
-	if (-1 < vel_x && vel_x < 1) vel_x = 0;
+	//if (vel_x > 0) vel_x -= friction;
+	//else if (vel_x < 0) vel_x += friction;
+	//else if (-friction <= vel_x && vel_x <= friction) vel_x = 0;
+	//if (-1 < vel_x && vel_x < 1) vel_x = 0;
 
 	//Speed limit
 	if (vel_x > max_vel_x) vel_x = max_vel_x;
@@ -134,8 +135,10 @@ void Player::render() {
 	}
 
 	//acceleration = 5;
+	//pos_x += acc_x;
 	//pos_x += acc_x / slow;
-	pos_x += acc_x;
+	t += acc_x / slow;
+	pos_x = t;
 
 
 
@@ -151,7 +154,14 @@ void Player::render() {
 	if (frame / slow >= 8) {
 		frame = 0;
 	}
-	texture->render(pos_x, pos_y, currentClip, 0.0, NULL, flip);
+
+	if (acc_x != 0) {
+		texture->render(pos_x, pos_y, currentClip, 0.0, NULL, flip);
+	}
+	else {
+		currentClip = &gSpriteClips[7];
+		texture->render(pos_x, pos_y, currentClip, 0.0, NULL, flip);
+	}
 
 
 

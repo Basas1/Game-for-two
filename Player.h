@@ -21,6 +21,7 @@ private:
 
 	//Jump speed
 	int jump_vel;
+	double t;
 
 
 	int frame;
