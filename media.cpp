@@ -38,7 +38,8 @@ bool load_media() {
 		printf("Failed to load map texture!\n");
 		success = false;
 	}
-	player_texture = load_texture("Images/player.png");
+	//player_texture = load_texture("Images/player.png");
+	player_texture = load_texture("Images/walk.png");
 	if (player_texture == NULL) {
 		printf("Failed to load player texture!\n");
 		success = false;

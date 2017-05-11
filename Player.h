@@ -16,6 +16,18 @@ public:
 
 	//Render object
 	void render();
+private:
+	int round(float f);
+
+	//Jump speed
+	int jump_vel;
+
+
+	int frame;
+	SDL_Rect gSpriteClips[8];
+	//SDL_Rect SpriteClips[6];
+	SDL_Rect* currentClip;
+	SDL_RendererFlip flip;
 
 };
 

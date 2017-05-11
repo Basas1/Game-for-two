@@ -9,15 +9,15 @@ Movable_object::Movable_object() {
 	vel_x = 0;
 	vel_y = 0;
 
-	max_vel_x = 10;
+	max_vel_x = 5;
 	max_vel_y = 20;
 
 	acc_x = 0;
 	acc_y = 0;
 
-	acceleration = 2;
+	acceleration = 23;
 	gravity = 0.8;
-	friction = 0.8;
+	friction = 0.5;
 }
 
 
