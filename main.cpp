@@ -7,10 +7,15 @@
 #include "init.h"
 #include "tools.h"
 #include "media.h"
+#include "Timer.h"
 
 int main(int argc, char* args[]) {
 
 	SDL_Surface* screen_surface = NULL;
+
+	//timer for fps capping
+	Timer capTimer;
+	int frameTicks;
 
 	//Start up SDL and create window
 	if (!init()) {
@@ -19,6 +24,7 @@ int main(int argc, char* args[]) {
 	else {
 		//While application is running
 		while (state_id != STATE_EXIT) {
+			capTimer.start();
 
 			//Do state event handling
 			current_state->handle_events();
@@ -36,6 +42,13 @@ int main(int argc, char* args[]) {
 			screen_surface = SDL_GetWindowSurface(main_window);
 
 			SDL_RenderPresent(main_renderer);
+
+			frameTicks = capTimer.getTicks();
+			if (frameTicks < SCREEN_TICKS_PER_FRAME)
+			{
+				//Wait remaining time
+				SDL_Delay(SCREEN_TICKS_PER_FRAME - frameTicks);
+			}
 		}
 	}
 

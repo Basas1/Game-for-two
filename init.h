@@ -13,6 +13,10 @@
 const int SCREEN_WIDTH = 1600;
 const int SCREEN_HEIGHT = 900;
 
+//Fps constants
+const int SCREEN_FPS = 60;
+const int SCREEN_TICKS_PER_FRAME = 1000 / SCREEN_FPS;
+
 //Window position
 const int WINDOW_START_X = (1920 - SCREEN_WIDTH) / 2;
 const int WINDOW_START_Y = (1080 - SCREEN_HEIGHT) / 2;
