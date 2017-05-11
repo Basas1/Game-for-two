@@ -39,7 +39,7 @@ int main(int argc, char* args[]) {
 			current_state->render();
 
 			//Update screen
-			screen_surface = SDL_GetWindowSurface(main_window);
+			//screen_surface = SDL_GetWindowSurface(main_window);
 
 			SDL_RenderPresent(main_renderer);
 
