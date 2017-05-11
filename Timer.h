@@ -13,7 +13,7 @@ public:
 	void toggle();
 
 	//Gets the timer's time
-	Uint32 getTicks();
+	Uint32 get_ticks();
 
 	//Checks the status of the timer
 	bool is_started();

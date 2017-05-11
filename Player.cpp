@@ -104,8 +104,11 @@ void Player::move() {
 	pos_y += vel_y;
 
 	//Check for level border
-	if (pos_x < 0) { pos_x = 0; vel_x = 0; }
-	if (pos_x > SCREEN_WIDTH - width) { pos_x = SCREEN_WIDTH - width; vel_x = 0; }
+	if (pos_x < 0) { pos_x = 0; t = 0; vel_x = 0; }
+	if (pos_x > SCREEN_WIDTH - width) { 
+		pos_x = SCREEN_WIDTH - width;
+	t = SCREEN_WIDTH - width;
+	vel_x = 0; }
 	//if (pos_y < 0) { pos_y = 0; vel_y = 0; }
 	if (pos_y < 0) { pos_y = 0; }
 	if (pos_y > SCREEN_HEIGHT - height) { pos_y = SCREEN_HEIGHT - height; vel_y = 0; }
@@ -121,7 +124,7 @@ void Player::render() {
 	}
 
 
-	int slow = 30;
+	int slow = 5;
 	int kadr = frame / slow;
 	
 	int t1, t2;
