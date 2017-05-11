@@ -49,12 +49,18 @@ void Player::handle_events(SDL_Event& event) {
 	acc_x = a_x;
 
 	//If a key was pressed
-	if (event.type == SDL_KEYDOWN && event.key.repeat == 0) {
+	//if (event.type == SDL_KEYDOWN && event.key.repeat == 0) {
+	if (event.type == SDL_KEYDOWN) {
 		switch (event.key.keysym.sym) {
 		case SDLK_SPACE: vel_y = -jump_vel; break;
+		case SDLK_q: acceleration -= 0.5; break;
+		case SDLK_w: acceleration += 0.5; break;
 		//case SDLK_RIGHT: acc_x = acceleration; break;
 		//case SDLK_LEFT: acc_x = -acceleration; break;
 		}
+		int t;
+		t = acceleration;
+		printf("acc=%d\n", t);
 	}
 
 	////If a key was pressed
@@ -114,20 +120,22 @@ void Player::render() {
 	}
 
 
-	int slow = 6;
+	int slow = 30;
 	int kadr = frame / slow;
 	
 	int t1, t2;
 	t1 = (frame - 1) / slow;
 	t2 = frame / slow;
 
-	printf("t1=%d t2=%d (f=%d)\n", t1, t2, frame);
+	//printf("t1=%d t2=%d (f=%d)\n", t1, t2, frame);
 	if (t1 != t2 || frame == 0) {
-		printf("->t1=%d t2=%d (f=%d)\n", t1, t2, frame);
-		pos_x += acc_x;
+		//printf("->t1=%d t2=%d (f=%d)\n", t1, t2, frame);
+		//pos_x += acc_x;
 	}
 
+	//acceleration = 5;
 	//pos_x += acc_x / slow;
+	pos_x += acc_x;
 
 
 
