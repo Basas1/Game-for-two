@@ -8,7 +8,6 @@ public:
 	Player();
 	~Player();
 
-
 	//Event handler
 	void handle_events(SDL_Event& event);
 
@@ -22,17 +21,8 @@ private:
 
 	//Jump speed
 	int jump_vel;
-	double t;
 
 	//Object's texture
 	Animated_texture* walk_animation;
-
-	int frame;
-	//SDL_Rect gSpriteClips[8];
-	SDL_Rect *gSpriteClips;
-
-	SDL_Rect* currentClip;
-	SDL_RendererFlip flip;
-
 };
 

@@ -32,6 +32,10 @@ protected:
 	//Check upper of object collision box for collision with map
 	bool check_map_collision_upper();
 
+	//Check side of object collision box for collision with map
+	bool check_map_collision_left();
+	bool check_map_collision_right();
+
 	//Object's coordinates
 	int pos_x, pos_y;
 

@@ -19,6 +19,8 @@ Texture::Texture(SDL_Texture* t) {
 	SDL_SetRenderTarget(main_renderer, NULL);
 	//Initialize class texture
 	original_texture = copy_texture;
+	//Set flip to none
+	flip = SDL_FLIP_NONE;
 }
 
 bool Texture::load_from_file(std::string path) {
@@ -55,6 +57,10 @@ void Texture::set_ñolor(Uint8 red, Uint8 green, Uint8 blue)
 	SDL_SetTextureColorMod(original_texture, red, green, blue);
 }
 
+void Texture::set_flip(SDL_RendererFlip change) {
+	flip = change;
+}
+
 Texture::~Texture() {
 	free();
 }
@@ -75,7 +81,7 @@ int Texture::get_height() {
 	return height;
 }
 
-void Texture::render(int x, int y, SDL_Rect* clip, double angle, SDL_Point* center, SDL_RendererFlip flip) {
+void Texture::render(int x, int y, SDL_Rect* clip, double angle, SDL_Point* center) {
 	//Set rendering space
 	SDL_Rect renderQuad = { x, y, width, height };
 	//Render to screen
