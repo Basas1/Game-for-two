@@ -8,7 +8,7 @@ public:
 	Movable_object();
 
 	//Move method
-	virtual void move() = 0;
+	void move();
 
 	//Render object
 	virtual void render() = 0;
@@ -22,6 +22,15 @@ public:
 protected:
 	//Check for collision with other objects
 	bool check_collision();
+
+	//Check for map collision in coordinate (x,y)
+	bool check_map_collision(int x, int y);
+
+	//Check bottom of object collision box for collision with map
+	bool check_map_collision_bottom();
+
+	//Check upper of object collision box for collision with map
+	bool check_map_collision_upper();
 
 	//Object's coordinates
 	int pos_x, pos_y;

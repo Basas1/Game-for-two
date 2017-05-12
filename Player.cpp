@@ -9,17 +9,25 @@ Player::Player() : Movable_object() {
 	pos_y = 900;
 	t = pos_x;
 
-	jump_vel = 15;
+	jump_vel = 10;
 
 	texture = new Texture(player_texture);
 	texture->set_width(width);
 	texture->set_height(height);
+	walk_animation = new Animated_texture(walk_texture,8);
+	walk_animation->set_width(width);
+	walk_animation->set_height(height);
+	walk_animation->set_clips();
+
+
 
 	collision_box = { pos_x, pos_y, width, height };
 
 
 	frame = 0;
 	flip = SDL_FLIP_NONE;
+
+	gSpriteClips = new SDL_Rect[8];
 
 	//Set standing sprite clip
 	for (int i = 0; i < 8; i++) {
@@ -61,7 +69,7 @@ void Player::handle_events(SDL_Event& event) {
 		}
 		int t;
 		t = acceleration;
-		printf("acc=%d\n", t);
+		//printf("acc=%d\n", t);
 	}
 
 	////If a key was pressed
@@ -97,17 +105,29 @@ void Player::move() {
 	if (vel_x < -max_vel_x) vel_x = -max_vel_x;
 
 	//Gravity effect
-	vel_y += gravity;
+	//vel_y += gravity;
 
 	//Change player position
 	//pos_x += round(vel_x);
-	pos_y += vel_y;
+	//pos_y += vel_y;
+
+	//for (pos_y; pos_y >= pos_y + vel_y; pos_y--) {
+	//	if (check_map_collision_bottom()) {
+	//		//vel_y = 0;
+	//		break;
+	//	}
+	//}
+
+	Movable_object::move();
+
+
+
 
 	//Check for level border
 	if (pos_x < 0) { pos_x = 0; t = 0; vel_x = 0; }
 	if (pos_x > SCREEN_WIDTH - width) { 
 		pos_x = SCREEN_WIDTH - width;
-	t = SCREEN_WIDTH - width;
+	t = 0;
 	vel_x = 0; }
 	//if (pos_y < 0) { pos_y = 0; vel_y = 0; }
 	if (pos_y < 0) { pos_y = 0; }
@@ -159,14 +179,21 @@ void Player::render() {
 	}
 
 	if (acc_x != 0) {
-		texture->render(pos_x, pos_y, currentClip, 0.0, NULL, flip);
+		//currentClip = &gSpriteClips[0];
+		//texture->render(pos_x, pos_y, currentClip, 0.0, NULL, flip);
+		walk_animation->render(pos_x, pos_y, 0.0, NULL, flip);
+		walk_animation->next_frame();
 	}
 	else {
-		currentClip = &gSpriteClips[7];
-		texture->render(pos_x, pos_y, currentClip, 0.0, NULL, flip);
+		//currentClip = &gSpriteClips[7];
+		//texture->render(pos_x, pos_y, currentClip, 0.0, NULL, flip);
+		texture->render(pos_x, pos_y, NULL, 0.0, NULL, flip);
+		walk_animation->set_frame(0);
 	}
 
-
+	//check_map_collision(pos_x, pos_y);
+	//printf("collision = %d\n", check_map_collision(pos_x, pos_y));
+	printf("collision = %d\n", check_map_collision_bottom());
 
 
 

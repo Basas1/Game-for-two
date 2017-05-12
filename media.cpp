@@ -10,10 +10,11 @@ SDL_Texture* background_texture = NULL;
 //Globally used textures
 SDL_Texture* map = NULL;
 SDL_Texture* player_texture = NULL;
+SDL_Texture* walk_texture = NULL;
 
 
 //Map surface
-//SDL_Surface* map_surface = NULL;
+SDL_Surface* map_surface = NULL;
 
 //Globally used font
 //TTF_Font* font1 = NULL;
@@ -33,18 +34,25 @@ bool load_media() {
 		success = false;
 	}
 	//Loading other textures
-	map = load_texture("Images/map.jpg");
+	//map = load_texture("Images/map.jpg");
+	map = load_texture("Images/map_box.bmp");
 	if (map == NULL) {
 		printf("Failed to load map texture!\n");
 		success = false;
 	}
 	//player_texture = load_texture("Images/player.png");
-	player_texture = load_texture("Images/walk.png");
+	player_texture = load_texture("Images/stand.png");
 	if (player_texture == NULL) {
 		printf("Failed to load player texture!\n");
 		success = false;
 	}
-	
+	walk_texture = load_texture("Images/walk.png");
+	if (walk_texture == NULL) {
+		printf("Failed to load player texture!\n");
+		success = false;
+	}
+
+
 	//Open fonts
 	//font1 = TTF_OpenFont("Fonts/arial.ttf", 28);
 	//if (font1 == NULL ) {
@@ -60,7 +68,7 @@ bool load_media() {
 	//}
 	
 	//Load map surface
-	//map_surface = IMG_Load("Images/map3.bmp");
+	map_surface = IMG_Load("Images/map_box.bmp");
 
 	return success;
 }

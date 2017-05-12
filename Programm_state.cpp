@@ -20,6 +20,7 @@ void change_state()
 	if (next_state != STATE_NULL)
 	{
 		//Delete the current state
+		//if (next_state != STATE_EXIT && next_state != STATE_GAME)
 		if (next_state != STATE_EXIT)
 		{
 			delete current_state;

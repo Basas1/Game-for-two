@@ -35,7 +35,7 @@ public:
 	int get_width();
 	int get_height();
 
-private:
+protected:
 	//Actual SDL texture
 	SDL_Texture* original_texture;
 
