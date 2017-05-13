@@ -46,10 +46,7 @@ void Game::render() {
 	SDL_RenderClear(main_renderer);
 
 	//Render background
-
-	SDL_Rect kek = { camera->get_x(), camera->get_y(), SCREEN_WIDTH, SCREEN_HEIGHT };
-	SDL_RenderCopy(main_renderer, background, &kek, NULL);
-
+	SDL_RenderCopyEx(main_renderer, background, camera->get_rect(), NULL, 0.0, NULL, SDL_FLIP_NONE);
 
 	player->render();
 

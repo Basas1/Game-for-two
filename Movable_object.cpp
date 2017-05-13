@@ -63,7 +63,7 @@ bool Movable_object::check_map_collision_right() {
 	return false;
 }
 
-//Move object accordint to it's velocity
+//Move object according to it's velocity
 void Movable_object::move() {
 	//Right-left movement
 	int slope;
