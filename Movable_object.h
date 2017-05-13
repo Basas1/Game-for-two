@@ -60,6 +60,8 @@ protected:
 	//Friction
 	double friction;
 
+	int can_rise;
+
 	//Object's texture
 	Texture* texture;
 

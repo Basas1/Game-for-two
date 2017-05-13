@@ -52,6 +52,7 @@ void Game::render() {
 
 
 	SDL_Rect kek = { 0, 0, SCREEN_WIDTH, SCREEN_HEIGHT };
+	//SDL_RenderCopy(main_renderer, background, &kek, NULL);
 	SDL_RenderCopy(main_renderer, background, &kek, NULL);
 
 

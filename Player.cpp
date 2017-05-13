@@ -5,8 +5,8 @@
 Player::Player() : Movable_object() {
 	width = 86;
 	height = 128;
-	pos_x = 500;
-	pos_y = 900-height;
+	pos_x = 300;
+	pos_y = 0;
 	jump_vel = 10;
 
 	texture = new Texture(player_texture);
@@ -41,8 +41,8 @@ void Player::handle_events(SDL_Event& event) {
 	if (event.type == SDL_KEYDOWN && event.key.repeat == 0) {
 		switch (event.key.keysym.sym) {
 		case SDLK_SPACE: vel_y = -jump_vel; break;
-		case SDLK_q: acceleration -= 0.5; break;
-		case SDLK_w: acceleration += 0.5; break;
+		case SDLK_r: pos_x = 0; pos_y = 0; break;
+		//case SDLK_w: acceleration += 0.5; break;
 		}
 	}
 	//If a key was released
