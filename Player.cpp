@@ -12,12 +12,14 @@ Player::Player() : Movable_object() {
 	texture = new Texture(player_texture);
 	texture->set_width(width);
 	texture->set_height(height);
-	walk_animation = new Animated_texture(walk_texture,8);
+	walk_animation = new Animated_texture(walk_texture, 8);
 	walk_animation->set_width(width);
 	walk_animation->set_height(height);
 	walk_animation->set_clips();
 
 	collision_box = { pos_x, pos_y, width, height };
+	vision_focus_x = width / 2;
+	vision_focus_y = height / 2;
 }
 
 
@@ -42,7 +44,6 @@ void Player::handle_events(SDL_Event& event) {
 		switch (event.key.keysym.sym) {
 		case SDLK_SPACE: vel_y = -jump_vel; break;
 		case SDLK_r: pos_x = 0; pos_y = 0; break;
-		//case SDLK_w: acceleration += 0.5; break;
 		}
 	}
 	//If a key was released
@@ -100,6 +101,8 @@ void Player::render() {
 	//if (check_map_collision_right()) printf("Right collision\n");
 	//if (check_map_collision_bottom()) printf("Bottom collision\n");
 	//if (check_map_collision_upper()) printf("Upper collision\n");
+	vision_focus_x = pos_x + width / 2;
+	vision_focus_y = pos_y + height / 2;
 }
 
 Player::~Player() {
@@ -110,3 +113,10 @@ int Player::round(float f) {
 	return (f > 0.0) ? (f + 0.5) : (f - 0.5);
 }
 
+int Player::get_vision_x() {
+	return vision_focus_x;
+}
+
+int Player::get_vision_y() {
+	return vision_focus_y;
+}

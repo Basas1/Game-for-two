@@ -51,8 +51,7 @@ void Texture::change_texture(SDL_Texture* change_to) {
 	original_texture = copy_texture;
 }
 
-void Texture::set_ñolor(Uint8 red, Uint8 green, Uint8 blue)
-{
+void Texture::set_ñolor(Uint8 red, Uint8 green, Uint8 blue) {
 	//Modulate texture rgb
 	SDL_SetTextureColorMod(original_texture, red, green, blue);
 }
@@ -83,7 +82,8 @@ int Texture::get_height() {
 
 void Texture::render(int x, int y, SDL_Rect* clip, double angle, SDL_Point* center) {
 	//Set rendering space
-	SDL_Rect renderQuad = { x, y, width, height };
+	SDL_Rect renderQuad = { x - camera->get_x(), y - camera->get_y(), width, height };
+
 	//Render to screen
 	SDL_RenderCopyEx(main_renderer, original_texture, clip, &renderQuad, angle, center, flip);
 }

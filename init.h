@@ -6,12 +6,17 @@
 #include "Programm_state.h"
 #include "tools.h"
 #include "media.h"
-
+#include "camera.h"
 
 
 //Screen dimension constants
 const int SCREEN_WIDTH = 1600;
 const int SCREEN_HEIGHT = 900;
+
+//Level dimension constants
+const int LEVEL_WIDTH = 3200;
+const int LEVEL_HEIGHT = 900;
+
 
 //Fps constants
 const int SCREEN_FPS = 200;
@@ -44,6 +49,9 @@ extern SDL_Window* main_window;
 
 //The window renderer
 extern SDL_Renderer* main_renderer;
+
+//Main camera
+extern Camera* camera;
 
 bool init();
 

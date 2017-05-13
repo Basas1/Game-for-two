@@ -47,5 +47,8 @@ protected:
 
 	//Image dimensions
 	int width, height;
+
+
 };
 
+	
