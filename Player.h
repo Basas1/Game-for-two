@@ -8,7 +8,6 @@ public:
 	Player();
 	~Player();
 
-
 	//Event handler
 	void handle_events(SDL_Event& event);
 
@@ -17,22 +16,19 @@ public:
 
 	//Render object
 	void render();
+
+	int get_vision_x();
+	int get_vision_y();
 private:
 	int round(float f);
 
 	//Jump speed
 	int jump_vel;
-	double t;
 
 	//Object's texture
 	Animated_texture* walk_animation;
 
-	int frame;
-	//SDL_Rect gSpriteClips[8];
-	SDL_Rect *gSpriteClips;
-
-	SDL_Rect* currentClip;
-	SDL_RendererFlip flip;
-
+	//point that camera follows
+	int vision_focus_x, vision_focus_y;
 };
 

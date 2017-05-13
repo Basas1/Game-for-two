@@ -14,6 +14,7 @@ int next_state = STATE_NULL;
 Programm_state* current_state = NULL;
 SDL_Event event;
 
+Camera* camera = NULL;
 
 //The window we'll be rendering to
 SDL_Window* main_window = NULL;
@@ -22,6 +23,8 @@ SDL_Window* main_window = NULL;
 SDL_Renderer* main_renderer = NULL;
 
 bool init() {
+
+	camera = new Camera;
 	//Initialization flag
 	bool success = true;
 
@@ -83,8 +86,7 @@ bool init() {
 	//Set start programm state
 	state_id = STATE_MENU;
 	current_state = new Game();
-
-
+	
 	return success;
 }
 

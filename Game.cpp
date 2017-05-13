@@ -5,11 +5,11 @@
 
 
 
+
 Game::Game() {
 	//Load the background
 	background = map;
-	player_1 = new Player();
-	
+	player = new Player;
 }
 
 
@@ -33,13 +33,14 @@ void Game::handle_events() {
 			set_next_state(STATE_MENU);
 		}
 
-		player_1->handle_events(event);
+		player->handle_events(event);
 
 	}
 }
 
 void Game::logic() {
-	player_1->move();
+	player->move();
+	camera->follow(player->get_vision_x(), player->get_vision_y());
 }
 
 void Game::render() {
@@ -48,14 +49,8 @@ void Game::render() {
 	SDL_RenderClear(main_renderer);
 
 	//Render background
-	//SDL_RenderCopy(main_renderer, background, NULL, NULL);
-
-
-	SDL_Rect kek = { 0, 0, SCREEN_WIDTH, SCREEN_HEIGHT };
-	SDL_RenderCopy(main_renderer, background, &kek, NULL);
-
-
+	SDL_RenderCopyEx(main_renderer, background, camera->get_rect(), NULL, 0.0, NULL, SDL_FLIP_NONE);
 	
-	player_1->render();
+	player->render();
 
 }

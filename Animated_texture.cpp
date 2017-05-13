@@ -53,8 +53,8 @@ int Animated_texture::get_frame_number() {
 	return current_frame;
 }
 
-void Animated_texture::render(int x, int y, double angle, SDL_Point* center, SDL_RendererFlip flip) {
-	Texture::render(x, y, current_clip, angle, center, flip);
+void Animated_texture::render(int x, int y, double angle, SDL_Point* center) {
+	Texture::render(x, y, current_clip, angle, center);
 }
 
 
