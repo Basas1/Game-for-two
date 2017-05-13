@@ -1,5 +1,6 @@
 Images/
 Debug/
+backup/
 Release/
 SDL-project.props
 Game1.vcxproj.filters
