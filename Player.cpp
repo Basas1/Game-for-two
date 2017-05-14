@@ -107,11 +107,6 @@ void Player::render() {
 		texture->render(center_x, center_y);
 		walk_animation->set_frame(0);
 	}
-
-	//if (check_map_collision_left()) printf("Left collision\n");
-	//if (check_map_collision_right()) printf("Right collision\n");
-	//if (check_map_collision_bottom()) printf("Bottom collision\n");
-	//if (check_map_collision_upper()) printf("Upper collision\n");
 }
 
 Player::~Player() {
