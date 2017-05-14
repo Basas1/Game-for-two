@@ -37,7 +37,7 @@ void Game::handle_events() {
 
 void Game::logic() {
 	player->move();
-	camera->follow(player->get_vision_x(), player->get_vision_y());
+	camera->follow(player->get_x(), player->get_y());
 }
 
 void Game::render() {

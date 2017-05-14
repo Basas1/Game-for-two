@@ -3,23 +3,23 @@
 
 
 Player::Player() : Movable_object() {
-	width = 86;
+	width = 40;
 	height = 128;
 	pos_x = 300;
 	pos_y = 0;
-	jump_vel = 10;
+	jump_vel = 7;
 
 	texture = new Texture(player_texture);
-	texture->set_width(width);
-	texture->set_height(height);
-	walk_animation = new Animated_texture(walk_texture, 8);
-	walk_animation->set_width(width);
-	walk_animation->set_height(height);
+	//texture->set_width(width);
+	//texture->set_height(height);
+	walk_animation = new Animated_texture(walk_texture, 10);
+	//walk_animation->set_width(width);
+	//walk_animation->set_height(height);
 	walk_animation->set_clips();
 
 	collision_box = { pos_x, pos_y, width, height };
-	vision_focus_x = width / 2;
-	vision_focus_y = height / 2;
+	center_x = width / 2;
+	center_y = height / 2;
 }
 
 
@@ -78,6 +78,8 @@ void Player::move() {
 }
 
 void Player::render() {
+	center_x = pos_x + width / 2;
+	center_y = pos_y + height / 2;
 
 	if (acc_x > 0) {
 		walk_animation->set_flip(SDL_FLIP_NONE);
@@ -89,11 +91,11 @@ void Player::render() {
 	}
 
 	if (acc_x != 0) {
-		walk_animation->render(pos_x, pos_y);
+		walk_animation->render(center_x, center_y);
 		walk_animation->next_frame();
 	}
 	else {
-		texture->render(pos_x, pos_y);
+		texture->render(center_x, center_y);
 		walk_animation->set_frame(0);
 	}
 
@@ -101,8 +103,6 @@ void Player::render() {
 	//if (check_map_collision_right()) printf("Right collision\n");
 	//if (check_map_collision_bottom()) printf("Bottom collision\n");
 	//if (check_map_collision_upper()) printf("Upper collision\n");
-	vision_focus_x = pos_x + width / 2;
-	vision_focus_y = pos_y + height / 2;
 }
 
 Player::~Player() {
@@ -113,10 +113,12 @@ int Player::round(float f) {
 	return (f > 0.0) ? (f + 0.5) : (f - 0.5);
 }
 
-int Player::get_vision_x() {
-	return vision_focus_x;
+int Player::get_x() {
+	center_x = pos_x + width / 2;
+	return center_x;
 }
 
-int Player::get_vision_y() {
-	return vision_focus_y;
+int Player::get_y() {
+	center_y = pos_y + height / 2;
+	return center_y;
 }
