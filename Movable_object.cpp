@@ -19,7 +19,7 @@ Movable_object::Movable_object() {
 	acceleration = 2;
 	gravity = 0.1;
 	friction = 0.5;
-	can_rise = 15;
+	can_rise = 25;
 }
 
 //Check for map collision in coordinate (x,y)
@@ -110,7 +110,7 @@ void Movable_object::move() {
 				break;
 			}
 			if (!check_map_collision(pos_x + width + 1, pos_y + height - can_rise) &&
-				check_map_collision(pos_x + width / 2, pos_y + height)) {
+				check_map_collision(pos_x + width / 2, pos_y + height - 1)) {
 				for (int i = pos_y + height - can_rise; i < pos_y + height; i++) {
 					if (check_map_collision(pos_x + width / 2, i)) {
 						pos_y = i - height;
@@ -127,7 +127,7 @@ void Movable_object::move() {
 				break;
 			}
 			if (!check_map_collision(pos_x - 1, pos_y + height - can_rise) &&
-				check_map_collision(pos_x + width / 2, pos_y + height)) {
+				check_map_collision(pos_x + width / 2, pos_y + height - 1)) {
 				for (int i = pos_y + height - can_rise; i < pos_y + height; i++) {
 					if (check_map_collision(pos_x + width / 2, i)) {
 						pos_y = i - height;

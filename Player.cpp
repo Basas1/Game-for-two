@@ -46,6 +46,15 @@ void Player::handle_events(SDL_Event& event) {
 		case SDLK_r: pos_x = 0; pos_y = 0; break;
 		}
 	}
+	if (event.type == SDL_KEYDOWN) {
+		switch (event.key.keysym.sym) {
+		case SDLK_w: pos_y -= 100; break;
+		case SDLK_a: pos_x -= 10; break;
+		case SDLK_s: pos_y += 10; break;
+		case SDLK_d: pos_x += 10; break;
+		}
+	}
+
 	//If a key was released
 	//else if (event.type == SDL_KEYUP && event.key.repeat == 0) {
 	//	switch (event.key.keysym.sym) {

@@ -37,10 +37,10 @@ void Camera::move_to(int vision_focus_x, int vision_focus_y) {
 	if (camera.y < 0) {
 		camera.y = 0;
 	}
-	if (camera.x > LEVEL_WIDTH - camera.w) {
-		camera.x = LEVEL_WIDTH - camera.w;
+	if (camera.x > map_surface->w - camera.w) {
+		camera.x = map_surface->w - camera.w;
 	}
-	if (camera.y > LEVEL_HEIGHT - camera.h) {
-		camera.y = LEVEL_HEIGHT - camera.h;
+	if (camera.y > map_surface->h - camera.h) {
+		camera.y = map_surface->h - camera.h;
 	}
 }
