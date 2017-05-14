@@ -35,7 +35,7 @@ bool load_media() {
 	}
 	//Loading other textures
 	//map = load_texture("Images/map.jpg");
-	map = load_texture("Images/map_box.bmp");
+	map = load_texture("Images/tileMap.jpg");
 	if (map == NULL) {
 		printf("Failed to load map texture!\n");
 		success = false;
@@ -46,7 +46,7 @@ bool load_media() {
 		printf("Failed to load player texture!\n");
 		success = false;
 	}
-	walk_texture = load_texture("Images/walk.png");
+	walk_texture = load_texture("Images/run.png");
 	if (walk_texture == NULL) {
 		printf("Failed to load player texture!\n");
 		success = false;
@@ -68,7 +68,7 @@ bool load_media() {
 	//}
 	
 	//Load map surface
-	map_surface = IMG_Load("Images/map_box.bmp");
+	map_surface = IMG_Load("Images/tileBase.bmp");
 
 	return success;
 }

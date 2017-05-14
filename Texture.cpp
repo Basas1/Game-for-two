@@ -82,7 +82,7 @@ int Texture::get_height() {
 
 void Texture::render(int x, int y, SDL_Rect* clip, double angle, SDL_Point* center) {
 	//Set rendering space
-	SDL_Rect renderQuad = { x - camera->get_x(), y - camera->get_y(), width, height };
+	SDL_Rect renderQuad = { x - camera->get_x() - (width / 2), y - camera->get_y() - (height / 2), width, height };
 
 	//Render to screen
 	SDL_RenderCopyEx(main_renderer, original_texture, clip, &renderQuad, angle, center, flip);
