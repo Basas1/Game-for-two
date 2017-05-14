@@ -32,8 +32,7 @@ bool Movable_object::check_map_collision(int x, int y) {
 
 //Check bottom of object collision box for collision with map
 bool Movable_object::check_map_collision_bottom() {
-	//for (int i = pos_x; i <= pos_x + width; i+= width/4) {
-	for (int i = pos_x + width/3; i <= pos_x + 2 * width / 3; i++) {
+	for (int i = pos_x; i <= pos_x + width; i++) {
 		if (check_map_collision(i, pos_y + height)) return true;
 	}
 	return false;
@@ -41,7 +40,7 @@ bool Movable_object::check_map_collision_bottom() {
 
 //Check upper of object collision box for collision with map
 bool Movable_object::check_map_collision_upper() {
-	for (int i = pos_x; i <= pos_x + width; i += width / 4) {
+	for (int i = pos_x; i <= pos_x + width; i ++) {
 		if (check_map_collision(i, pos_y - 1)) return true;
 	}
 	return false;
@@ -52,6 +51,14 @@ bool Movable_object::check_map_collision_left() {
 	for (int i = pos_y; i <= pos_y + height - can_rise; i += height / 20) {
 		if (check_map_collision(pos_x - 1, i)) return true;
 	}
+	for (int i = pos_y + height - can_rise; i <= pos_y + height - 1; i++) {
+		if (check_map_collision(pos_x - 1, i)) {
+			for (int j = pos_y; j > i - height; j--) {
+				if (check_map_collision(pos_x - 1, j)) return true;
+			}
+			break;
+		}
+	}
 	return false;
 }
 
@@ -60,15 +67,43 @@ bool Movable_object::check_map_collision_right() {
 	for (int i = pos_y; i <= pos_y + height - can_rise; i += height / 20) {
 		if (check_map_collision(pos_x + width + 1, i)) return true;
 	}
+	for (int i = pos_y + height - can_rise; i <= pos_y + height - 1; i++) {
+		if (check_map_collision(pos_x + width + 1, i)) {
+			for (int j = pos_y; j > i - height; j--) {
+				if (check_map_collision(pos_x + width + 1, j)) return true;
+			}
+			break;
+		}
+	}
 	return false;
 }
 
 //Move object according to it's velocity
 void Movable_object::move() {
+	//Gravity effect
+	vel_y += gravity;
+	if (vel_y > 0) {
+		int old_y = pos_y;
+		for (pos_y; pos_y <= old_y + vel_y; pos_y++) {
+			if (check_map_collision_bottom()) {
+				vel_y = 0;
+				break;
+			}
+		}
+	}
+	else {
+		int old_y = pos_y;
+		for (pos_y; pos_y >= old_y + vel_y; pos_y--) {
+			if (check_map_collision_upper()) {
+				vel_y = 0;
+				break;
+			}
+		}
+	}
+
 	//Right-left movement
-	int slope;
+	int old_x = pos_x;
 	if (vel_x > 0) {
-		int old_x = pos_x;
 		for (pos_x; pos_x <= old_x + vel_x; pos_x++) {
 			if (check_map_collision_right()) {
 				vel_x = 0;
@@ -86,7 +121,6 @@ void Movable_object::move() {
 		}
 	}
 	else if (vel_x < 0) {
-		int old_x = pos_x;
 		for (pos_x; pos_x >= old_x + vel_x; pos_x--) {
 			if (check_map_collision_left()) {
 				vel_x = 0;
@@ -104,38 +138,7 @@ void Movable_object::move() {
 
 		}
 	}
-	//Gravity effect
-	vel_y += gravity;
-	if (vel_y > 0) {
-		int old_y = pos_y;
-		for (pos_y; pos_y <= old_y + vel_y; pos_y++) {
-			if (check_map_collision_bottom()) {
-				vel_y = 0;
-				break;
-			}
-			if (check_map_collision(pos_x - 1, pos_y + height - can_rise)) {
-				pos_x += 0.001;
-			}	
-			if (check_map_collision(pos_x + width + 1, pos_y + height - can_rise)) {
-				pos_x -= 0.001;
-			}
-
-		}
-	}
-	else {
-		int old_y = pos_y;
-		for (pos_y; pos_y >= old_y + vel_y; pos_y--) {
-			if (check_map_collision_upper()) {
-				vel_y = 0;
-				break;
-			}
-		}
-	}
-
 }
-
-
-
 
 //Return object's coordinate x
 int Movable_object::get_x() {
