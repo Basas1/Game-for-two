@@ -9,7 +9,8 @@ Fireball::Fireball(int x, int y, bool left) : Movable_object() {
 	pos_x = x;
 	pos_y = y;
 	can_rise = 0;
-	gravity = 0;
+	gravity = 0.05;
+	vel_y = -4;
 
 	exist = true;
 	if (left) {
