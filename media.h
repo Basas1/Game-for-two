@@ -9,6 +9,7 @@ extern SDL_Texture* background_texture;
 extern SDL_Texture* map;
 extern SDL_Texture* player_texture;
 extern SDL_Texture* walk_texture;
+extern SDL_Texture* fireball_texture;
 
 
 //Map surface

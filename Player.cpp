@@ -5,8 +5,8 @@
 Player::Player() : Movable_object() {
 	width = 40;
 	height = 128;
-	pos_x = 300;
-	pos_y = 0;
+	pos_x = 50;
+	pos_y = 1500;
 	jump_vel = 7;
 
 	texture = new Texture(player_texture);
@@ -20,6 +20,9 @@ Player::Player() : Movable_object() {
 	collision_box = { pos_x, pos_y, width, height };
 	center_x = width / 2;
 	center_y = height / 2;
+
+	flip_left = false;
+	ball = NULL;
 }
 
 
@@ -44,6 +47,10 @@ void Player::handle_events(SDL_Event& event) {
 		switch (event.key.keysym.sym) {
 		case SDLK_SPACE: vel_y = -jump_vel; break;
 		case SDLK_r: pos_x = 0; pos_y = 0; break;
+		case SDLK_f: {
+			ball = new Fireball(pos_x + width / 2, pos_y + height / 2, flip_left);
+			break;
+		}
 		}
 	}
 	if (event.type == SDL_KEYDOWN) {
@@ -84,17 +91,25 @@ void Player::move() {
 
 	vel_x = acc_x;
 	Movable_object::move();
+
+
+	if (ball != NULL) {
+		ball->move();
+	}
 }
 
 void Player::render() {
+	//printf("x=%d; y=%d;\n", get_x(), get_y());
 	center_x = pos_x + width / 2;
 	center_y = pos_y + height / 2;
 
 	if (acc_x > 0) {
+		flip_left = false;
 		walk_animation->set_flip(SDL_FLIP_NONE);
 		texture->set_flip(SDL_FLIP_NONE);
 	}
 	else if (acc_x < 0) {
+		flip_left = true;
 		walk_animation->set_flip(SDL_FLIP_HORIZONTAL);
 		texture->set_flip(SDL_FLIP_HORIZONTAL);
 	}
@@ -107,10 +122,16 @@ void Player::render() {
 		texture->render(center_x, center_y);
 		walk_animation->set_frame(0);
 	}
+
+	if (ball != NULL) {
+		ball->render();
+	}
+
 }
 
 Player::~Player() {
 	delete texture;
+	delete walk_animation;
 }
 
 int Player::round(float f) {

@@ -1,6 +1,7 @@
 #pragma once
 #include "Movable_object.h"
 #include "Animated_texture.h"
+#include "Fireball.h"
 
 
 class Player : public Movable_object {
@@ -24,6 +25,9 @@ private:
 
 	//Jump speed
 	int jump_vel;
+
+	bool flip_left;
+	Fireball* ball;
 
 	//Object's texture
 	Animated_texture* walk_animation;

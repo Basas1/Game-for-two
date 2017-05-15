@@ -11,6 +11,7 @@ SDL_Texture* background_texture = NULL;
 SDL_Texture* map = NULL;
 SDL_Texture* player_texture = NULL;
 SDL_Texture* walk_texture = NULL;
+SDL_Texture* fireball_texture = NULL;
 
 
 //Map surface
@@ -34,7 +35,6 @@ bool load_media() {
 		success = false;
 	}
 	//Loading other textures
-	//map = load_texture("Images/map.jpg");
 	map = load_texture("Images/map.jpg");
 	if (map == NULL) {
 		printf("Failed to load map texture!\n");
@@ -49,6 +49,12 @@ bool load_media() {
 	walk_texture = load_texture("Images/run.png");
 	if (walk_texture == NULL) {
 		printf("Failed to load player texture!\n");
+		success = false;
+	}
+
+	fireball_texture = load_texture("Images/fireball.png");
+	if (fireball_texture == NULL) {
+		printf("Failed to load fireball texture!\n");
 		success = false;
 	}
 

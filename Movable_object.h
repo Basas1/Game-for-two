@@ -36,6 +36,9 @@ protected:
 	bool check_map_collision_left();
 	bool check_map_collision_right();
 
+	//Check all collisions
+	bool check_map_collision_all();
+
 	//Object's coordinates
 	int pos_x, pos_y;
 

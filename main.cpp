@@ -15,7 +15,6 @@ int main(int argc, char* args[]) {
 
 	//timer for fps capping
 	Timer fps;
-	int frameTicks;
 
 	//Start up SDL and create window
 	if (!init()) {

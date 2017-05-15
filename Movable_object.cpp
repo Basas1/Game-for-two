@@ -46,6 +46,15 @@ bool Movable_object::check_map_collision_upper() {
 	return false;
 }
 
+bool Movable_object::check_map_collision_all() {
+	if (check_map_collision_right()) return true;
+	if (check_map_collision_left()) return true;
+	if (check_map_collision_upper()) return true;
+	if (check_map_collision_bottom()) return true;
+	return false;
+}
+
+
 //Check left side of object collision box for collision with map
 bool Movable_object::check_map_collision_left() {
 	for (int i = pos_y; i <= pos_y + height - can_rise; i += height / 20) {
@@ -91,7 +100,7 @@ void Movable_object::move() {
 			}
 		}
 	}
-	else {
+	else if (vel_y < 0) {
 		int old_y = pos_y;
 		for (pos_y; pos_y >= old_y + vel_y; pos_y--) {
 			if (check_map_collision_upper()) {
