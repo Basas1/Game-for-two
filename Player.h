@@ -29,7 +29,6 @@ private:
 	int jump_vel;
 
 	bool flip_left;
-	//Fireball* ball;
 
 	//Object's texture
 	Animated_texture* walk_animation;

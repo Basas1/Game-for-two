@@ -41,7 +41,7 @@ void Fireball::logic() {
 }
 
 void Fireball::render() {
-	if (exist) texture->render(pos_x, pos_y);
+	texture->render(pos_x, pos_y);
 }
 
 Fireball::~Fireball() {

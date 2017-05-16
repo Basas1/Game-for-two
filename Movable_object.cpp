@@ -99,6 +99,17 @@ void Movable_object::move() {
 				break;
 			}
 		}
+		////Expiremental solution for map edge cases
+		//if ((check_map_collision(pos_x - 1, pos_y + height) || check_map_collision(pos_x - 1, pos_y + height - 1)) &&
+		//	!check_map_collision(pos_x + width / 2, pos_y + height) && !check_map_collision(pos_x + width, pos_y + height)) {
+		//	pos_y+= acceleration;
+		//	pos_x+= acceleration; 
+		//}
+		//if ((check_map_collision(pos_x + width + 1, pos_y + height) || check_map_collision(pos_x + width + 1, pos_y + height - 1)) &&
+		//	!check_map_collision(pos_x + width / 2, pos_y + height) && !check_map_collision(pos_x, pos_y + height)) {
+		//	pos_y += acceleration;
+		//	pos_x -= acceleration;
+		//}
 	}
 	else if (vel_y < 0) {
 		int old_y = pos_y;
@@ -110,7 +121,7 @@ void Movable_object::move() {
 		}
 	}
 
-	//Right-left movement
+	//Right movement
 	int old_x = pos_x;
 	if (vel_x > 0) {
 		for (pos_x; pos_x <= old_x + vel_x; pos_x++) {
@@ -129,6 +140,7 @@ void Movable_object::move() {
 			}
 		}
 	}
+	//Left movement
 	else if (vel_x < 0) {
 		for (pos_x; pos_x >= old_x + vel_x; pos_x--) {
 			if (check_map_collision_left()) {

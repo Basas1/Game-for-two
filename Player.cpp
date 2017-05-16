@@ -25,7 +25,6 @@ Player::Player() : Movable_object() {
 	center_y = height / 2;
 
 	flip_left = false;
-	//ball = NULL;
 }
 
 
@@ -46,7 +45,7 @@ void Player::handle_events(SDL_Event& event) {
 	acc_x = a_x;
 
 	//If a key was pressed
-	//if (event.type == SDL_KEYDOWN && event.key.repeat == 0) {
+//	if (event.type == SDL_KEYDOWN && event.key.repeat == 0) {
 	if (event.type == SDL_KEYDOWN) {
 		switch (event.key.keysym.sym) {
 		case SDLK_SPACE: vel_y = -jump_vel; break;
@@ -97,11 +96,6 @@ void Player::move() {
 
 	vel_x = acc_x;
 	Movable_object::move();
-
-
-	//if (ball != NULL) {
-	//	ball->move();
-	//}
 }
 
 void Player::logic() {
@@ -132,10 +126,6 @@ void Player::render() {
 		texture->render(center_x, center_y);
 		walk_animation->set_frame(0);
 	}
-
-	//if (ball != NULL) {
-	//	ball->render();
-	//}
 
 }
 

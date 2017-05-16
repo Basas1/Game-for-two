@@ -10,9 +10,8 @@
 #include <vector>
 #include "Game_object.h"
 
-
+//Vector of all objects in game
 extern std::vector<Game_object*> objects;
-
 
 //Screen dimension constants
 const int SCREEN_WIDTH = 1600;

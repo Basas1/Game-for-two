@@ -11,6 +11,7 @@ public:
 	//Move method
 	void move();
 
+	//Event handler
 	void handle_events(SDL_Event& event);
 
 	//Render object
