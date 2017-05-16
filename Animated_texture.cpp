@@ -14,10 +14,10 @@ Animated_texture::Animated_texture(SDL_Texture* original_texture, int frames) : 
 
 void Animated_texture::set_clips() {
 	for (int i = 0; i < total_frames; i++) {
-		sprite_clips[i].x = i * 128;
+		sprite_clips[i].x = i * width;
 		sprite_clips[i].y = 0;
-		sprite_clips[i].w = 128;
-		sprite_clips[i].h = 128;
+		sprite_clips[i].w = width;
+		sprite_clips[i].h = height;
 	}
 	current_clip = &sprite_clips[current_frame];
 }

@@ -52,7 +52,7 @@ void Player::handle_events(SDL_Event& event) {
 		case SDLK_r: pos_x = 0; pos_y = 0; break;
 		case SDLK_f: {
 			Fireball *ball;
-			ball = new Fireball(pos_x + width / 2, pos_y + height / 2, flip_left);
+			ball = new Fireball(pos_x + width / 2, pos_y + 10, flip_left);
 			objects.insert(objects.end(), ball);
 			break;
 		}

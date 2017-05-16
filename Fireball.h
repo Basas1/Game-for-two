@@ -1,5 +1,7 @@
 #pragma once
 #include "Movable_object.h"
+#include "Animated_texture.h"
+
 class Fireball : public Movable_object {
 public:
 	Fireball(int x, int y, bool left);
@@ -12,6 +14,8 @@ public:
 
 	//Render object
 	void render();
+private:
+	Animated_texture* fireball_animation;
 
 };
 

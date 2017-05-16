@@ -42,7 +42,7 @@ bool load_media() {
 		success = false;
 	}
 	//player_texture = load_texture("Images/player.png");
-	player_texture = load_texture("Images/stand.png");
+	player_texture = load_texture("Images/stand.gif");
 	if (player_texture == NULL) {
 		printf("Failed to load player texture!\n");
 		success = false;
@@ -53,7 +53,7 @@ bool load_media() {
 		success = false;
 	}
 
-	fireball_texture = load_texture("Images/fireball.png");
+	fireball_texture = load_texture("Images/fireball.gif");
 	if (fireball_texture == NULL) {
 		printf("Failed to load fireball texture!\n");
 		success = false;
