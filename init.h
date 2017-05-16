@@ -6,15 +6,25 @@
 #include "Programm_state.h"
 #include "tools.h"
 #include "media.h"
+#include "camera.h"
+#include <vector>
+#include "Game_object.h"
 
+
+extern std::vector<Game_object*> objects;
 
 
 //Screen dimension constants
 const int SCREEN_WIDTH = 1600;
 const int SCREEN_HEIGHT = 900;
 
+//Level dimension constants
+const int LEVEL_WIDTH = 3200;
+const int LEVEL_HEIGHT = 900;
+
+
 //Fps constants
-const int SCREEN_FPS = 60;
+const int SCREEN_FPS = 200;
 const int SCREEN_TICKS_PER_FRAME = 1000 / SCREEN_FPS;
 
 //Window position
@@ -44,6 +54,9 @@ extern SDL_Window* main_window;
 
 //The window renderer
 extern SDL_Renderer* main_renderer;
+
+//Main camera
+extern Camera* camera;
 
 bool init();
 

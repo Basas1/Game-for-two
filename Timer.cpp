@@ -58,7 +58,7 @@ void Timer::toggle() {
 	}
 }
 
-Uint32 Timer::getTicks() {
+Uint32 Timer::get_ticks() {
 	//The actual timer time
 	Uint32 time = 0;
 

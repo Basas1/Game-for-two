@@ -14,8 +14,7 @@ int main(int argc, char* args[]) {
 	SDL_Surface* screen_surface = NULL;
 
 	//timer for fps capping
-	Timer capTimer;
-	int frameTicks;
+	Timer fps;
 
 	//Start up SDL and create window
 	if (!init()) {
@@ -24,7 +23,7 @@ int main(int argc, char* args[]) {
 	else {
 		//While application is running
 		while (state_id != STATE_EXIT) {
-			capTimer.start();
+			fps.start();
 
 			//Do state event handling
 			current_state->handle_events();
@@ -43,11 +42,10 @@ int main(int argc, char* args[]) {
 
 			SDL_RenderPresent(main_renderer);
 
-			frameTicks = capTimer.getTicks();
-			if (frameTicks < SCREEN_TICKS_PER_FRAME)
+			if ( fps.get_ticks() < SCREEN_TICKS_PER_FRAME)
 			{
 				//Wait remaining time
-				SDL_Delay(SCREEN_TICKS_PER_FRAME - frameTicks);
+				SDL_Delay(SCREEN_TICKS_PER_FRAME - fps.get_ticks());
 			}
 		}
 	}
@@ -55,6 +53,6 @@ int main(int argc, char* args[]) {
 	//Free resources and close SDL
 	close();
 
-	//system("pause");
+	system("pause");
 	return 0;
 }

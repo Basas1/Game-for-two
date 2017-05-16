@@ -8,10 +8,12 @@ extern SDL_Texture* background_texture;
 //Globally used textures
 extern SDL_Texture* map;
 extern SDL_Texture* player_texture;
+extern SDL_Texture* walk_texture;
+extern SDL_Texture* fireball_texture;
 
 
 //Map surface
-//extern SDL_Surface* map_surface;
+extern SDL_Surface* map_surface;
 
 //Globally used fonts
 //extern TTF_Font* font1;

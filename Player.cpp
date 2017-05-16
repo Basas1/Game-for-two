@@ -1,35 +1,31 @@
 #include "Player.h"
 #include "media.h"
+#include "init.h"
+#include "Fireball.h"
+
 
 
 Player::Player() : Movable_object() {
-	width = 86;
+	width = 40;
 	height = 128;
-	pos_x = 500;
-	pos_y = 900;
-	t = pos_x;
-
-	jump_vel = 15;
+	pos_x = 50;
+	pos_y = 1500;
+	jump_vel = 7;
 
 	texture = new Texture(player_texture);
-	texture->set_width(width);
-	texture->set_height(height);
+	//texture->set_width(width);
+	//texture->set_height(height);
+	walk_animation = new Animated_texture(walk_texture, 10);
+	//walk_animation->set_width(width);
+	//walk_animation->set_height(height);
+	walk_animation->set_clips();
 
 	collision_box = { pos_x, pos_y, width, height };
+	center_x = width / 2;
+	center_y = height / 2;
 
-
-	frame = 0;
-	flip = SDL_FLIP_NONE;
-
-	//Set standing sprite clip
-	for (int i = 0; i < 8; i++) {
-		gSpriteClips[i].x = i * width;
-		gSpriteClips[i].y = 0;
-		gSpriteClips[i].w = width;
-		gSpriteClips[i].h = height;
-	}
-
-
+	flip_left = false;
+	//ball = NULL;
 }
 
 
@@ -54,27 +50,26 @@ void Player::handle_events(SDL_Event& event) {
 	if (event.type == SDL_KEYDOWN) {
 		switch (event.key.keysym.sym) {
 		case SDLK_SPACE: vel_y = -jump_vel; break;
-		case SDLK_q: acceleration -= 0.5; break;
-		case SDLK_w: acceleration += 0.5; break;
-		//case SDLK_RIGHT: acc_x = acceleration; break;
-		//case SDLK_LEFT: acc_x = -acceleration; break;
+		case SDLK_r: pos_x = 0; pos_y = 0; break;
+		case SDLK_f: {
+			Fireball *ball;
+			ball = new Fireball(pos_x + width / 2, pos_y + height / 2, flip_left);
+			objects.insert(objects.end(), ball);
+			break;
 		}
-		int t;
-		t = acceleration;
-		printf("acc=%d\n", t);
+		}
+	}
+	if (event.type == SDL_KEYDOWN) {
+		switch (event.key.keysym.sym) {
+		case SDLK_w: pos_y -= 100; break;
+		case SDLK_a: pos_x -= 10; break;
+		case SDLK_s: pos_y += 10; break;
+		case SDLK_d: pos_x += 10; break;
+		}
 	}
 
-	////If a key was pressed
-	//if (event.type == SDL_KEYDOWN && event.key.repeat == 0) {
-	//	//Adjust the velocity
-	//	switch (event.key.keysym.sym) {
-	//	case SDLK_SPACE: vel_y = -jump_vel; break;
-	//	case SDLK_RIGHT: acc_x = acceleration; break;
-	//	case SDLK_LEFT: acc_x = -acceleration; break;
-	//	}
-	//}
+	//If a key was released
 	//else if (event.type == SDL_KEYUP && event.key.repeat == 0) {
-	//	//Adjust the velocity
 	//	switch (event.key.keysym.sym) {
 	//	case SDLK_RIGHT: acc_x = 0; break;
 	//	case SDLK_LEFT: acc_x = 0; break;
@@ -84,7 +79,7 @@ void Player::handle_events(SDL_Event& event) {
 }
 
 void Player::move() {
-	vel_x += acc_x;
+	//vel_x += acc_x;
 
 	//Calculate friction
 	//if (vel_x > 0) vel_x -= friction;
@@ -93,88 +88,72 @@ void Player::move() {
 	//if (-1 < vel_x && vel_x < 1) vel_x = 0;
 
 	//Speed limit
-	if (vel_x > max_vel_x) vel_x = max_vel_x;
-	if (vel_x < -max_vel_x) vel_x = -max_vel_x;
-
-	//Gravity effect
-	vel_y += gravity;
+	//if (vel_x > max_vel_x) vel_x = max_vel_x;
+	//if (vel_x < -max_vel_x) vel_x = -max_vel_x;
 
 	//Change player position
 	//pos_x += round(vel_x);
-	pos_y += vel_y;
+	//pos_y += vel_y;
 
-	//Check for level border
-	if (pos_x < 0) { pos_x = 0; vel_x = 0; }
-	if (pos_x > SCREEN_WIDTH - width) { pos_x = SCREEN_WIDTH - width; vel_x = 0; }
-	//if (pos_y < 0) { pos_y = 0; vel_y = 0; }
-	if (pos_y < 0) { pos_y = 0; }
-	if (pos_y > SCREEN_HEIGHT - height) { pos_y = SCREEN_HEIGHT - height; vel_y = 0; }
+	vel_x = acc_x;
+	Movable_object::move();
+
+
+	//if (ball != NULL) {
+	//	ball->move();
+	//}
+}
+
+void Player::logic() {
+	move();
 }
 
 void Player::render() {
+	//printf("x=%d; y=%d;\n", get_x(), get_y());
+	center_x = pos_x + width / 2;
+	center_y = pos_y + height / 2;
 
-	if (vel_x > 0) {
-		flip = SDL_FLIP_NONE;
+	if (acc_x > 0) {
+		flip_left = false;
+		walk_animation->set_flip(SDL_FLIP_NONE);
+		texture->set_flip(SDL_FLIP_NONE);
 	}
-	else if (vel_x < 0) {
-		flip = SDL_FLIP_HORIZONTAL;
-	}
-
-
-	int slow = 30;
-	int kadr = frame / slow;
-	
-	int t1, t2;
-	t1 = (frame - 1) / slow;
-	t2 = frame / slow;
-
-	//printf("t1=%d t2=%d (f=%d)\n", t1, t2, frame);
-	if (t1 != t2 || frame == 0) {
-		//printf("->t1=%d t2=%d (f=%d)\n", t1, t2, frame);
-		//pos_x += acc_x;
-	}
-
-	//acceleration = 5;
-	//pos_x += acc_x;
-	//pos_x += acc_x / slow;
-	t += acc_x / slow;
-	pos_x = t;
-
-
-
-	if (frame / slow > 7) {
-		currentClip = &gSpriteClips[7 - (kadr - 7)];
-	}
-	else {
-		currentClip = &gSpriteClips[kadr];
-	}
-
-	//Go to next frame
-	++frame;
-	if (frame / slow >= 8) {
-		frame = 0;
+	else if (acc_x < 0) {
+		flip_left = true;
+		walk_animation->set_flip(SDL_FLIP_HORIZONTAL);
+		texture->set_flip(SDL_FLIP_HORIZONTAL);
 	}
 
 	if (acc_x != 0) {
-		texture->render(pos_x, pos_y, currentClip, 0.0, NULL, flip);
+		walk_animation->render(center_x, center_y);
+		walk_animation->next_frame();
 	}
 	else {
-		currentClip = &gSpriteClips[7];
-		texture->render(pos_x, pos_y, currentClip, 0.0, NULL, flip);
+		texture->render(center_x, center_y);
+		walk_animation->set_frame(0);
 	}
 
+	//if (ball != NULL) {
+	//	ball->render();
+	//}
 
-
-
-
-	//texture->render(pos_x, pos_y);
 }
 
 Player::~Player() {
 	delete texture;
+	delete walk_animation;
 }
 
 int Player::round(float f) {
 	return (f > 0.0) ? (f + 0.5) : (f - 0.5);
 }
 
+int Player::get_x() {
+	center_x = pos_x + width / 2;
+	return center_x;
+}
+
+int Player::get_y() {
+	center_y = pos_y + height / 2;
+	return center_y;
+}
