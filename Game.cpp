@@ -9,6 +9,7 @@
 Game::Game() {
 	//Load the background
 	background = map;
+	//Create player object
 	player = new Player;
 
 	objects.reserve(10);
@@ -49,6 +50,12 @@ void Game::logic() {
 		}
 	}
 
+	//Delete not existing objects from vector
+	for (int i = objects.size() - 1; i > 0; i--) {
+		if (!objects[i]->is_exist()) {
+			objects.erase(objects.begin() + i);
+		}
+	}
 
 	camera->follow(player->get_x(), player->get_y());
 }
