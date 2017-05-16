@@ -7,6 +7,11 @@
 #include "tools.h"
 #include "media.h"
 #include "camera.h"
+#include <vector>
+#include "Game_object.h"
+
+
+extern std::vector<Game_object*> objects;
 
 
 //Screen dimension constants

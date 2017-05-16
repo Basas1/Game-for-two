@@ -9,6 +9,9 @@
 #include "Menu.h"
 #include "Game.h"
 
+
+std::vector<Game_object*> objects;
+
 int state_id = STATE_NULL;
 int next_state = STATE_NULL;
 Programm_state* current_state = NULL;
@@ -85,6 +88,8 @@ bool init() {
 	//Set start programm state
 	state_id = STATE_MENU;
 	current_state = new Game();
+
+
 
 	return success;
 }

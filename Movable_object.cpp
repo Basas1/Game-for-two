@@ -3,7 +3,7 @@
 #include "tools.h"
 
 
-Movable_object::Movable_object() {
+Movable_object::Movable_object() : Game_object() {
 	pos_x = 0;
 	pos_y = 0;
 
@@ -164,3 +164,5 @@ bool Movable_object::check_collision() {
 	return false;
 }
 
+void Movable_object::handle_events(SDL_Event& event) {
+}

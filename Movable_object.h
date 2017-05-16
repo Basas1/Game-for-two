@@ -1,14 +1,17 @@
 #pragma once
 #include <SDL.h>
 #include "Texture.h"
+#include "Game_object.h"
 
 
-class Movable_object {
+class Movable_object : public Game_object {
 public:
 	Movable_object();
 
 	//Move method
 	void move();
+
+	void handle_events(SDL_Event& event);
 
 	//Render object
 	virtual void render() = 0;

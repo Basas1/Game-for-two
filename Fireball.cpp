@@ -30,8 +30,14 @@ Fireball::Fireball(int x, int y, bool left) : Movable_object() {
 void Fireball::move() {
 	if (check_map_collision_all()) {
 		exist = false;
+		delete texture;
+		texture = NULL;
 	}
 	if (exist) Movable_object::move();
+}
+
+void Fireball::logic() {
+	move();
 }
 
 void Fireball::render() {

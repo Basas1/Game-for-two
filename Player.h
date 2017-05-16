@@ -1,7 +1,7 @@
 #pragma once
 #include "Movable_object.h"
 #include "Animated_texture.h"
-#include "Fireball.h"
+//#include "Fireball.h"
 
 
 class Player : public Movable_object {
@@ -12,11 +12,13 @@ public:
 	//Event handler
 	void handle_events(SDL_Event& event);
 
-	//Move method
-	void move();
-
 	//Render object
 	void render();
+
+	void logic();
+
+	//Move method
+	void move();
 
 	int get_x();
 	int get_y();
@@ -27,7 +29,7 @@ private:
 	int jump_vel;
 
 	bool flip_left;
-	Fireball* ball;
+	//Fireball* ball;
 
 	//Object's texture
 	Animated_texture* walk_animation;

@@ -10,6 +10,9 @@ Game::Game() {
 	//Load the background
 	background = map;
 	player = new Player;
+
+	objects.reserve(10);
+	objects.insert(objects.end(), player);
 }
 
 
@@ -30,13 +33,23 @@ void Game::handle_events() {
 			set_next_state(STATE_MENU);
 		}
 
-		player->handle_events(event);
+		for (int i = 0; i < objects.size(); i++) {
+			if (objects[i]->is_exist()) {
+			objects[i]->handle_events(event);
+			}
+		}
 
 	}
 }
 
 void Game::logic() {
-	player->move();
+	for (int i = 0; i < objects.size(); i++) {
+		if (objects[i]->is_exist()) {
+			objects[i]->logic();
+		}
+	}
+
+
 	camera->follow(player->get_x(), player->get_y());
 }
 
@@ -48,6 +61,12 @@ void Game::render() {
 	//Render background
 	SDL_RenderCopyEx(main_renderer, background, camera->get_rect(), NULL, 0.0, NULL, SDL_FLIP_NONE);
 
-	player->render();
+	for (int i = 0; i < objects.size(); i++) {
+		if (objects[i]->is_exist()) {
+			objects[i]->render();
+		}
+	}
+
+	printf("object count: %d;\n", objects.size());
 
 }

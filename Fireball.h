@@ -8,11 +8,10 @@ public:
 	//Move method
 	void move();
 
+	void logic();
+
 	//Render object
 	void render();
-
-private:
-	bool exist;
 
 };
 

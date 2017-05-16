@@ -1,5 +1,8 @@
 #include "Player.h"
 #include "media.h"
+#include "init.h"
+#include "Fireball.h"
+
 
 
 Player::Player() : Movable_object() {
@@ -22,7 +25,7 @@ Player::Player() : Movable_object() {
 	center_y = height / 2;
 
 	flip_left = false;
-	ball = NULL;
+	//ball = NULL;
 }
 
 
@@ -43,12 +46,15 @@ void Player::handle_events(SDL_Event& event) {
 	acc_x = a_x;
 
 	//If a key was pressed
-	if (event.type == SDL_KEYDOWN && event.key.repeat == 0) {
+	//if (event.type == SDL_KEYDOWN && event.key.repeat == 0) {
+	if (event.type == SDL_KEYDOWN) {
 		switch (event.key.keysym.sym) {
 		case SDLK_SPACE: vel_y = -jump_vel; break;
 		case SDLK_r: pos_x = 0; pos_y = 0; break;
 		case SDLK_f: {
+			Fireball *ball;
 			ball = new Fireball(pos_x + width / 2, pos_y + height / 2, flip_left);
+			objects.insert(objects.end(), ball);
 			break;
 		}
 		}
@@ -93,9 +99,13 @@ void Player::move() {
 	Movable_object::move();
 
 
-	if (ball != NULL) {
-		ball->move();
-	}
+	//if (ball != NULL) {
+	//	ball->move();
+	//}
+}
+
+void Player::logic() {
+	move();
 }
 
 void Player::render() {
@@ -123,9 +133,9 @@ void Player::render() {
 		walk_animation->set_frame(0);
 	}
 
-	if (ball != NULL) {
-		ball->render();
-	}
+	//if (ball != NULL) {
+	//	ball->render();
+	//}
 
 }
 
