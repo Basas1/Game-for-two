@@ -48,7 +48,7 @@ bool Movable_object::check_map_collision_under() {
 
 //Check upper of object collision box for collision with map
 bool Movable_object::check_map_collision_upper() {
-	for (int i = pos_x; i <= pos_x + width; i ++) {
+	for (int i = pos_x; i <= pos_x + width; i++) {
 		if (check_map_collision(i, pos_y - 1)) return true;
 	}
 	return false;
@@ -65,7 +65,7 @@ bool Movable_object::check_map_collision_all() {
 
 //Check left side of object collision box for collision with map
 bool Movable_object::check_map_collision_left() {
-	for (int i = pos_y; i <= pos_y + height - can_rise; i += height / 20) {
+	for (int i = pos_y; i <= pos_y + height - can_rise; i ++) {
 		if (check_map_collision(pos_x - 1, i)) return true;
 	}
 	for (int i = pos_y + height - can_rise; i <= pos_y + height - 1; i++) {
@@ -81,7 +81,7 @@ bool Movable_object::check_map_collision_left() {
 
 //Check right side of object collision box for collision with map
 bool Movable_object::check_map_collision_right() {
-	for (int i = pos_y; i <= pos_y + height - can_rise; i += height / 20) {
+	for (int i = pos_y; i <= pos_y + height - can_rise; i ++) {
 		if (check_map_collision(pos_x + width + 1, i)) return true;
 	}
 	for (int i = pos_y + height - can_rise; i <= pos_y + height - 1; i++) {
@@ -118,7 +118,7 @@ void Movable_object::move() {
 	}
 	else if (vel_y < 0) {
 		if (!check_map_collision_upper()) {
-			double old_y = pos_y; 
+			double old_y = pos_y;
 			pos_y += vel_y - ceil(vel_y);
 			for (int i = 0; i > ceil(vel_y); i--) {
 				if (check_map_collision_upper()) {
@@ -132,7 +132,6 @@ void Movable_object::move() {
 			vel_y = 0;
 		}
 	}
-
 
 	//Right movement
 	int old_x = pos_x;
