@@ -1,8 +1,9 @@
 #pragma once
 #include "Movable_object.h"
 #include "Animated_texture.h"
-//#include "Fireball.h"
+#include <stack>
 
+class Player_states;
 
 class Player : public Movable_object {
 public:
@@ -12,28 +13,31 @@ public:
 	//Event handler
 	void handle_events(SDL_Event& event);
 
-	//Render object
-	void render();
-
 	void logic();
 
-	//Move method
-	void move();
+	void render();
 
 	int get_x();
 	int get_y();
-private:
+
+	//Player state
+	Player_states* state;
+
 	int round(float f);
 
 	//Jump speed
 	int jump_vel;
 
-	bool flip_left;
+	bool flip_right;
 
 	//Object's texture
-	Animated_texture* walk_animation;
+	Animated_texture* stand_animation;
+	Animated_texture* run_animation;
+	Animated_texture* jump_animation;
 
 	//point that camera follows
 	int center_x, center_y;
-};
 
+	std::stack<Player_states*> state_stack;
+
+};

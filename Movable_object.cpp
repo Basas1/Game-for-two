@@ -38,6 +38,14 @@ bool Movable_object::check_map_collision_bottom() {
 	return false;
 }
 
+//Check bottom of object collision box for collision with map
+bool Movable_object::check_map_collision_under() {
+	for (int i = pos_y+height; i <= pos_y + height + can_rise; i++) {
+		if (check_map_collision(pos_x + width/2, i)) return true;
+	}
+	return false;
+}
+
 //Check upper of object collision box for collision with map
 bool Movable_object::check_map_collision_upper() {
 	for (int i = pos_x; i <= pos_x + width; i ++) {
@@ -92,34 +100,39 @@ void Movable_object::move() {
 	//Gravity effect
 	vel_y += gravity;
 	if (vel_y > 0) {
-		int old_y = pos_y;
-		for (pos_y; pos_y <= old_y + vel_y; pos_y++) {
-			if (check_map_collision_bottom()) {
-				vel_y = 0;
-				break;
+		if (!check_map_collision_bottom()) {
+			double old_y = pos_y;
+			pos_y += vel_y - floor(vel_y);
+			for (int i = 0; i < floor(vel_y); i++) {
+				if (check_map_collision_bottom()) {
+					vel_y = 0;
+					break;
+				}
+				pos_y++;
 			}
+
 		}
-		////Expiremental solution for map edge cases
-		//if ((check_map_collision(pos_x - 1, pos_y + height) || check_map_collision(pos_x - 1, pos_y + height - 1)) &&
-		//	!check_map_collision(pos_x + width / 2, pos_y + height) && !check_map_collision(pos_x + width, pos_y + height)) {
-		//	pos_y+= acceleration;
-		//	pos_x+= acceleration; 
-		//}
-		//if ((check_map_collision(pos_x + width + 1, pos_y + height) || check_map_collision(pos_x + width + 1, pos_y + height - 1)) &&
-		//	!check_map_collision(pos_x + width / 2, pos_y + height) && !check_map_collision(pos_x, pos_y + height)) {
-		//	pos_y += acceleration;
-		//	pos_x -= acceleration;
-		//}
+		else {
+			vel_y = 0;
+		}
 	}
 	else if (vel_y < 0) {
-		int old_y = pos_y;
-		for (pos_y; pos_y >= old_y + vel_y; pos_y--) {
-			if (check_map_collision_upper()) {
-				vel_y = 0;
-				break;
+		if (!check_map_collision_upper()) {
+			double old_y = pos_y; 
+			pos_y += vel_y - ceil(vel_y);
+			for (int i = 0; i > ceil(vel_y); i--) {
+				if (check_map_collision_upper()) {
+					vel_y = 0;
+					break;
+				}
+				pos_y--;
 			}
 		}
+		else {
+			vel_y = 0;
+		}
 	}
+
 
 	//Right movement
 	int old_x = pos_x;
@@ -161,15 +174,6 @@ void Movable_object::move() {
 	}
 }
 
-//Return object's coordinate x
-int Movable_object::get_x() {
-	return pos_x;
-}
-
-//Return object's coordinate y
-int Movable_object::get_y() {
-	return pos_y;
-}
 
 //Check for collision with other objects
 bool Movable_object::check_collision() {

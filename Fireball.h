@@ -14,7 +14,7 @@ public:
 
 	//Render object
 	void render();
-private:
+
 	Animated_texture* fireball_animation;
 
 };

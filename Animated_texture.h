@@ -7,6 +7,8 @@ public:
 
 	//Prepare clips from texture
 	void set_clips();
+	//Set specific order of frames in animation
+	void set_frame_order(int order[], int count);
 	//Set animation frame to next if enough ticks passed
 	void next_frame();
 	//Set animation frame to listed
@@ -18,9 +20,10 @@ public:
 	int get_frame_number();
 
 	//Render texture at given point
-	void render(int x, int y, double angle = 0.0, SDL_Point* center = NULL);
+	void render(int x, int y, bool flip_right = true, double angle = 0.0, SDL_Point* center = NULL);
 
 protected:
+	int frame_order[50];
 	SDL_Rect* sprite_clips;
 	SDL_Rect* current_clip;
 	int current_frame;
