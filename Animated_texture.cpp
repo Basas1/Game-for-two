@@ -3,6 +3,9 @@
 
 
 Animated_texture::Animated_texture(SDL_Texture* original_texture, int frames) : Texture(original_texture) {
+	all_frame_width = width;
+	all_frame_height = height;
+
 
 	sprite_clips = new SDL_Rect[frames];
 	total_frames = frames;

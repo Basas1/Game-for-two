@@ -10,7 +10,7 @@ Movable_object::Movable_object() : Game_object() {
 	vel_x = 0;
 	vel_y = 0;
 
-	max_vel_x = 5;
+	max_vel_x = 2;
 	max_vel_y = 20;
 
 	acc_x = 0;
@@ -97,6 +97,14 @@ bool Movable_object::check_map_collision_right() {
 
 //Move object according to it's velocity
 void Movable_object::move() {
+	//Turn object to the side of movement
+	if (acc_x > 0) {
+		flip_right = true;
+	}
+	else if (acc_x < 0) {
+		flip_right = false;
+	}
+
 	//Gravity effect
 	vel_y += gravity;
 	if (vel_y > 0) {
@@ -114,6 +122,17 @@ void Movable_object::move() {
 		}
 		else {
 			vel_y = 0;
+		}
+		//Expiremental solution for map edge cases
+		if ((check_map_collision(pos_x - 1, pos_y + height) || check_map_collision(pos_x - 1, pos_y + height - 1)) &&
+			!check_map_collision(pos_x + width / 2, pos_y + height) && !check_map_collision(pos_x + width, pos_y + height)) {
+			pos_y+= acceleration;
+			pos_x+= acceleration/2; 
+		}
+		if ((check_map_collision(pos_x + width + 1, pos_y + height) || check_map_collision(pos_x + width + 1, pos_y + height - 1)) &&
+			!check_map_collision(pos_x + width / 2, pos_y + height) && !check_map_collision(pos_x, pos_y + height)) {
+			pos_y += acceleration;
+			pos_x -= acceleration/2;
 		}
 	}
 	else if (vel_y < 0) {

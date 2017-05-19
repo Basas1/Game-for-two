@@ -13,7 +13,7 @@ public:
 	};
 	void change_state(Player& p, int state);
 	virtual ~Player_states() {};
-	void handle_events(Player& p, SDL_Event& event);
+	virtual void handle_events(Player& p, SDL_Event& event) {};
 	virtual void logic(Player& p) {};
 	virtual void render(Player& p) {};
 };
@@ -40,6 +40,10 @@ public:
 
 class Jump : public Player_states {
 public:
+	Jump();
+	void handle_events(Player& p, SDL_Event& event);
 	void logic(Player& p);
 	void render(Player& p);
+private:
+	char jump_count;
 };

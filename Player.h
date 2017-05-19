@@ -28,8 +28,6 @@ public:
 	//Jump speed
 	int jump_vel;
 
-	bool flip_right;
-
 	//Object's texture
 	Animated_texture* stand_animation;
 	Animated_texture* run_animation;

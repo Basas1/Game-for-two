@@ -23,6 +23,8 @@ public:
 	void render(int x, int y, bool flip_right = true, double angle = 0.0, SDL_Point* center = NULL);
 
 protected:
+	int all_frame_width;
+	int all_frame_height;
 	int frame_order[50];
 	SDL_Rect* sprite_clips;
 	SDL_Rect* current_clip;

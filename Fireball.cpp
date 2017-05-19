@@ -9,14 +9,14 @@ Fireball::Fireball(int x, int y, bool right) : Movable_object() {
 	pos_x = x;
 	pos_y = y;
 	can_rise = 0;
-	gravity = 0.01;
-	vel_y = -1; 
+	gravity = 0.005;
+	vel_y = -0.5; 
 	exist = true;
 	if (right) {
-		vel_x = acceleration * 2;
+		vel_x = acceleration * 3;
 	}
 	else {
-		vel_x = -acceleration * 2;
+		vel_x = -acceleration * 3;
 	}
 
 	fireball_animation = new Animated_texture(fireball_texture, 3);

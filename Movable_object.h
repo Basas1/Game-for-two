@@ -66,6 +66,9 @@ public:
 
 	int can_rise;
 
+	//True if object turn to rigrht side
+	bool flip_right;
+
 	//Object's texture
 	Texture* texture;
 
