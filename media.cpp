@@ -13,6 +13,7 @@ SDL_Texture* player_texture = NULL;
 SDL_Texture* player_stand_texture = NULL;
 SDL_Texture* player_run_texture = NULL;
 SDL_Texture* player_jump_texture = NULL;
+SDL_Texture* player_hit_texture = NULL;
 SDL_Texture* fireball_texture = NULL;
 
 
@@ -64,6 +65,12 @@ bool load_media() {
 		printf("Failed to load player texture!\n");
 		success = false;
 	}
+	player_hit_texture = load_texture("Images/stab.gif");
+	if (player_hit_texture == NULL) {
+		printf("Failed to load player texture!\n");
+		success = false;
+	}
+
 
 	fireball_texture = load_texture("Images/fireball.gif");
 	if (fireball_texture == NULL) {

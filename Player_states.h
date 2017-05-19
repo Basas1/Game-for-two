@@ -10,6 +10,7 @@ public:
 		RUN_STATE,
 		FIRE_STATE,
 		JUMP_STATE,
+		HIT1_STATE,
 	};
 	void change_state(Player& p, int state);
 	virtual ~Player_states() {};
@@ -46,4 +47,9 @@ public:
 	void render(Player& p);
 private:
 	char jump_count;
+};
+
+class Hit1 : public Player_states {
+	void logic(Player& p);
+	void render(Player& p);
 };

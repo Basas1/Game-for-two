@@ -28,10 +28,11 @@ public:
 	//Jump speed
 	int jump_vel;
 
-	//Object's texture
+	//Object's textures
 	Animated_texture* stand_animation;
 	Animated_texture* run_animation;
 	Animated_texture* jump_animation;
+	Animated_texture* hit_animation;
 
 	//point that camera follows
 	int center_x, center_y;

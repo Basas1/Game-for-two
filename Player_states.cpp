@@ -19,6 +19,11 @@ void Player_states::change_state(Player& p, int state) {
 		jump_state = new Jump;
 		p.state_stack.push(jump_state);
 		break;
+	case HIT1_STATE:
+		Hit1* hit1_state;
+		hit1_state = new Hit1;
+		p.state_stack.push(hit1_state);
+		break;
 	case FIRE_STATE:
 		break;
 	}
@@ -67,6 +72,10 @@ void On_ground::handle_events(Player& p, SDL_Event& event) {
 			Fireball *ball;
 			ball = new Fireball(p.pos_x + p.width / 2, p.pos_y + 10, p.flip_right);
 			objects.insert(objects.end(), ball);
+			break;
+		}
+		case SDLK_e: {
+			change_state(p, HIT1_STATE);
 			break;
 		}
 		//case SDLK_h: {
@@ -165,6 +174,10 @@ void Jump::handle_events(Player& p, SDL_Event& event) {
 			objects.insert(objects.end(), ball);
 			break;
 		}
+		case SDLK_e: {
+			change_state(p, HIT1_STATE);
+			break;
+		}
 
 		}
 	}
@@ -174,5 +187,23 @@ void Jump::render(Player& p) {
 	p.jump_animation->render(p.center_x, p.center_y, p.flip_right);
 	p.jump_animation->next_frame();
 }
+
+
+void Hit1::logic(Player& p) {
+	if (p.hit_animation->get_replay_count() > 0) {
+		p.hit_animation->reset();
+		p.state_stack.pop();
+	}
+	p.vel_x = 0;
+	p.move();
+}
+
+
+void Hit1::render(Player& p) {
+	p.hit_animation->render(p.center_x, p.center_y, p.flip_right);
+	p.hit_animation->next_frame();
+}
+
+
 
 

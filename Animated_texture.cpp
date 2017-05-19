@@ -6,10 +6,10 @@ Animated_texture::Animated_texture(SDL_Texture* original_texture, int frames) : 
 	all_frame_width = width;
 	all_frame_height = height;
 
-
 	sprite_clips = new SDL_Rect[frames];
 	total_frames = frames;
 	current_frame = 0;
+	replay_counter = 0;
 	ticks_per_frame = 15;
 	ticks_counter = ticks_per_frame;
 	width /= frames;
@@ -46,12 +46,14 @@ void Animated_texture::set_frame_order(int order[], int count) {
 
 void Animated_texture::set_ticks_per_frame(int ticks) {
 	ticks_per_frame = ticks;
+	ticks_counter = ticks_per_frame;
 }
 
 void Animated_texture::next_frame() {
 	if (ticks_counter <= 0) {
 		if (frame_order[current_frame + 1] == -1) {
 			current_frame = 0;
+			replay_counter++;
 		}
 		else {
 			current_frame++;
@@ -75,6 +77,11 @@ int Animated_texture::get_frame_number() {
 	return current_frame;
 }
 
+int Animated_texture::get_replay_count() {
+	return replay_counter;
+}
+
+
 void Animated_texture::render(int x, int y, bool flip_right, double angle, SDL_Point* center) {
 	Texture::render(x, y, flip_right, current_clip, angle, center);
 }
@@ -83,4 +90,10 @@ void Animated_texture::render(int x, int y, bool flip_right, double angle, SDL_P
 Animated_texture::~Animated_texture() {
 	delete sprite_clips;
 	sprite_clips = NULL;
+}
+
+void Animated_texture::reset() {
+	current_frame = 0;
+	replay_counter = 0;
+	ticks_counter = ticks_per_frame;
 }

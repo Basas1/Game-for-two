@@ -11,6 +11,7 @@ Game::Game() {
 	background = map;
 	//Create player object
 	player = new Player;
+	player2 = new Player;
 
 	objects.reserve(10);
 	objects.insert(objects.end(), player);

@@ -14,13 +14,16 @@ Player::Player() : Movable_object() {
 	flip_right = true;
 
 	stand_animation = new Animated_texture(player_stand_texture, 3);
-	int order[] = { 0, 1, 2, 1 };
-	stand_animation->set_frame_order(order, sizeof(order) / sizeof(int));
+	int order1[] = { 0, 1, 2, 1 };
+	stand_animation->set_frame_order(order1, sizeof(order1) / sizeof(int));
 	stand_animation->set_ticks_per_frame(25);
 	run_animation = new Animated_texture(player_run_texture, 10);
 	jump_animation = new Animated_texture(player_jump_texture, 3);
-	jump_animation->set_frame_order(order, sizeof(order) / sizeof(int));
+	jump_animation->set_frame_order(order1, sizeof(order1) / sizeof(int));
 	jump_animation->set_ticks_per_frame(25);
+	hit_animation = new Animated_texture(player_hit_texture, 4);
+	int order2[] = { 0, 1, 2, 3, 1 };
+	hit_animation->set_frame_order(order2, sizeof(order2) / sizeof(int));
 
 	//stand_animation = new Animated_texture(player_stand_texture, 12);
 	//run_animation = new Animated_texture(player_run_texture, 4);

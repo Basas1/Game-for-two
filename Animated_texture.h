@@ -15,12 +15,15 @@ public:
 	void set_frame(int frame_number);
 	//Set ticks per one frame change to listed
 	void set_ticks_per_frame(int ticks_count);
-
 	//Return number of current animation frame
 	int get_frame_number();
-
+	//Return number of replays
+	int get_replay_count();
+	//Reset counters
+	void reset();
 	//Render texture at given point
 	void render(int x, int y, bool flip_right = true, double angle = 0.0, SDL_Point* center = NULL);
+
 
 protected:
 	int all_frame_width;
@@ -32,5 +35,6 @@ protected:
 	int total_frames;
 	int ticks_per_frame;
 	int ticks_counter;
+	int replay_counter;
 };
 

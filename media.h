@@ -11,6 +11,7 @@ extern SDL_Texture* player_texture;
 extern SDL_Texture* player_stand_texture;
 extern SDL_Texture* player_run_texture;
 extern SDL_Texture* player_jump_texture;
+extern SDL_Texture* player_hit_texture;
 extern SDL_Texture* fireball_texture;
 
 
