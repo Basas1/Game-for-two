@@ -70,7 +70,7 @@ void On_ground::handle_events(Player& p, SDL_Event& event) {
 		case SDLK_j: p.pos_x += 10; break;
 		case SDLK_w : {
 			Fireball *ball;
-			ball = new Fireball(p.pos_x + p.width / 2, p.pos_y + 10, p.flip_right);
+			ball = new Fireball(p.pos_x + p.width / 2, p.pos_y + p.height / 3, p.flip_right);
 			objects.insert(objects.end(), ball);
 			break;
 		}
@@ -107,7 +107,7 @@ void Stand::logic(Player& p) {
 }
 
 void Stand::render(Player& p) {
-	p.stand_animation->render(p.center_x, p.center_y, p.flip_right);
+	p.stand_animation->render(p.pos_x, p.pos_y, p.flip_right);
 	p.stand_animation->next_frame();
 }
 
@@ -120,7 +120,7 @@ void Run::logic(Player& p) {
 }
 
 void Run::render(Player& p) {
-	p.run_animation->render(p.center_x, p.center_y, p.flip_right);
+	p.run_animation->render(p.pos_x, p.pos_y, p.flip_right);
 	p.run_animation->next_frame();
 }
 
@@ -170,7 +170,7 @@ void Jump::handle_events(Player& p, SDL_Event& event) {
 		case SDLK_r: p.pos_x = 0; p.pos_y = 0; break;
 		case SDLK_w: {
 			Fireball *ball;
-			ball = new Fireball(p.pos_x + p.width / 2, p.pos_y + 10, p.flip_right);
+			ball = new Fireball(p.pos_x + p.width / 2, p.pos_y + p.height / 3, p.flip_right);
 			objects.insert(objects.end(), ball);
 			break;
 		}
@@ -184,7 +184,7 @@ void Jump::handle_events(Player& p, SDL_Event& event) {
 }
 
 void Jump::render(Player& p) {
-	p.jump_animation->render(p.center_x, p.center_y, p.flip_right);
+	p.jump_animation->render(p.pos_x, p.pos_y, p.flip_right);
 	p.jump_animation->next_frame();
 }
 
@@ -200,7 +200,7 @@ void Hit1::logic(Player& p) {
 
 
 void Hit1::render(Player& p) {
-	p.hit_animation->render(p.center_x, p.center_y, p.flip_right);
+	p.hit_animation->render(p.pos_x, p.pos_y, p.flip_right);
 	p.hit_animation->next_frame();
 }
 

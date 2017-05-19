@@ -3,6 +3,7 @@
 #include "Game_object.h"
 #include <SDL.h>
 #include "Player.h"
+#include "Enemy.h"
 
 
 class Game : public Programm_state {
@@ -16,6 +17,6 @@ public:
 private:
 	SDL_Texture* background;
 	Player* player;
-	Player* player2;
+	Enemy* enemy;
 };
 

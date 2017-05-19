@@ -4,7 +4,6 @@
 
 class Player_states {
 public:
-
 	enum states {
 		STAND_STATE,
 		RUN_STATE,
@@ -53,3 +52,4 @@ class Hit1 : public Player_states {
 	void logic(Player& p);
 	void render(Player& p);
 };
+

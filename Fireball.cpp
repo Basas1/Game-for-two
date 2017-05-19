@@ -4,8 +4,8 @@
 
 
 Fireball::Fireball(int x, int y, bool right) : Movable_object() {
-	width = 48;
-	height = 48;
+	width = 50;
+	height = 50;
 	pos_x = x;
 	pos_y = y;
 	can_rise = 0;
@@ -41,7 +41,7 @@ void Fireball::logic() {
 }
 
 void Fireball::render() {
-	fireball_animation->render(pos_x + 24, pos_y + 24);
+	fireball_animation->render(pos_x, pos_y);
 	fireball_animation->next_frame();
 }
 

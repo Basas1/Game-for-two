@@ -14,6 +14,11 @@ extern SDL_Texture* player_jump_texture;
 extern SDL_Texture* player_hit_texture;
 extern SDL_Texture* fireball_texture;
 
+extern SDL_Texture* enemy_stand_texture;
+extern SDL_Texture* enemy_run_texture;
+extern SDL_Texture* enemy_hit12_texture;
+
+
 
 //Map surface
 extern SDL_Surface* map_surface;

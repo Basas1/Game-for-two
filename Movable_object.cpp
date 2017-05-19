@@ -197,6 +197,3 @@ void Movable_object::move() {
 bool Movable_object::check_collision() {
 	return false;
 }
-
-void Movable_object::handle_events(SDL_Event& event) {
-}

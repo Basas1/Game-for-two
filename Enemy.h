@@ -3,28 +3,20 @@
 #include "Animated_texture.h"
 #include <stack>
 
-class Player_states;
+class Enemy_states;
 
-class Player : public Movable_object {
+class Enemy : public Movable_object {
 public:
-	Player();
-	~Player();
-
-	//Event handler
-	void handle_events(SDL_Event& event);
-
+	Enemy();
+	~Enemy();
+	void handle_events(SDL_Event& event) {};
 	void logic();
-
 	void render();
 
 	int get_x();
 	int get_y();
 
-	//Player state
-	Player_states* state;
-
-	//Jump speed
-	int jump_vel;
+	Enemy_states* state;
 
 	//Object's textures
 	Animated_texture* stand_animation;
@@ -32,9 +24,7 @@ public:
 	Animated_texture* jump_animation;
 	Animated_texture* hit_animation;
 
-	//point that camera follows
-	int center_x, center_y;
-
-	std::stack<Player_states*> state_stack;
+	std::stack<Enemy_states*> state_stack;
 
 };
+

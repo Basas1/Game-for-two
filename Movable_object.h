@@ -8,16 +8,12 @@ class Movable_object : public Game_object {
 public:
 	Movable_object();
 
+	virtual ~Movable_object() {};
+
+	void handle_events(SDL_Event& event) {};
+
 	//Move method
 	void move();
-
-	//Event handler
-	void handle_events(SDL_Event& event);
-
-	//Render object
-	virtual void render() = 0;
-
-	virtual ~Movable_object() {};
 
 	//Check for collision with other objects
 	bool check_collision();

@@ -1,8 +1,6 @@
 #include "Game.h"
 #include "media.h"
 #include "init.h"
-#include "Player.h"
-
 
 
 
@@ -11,10 +9,11 @@ Game::Game() {
 	background = map;
 	//Create player object
 	player = new Player;
-	player2 = new Player;
+	enemy = new Enemy;
 
 	objects.reserve(10);
 	objects.insert(objects.end(), player);
+	objects.insert(objects.end(), enemy);
 }
 
 
@@ -68,7 +67,8 @@ void Game::render() {
 	//Render background
 	SDL_RenderCopyEx(main_renderer, background, camera->get_rect(), NULL, 0.0, NULL, SDL_FLIP_NONE);
 
-	for (int i = 0; i < objects.size(); i++) {
+	//for (int i = 0; i < objects.size(); i++) {
+	for (int i = objects.size()-1; i >= 0; i--) {
 		if (objects[i]->is_exist()) {
 			objects[i]->render();
 		}

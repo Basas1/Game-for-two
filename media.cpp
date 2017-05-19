@@ -9,12 +9,18 @@ SDL_Texture* background_texture = NULL;
 
 //Globally used textures
 SDL_Texture* map = NULL;
+//Player textures
 SDL_Texture* player_texture = NULL;
 SDL_Texture* player_stand_texture = NULL;
 SDL_Texture* player_run_texture = NULL;
 SDL_Texture* player_jump_texture = NULL;
 SDL_Texture* player_hit_texture = NULL;
 SDL_Texture* fireball_texture = NULL;
+//Enemy1 textures
+SDL_Texture* enemy_stand_texture = NULL;
+SDL_Texture* enemy_run_texture = NULL;
+SDL_Texture* enemy_hit12_texture = NULL;
+
 
 
 //Map surface
@@ -44,7 +50,7 @@ bool load_media() {
 		printf("Failed to load map texture!\n");
 		success = false;
 	}
-	//player_texture = load_texture("Images/player.png");
+	//PLAYER TEXTURES:
 	player_texture = load_texture("Images/stand.gif");
 	if (player_texture == NULL) {
 		printf("Failed to load player texture!\n");
@@ -70,6 +76,23 @@ bool load_media() {
 		printf("Failed to load player texture!\n");
 		success = false;
 	}
+	//ENEMY1 TEXTURES
+	//enemy_stand_texture = load_texture("Images/stand12f12.png");
+	//if (enemy_stand_texture == NULL) {
+	//	printf("Failed to load player texture!\n");
+	//	success = false;
+	//}
+	//enemy_run_texture = load_texture("Images/runf.png");
+	//if (enemy_run_texture == NULL) {
+	//	printf("Failed to load player texture!\n");
+	//	success = false;
+	//}
+	//enemy_hit12_texture = load_texture("Images/attack12f35.png");
+	//if (enemy_hit12_texture == NULL) {
+	//	printf("Failed to load player texture!\n");
+	//	success = false;
+	//}
+
 
 
 	fireball_texture = load_texture("Images/fireball.gif");
@@ -95,8 +118,7 @@ bool load_media() {
 	
 	//Load map surface
 	map_surface = IMG_Load("Images/map_box.bmp");
-	//map_surface = IMG_Load("Images/testmap.bmp");
-
+	
 	return success;
 }
 
