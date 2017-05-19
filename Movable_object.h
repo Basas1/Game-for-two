@@ -19,11 +19,6 @@ public:
 
 	virtual ~Movable_object() {};
 
-	//Return object's coordinate
-	int get_x();
-	int get_y();
-
-protected:
 	//Check for collision with other objects
 	bool check_collision();
 
@@ -32,6 +27,8 @@ protected:
 
 	//Check bottom of object collision box for collision with map
 	bool check_map_collision_bottom();
+
+	bool check_map_collision_under();
 
 	//Check upper of object collision box for collision with map
 	bool check_map_collision_upper();
@@ -44,7 +41,7 @@ protected:
 	bool check_map_collision_all();
 
 	//Object's coordinates
-	int pos_x, pos_y;
+	double pos_x, pos_y;
 
 	//Object size
 	int width, height;
@@ -68,6 +65,9 @@ protected:
 	double friction;
 
 	int can_rise;
+
+	//True if object turn to rigrht side
+	bool flip_right;
 
 	//Object's texture
 	Texture* texture;

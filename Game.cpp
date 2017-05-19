@@ -21,8 +21,8 @@ Game::~Game() {
 }
 
 void Game::handle_events() {
-	//While there's events to handle
-	while (SDL_PollEvent(&event)) {
+	//Handle events
+	SDL_PollEvent(&event);
 		//If the user has Xed out the window
 		if (event.type == SDL_QUIT) {
 			//Quit the program
@@ -34,13 +34,12 @@ void Game::handle_events() {
 			set_next_state(STATE_MENU);
 		}
 
-		for (int i = 0; i < objects.size(); i++) {
-			if (objects[i]->is_exist()) {
+	for (int i = 0; i < objects.size(); i++) {
+		if (objects[i]->is_exist()) {
 			objects[i]->handle_events(event);
-			}
 		}
-
 	}
+
 }
 
 void Game::logic() {
@@ -74,6 +73,6 @@ void Game::render() {
 		}
 	}
 
-	printf("object count: %d;\n", objects.size());
+	//printf("object count: %d;\n", objects.size());
 
 }

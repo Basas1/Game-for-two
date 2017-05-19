@@ -10,7 +10,9 @@ SDL_Texture* background_texture = NULL;
 //Globally used textures
 SDL_Texture* map = NULL;
 SDL_Texture* player_texture = NULL;
-SDL_Texture* walk_texture = NULL;
+SDL_Texture* player_stand_texture = NULL;
+SDL_Texture* player_run_texture = NULL;
+SDL_Texture* player_jump_texture = NULL;
 SDL_Texture* fireball_texture = NULL;
 
 
@@ -47,8 +49,18 @@ bool load_media() {
 		printf("Failed to load player texture!\n");
 		success = false;
 	}
-	walk_texture = load_texture("Images/run.png");
-	if (walk_texture == NULL) {
+	player_stand_texture = load_texture("Images/stand.png");
+	if (player_stand_texture == NULL) {
+		printf("Failed to load player texture!\n");
+		success = false;
+	}
+	player_run_texture = load_texture("Images/run.png");
+	if (player_run_texture == NULL) {
+		printf("Failed to load player texture!\n");
+		success = false;
+	}
+	player_jump_texture = load_texture("Images/jump.png");
+	if (player_jump_texture == NULL) {
 		printf("Failed to load player texture!\n");
 		success = false;
 	}
