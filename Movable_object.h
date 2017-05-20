@@ -2,6 +2,8 @@
 #include <SDL.h>
 #include "Texture.h"
 #include "Game_object.h"
+#include <vector>
+
 
 
 class Movable_object : public Game_object {
@@ -15,8 +17,11 @@ public:
 	//Move method
 	void move();
 
-	//Check for collision with other objects
-	bool check_collision();
+	//Checks for collision with other game objects
+	std::vector<Game_object*> get_collisions(SDL_Rect* check_box=NULL);
+
+	//Check for collision between two collision boxes
+	bool check_collision(SDL_Rect a, SDL_Rect b);
 
 	//Check for map collision in coordinate (x,y)
 	bool check_map_collision(int x, int y);
@@ -67,8 +72,5 @@ public:
 
 	//Object's texture
 	Texture* texture;
-
-	//Collision box
-	SDL_Rect collision_box;
 };
 

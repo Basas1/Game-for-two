@@ -38,6 +38,15 @@ enum GameStates {
 	STATE_EXIT,
 };
 
+//Types of objects
+enum object_types {
+	PLAYER,
+	ENEMY,
+	FIREBALL,
+	OTHER,
+};
+
+
 //State variables
 extern int state_id;
 extern int next_state;

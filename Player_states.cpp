@@ -1,6 +1,8 @@
 #include "Player_states.h"
 #include "Fireball.h"
 #include "init.h"
+#include "Enemy.h"
+#include <vector>
 
 void Player_states::change_state(Player& p, int state) {
 	switch (state) {
@@ -70,7 +72,12 @@ void On_ground::handle_events(Player& p, SDL_Event& event) {
 		case SDLK_j: p.pos_x += 10; break;
 		case SDLK_w : {
 			Fireball *ball;
-			ball = new Fireball(p.pos_x + p.width / 2, p.pos_y + p.height / 3, p.flip_right);
+			if (p.flip_right) {
+				ball = new Fireball(p.pos_x + p.width + 1, p.pos_y + p.height / 3, p.flip_right);
+			}
+			else {
+				ball = new Fireball(p.pos_x - 1, p.pos_y + p.height / 3, p.flip_right);
+			}
 			objects.insert(objects.end(), ball);
 			break;
 		}
@@ -78,12 +85,14 @@ void On_ground::handle_events(Player& p, SDL_Event& event) {
 			change_state(p, HIT1_STATE);
 			break;
 		}
-		//case SDLK_h: {
-		//	Fire* state;
-		//	state = new Fire;
-		//	p.state_stack.push(state);
-		//	break;
-		//}
+		case SDLK_f: {
+			Enemy* enemy;
+			enemy = new Enemy;
+			enemy->pos_x = p.pos_x + 100;
+			enemy->pos_y = p.pos_y;
+			objects.insert(objects.end(), enemy);
+			break;
+		}
 		}
 	}
 
@@ -170,7 +179,12 @@ void Jump::handle_events(Player& p, SDL_Event& event) {
 		case SDLK_r: p.pos_x = 0; p.pos_y = 0; break;
 		case SDLK_w: {
 			Fireball *ball;
-			ball = new Fireball(p.pos_x + p.width / 2, p.pos_y + p.height / 3, p.flip_right);
+			if (p.flip_right) {
+				ball = new Fireball(p.pos_x + p.width + 1, p.pos_y + p.height / 3, p.flip_right);
+			}
+			else {
+				ball = new Fireball(p.pos_x - 1, p.pos_y + p.height / 3, p.flip_right);
+			}
 			objects.insert(objects.end(), ball);
 			break;
 		}
@@ -193,6 +207,25 @@ void Hit1::logic(Player& p) {
 	if (p.hit_animation->get_replay_count() > 0) {
 		p.hit_animation->reset();
 		p.state_stack.pop();
+	}
+	if (p.hit_animation->get_frame_number() == 6) {
+		std::vector<Game_object*> collisions;
+		SDL_Rect hit_box;
+
+		if (p.flip_right) {
+			hit_box = { (int)p.pos_x + (int)p.width / 2, (int)p.pos_y + (int)(p.height / 2), (int)(p.width), (int)(p.height/2) };
+		}
+		else {
+			hit_box = { (int)p.pos_x - (int)(p.width / 2), (int)p.pos_y + (int)(p.height / 2), (int)(p.width), (int)(p.height / 2) };
+		}
+		collisions = p.get_collisions(&hit_box);
+		if (collisions.size() != 0) {
+			for (int i = 0; i < collisions.size(); i++) {
+				if (collisions[i]->type == ENEMY) {
+					collisions[i]->kill();
+				}
+			}
+		}
 	}
 	p.vel_x = 0;
 	p.move();

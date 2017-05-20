@@ -87,12 +87,9 @@ void Texture::render(int x, int y, bool flip_right, SDL_Rect* clip, double angle
 	else {
 		flip = SDL_FLIP_HORIZONTAL;
 	}
+
 	//Set rendering space
 	SDL_Rect renderQuad = { x - camera->get_x() - (width / 3), y - camera->get_y(), width, height };
-
-	//Rectangle of texture
-	//SDL_SetRenderDrawColor(main_renderer, 0, 0, 0, 255);
-	//SDL_RenderFillRect(main_renderer, &renderQuad);
 
 	//Render to screen
 	SDL_RenderCopyEx(main_renderer, original_texture, clip, &renderQuad, angle, center, flip);

@@ -67,13 +67,12 @@ void Game::render() {
 	//Render background
 	SDL_RenderCopyEx(main_renderer, background, camera->get_rect(), NULL, 0.0, NULL, SDL_FLIP_NONE);
 
-	//for (int i = 0; i < objects.size(); i++) {
 	for (int i = objects.size()-1; i >= 0; i--) {
 		if (objects[i]->is_exist()) {
 			objects[i]->render();
 		}
 	}
 
-	//printf("object count: %d;\n", objects.size());
+	printf("object count: %d;\n", objects.size());
 
 }

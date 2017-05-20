@@ -6,6 +6,7 @@
 
 
 Enemy::Enemy() {
+	type = ENEMY;
 	width = 40;
 	height = 128;
 	pos_x = 600;
