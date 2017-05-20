@@ -5,7 +5,7 @@
 class Texture {
 public:
 	//Initializes variables
-	Texture(SDL_Texture* original_texture);
+	Texture(SDL_Texture* original_texture, int x_offset, int y_offset);
 
 	//Deallocates memory
 	~Texture();
@@ -48,7 +48,8 @@ protected:
 	//Image dimensions
 	int width, height;
 
-
+	//Set offsets for texture from actual player position
+	int x_off, y_off;
 };
 
 	

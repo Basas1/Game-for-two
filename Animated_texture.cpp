@@ -2,7 +2,7 @@
 
 
 
-Animated_texture::Animated_texture(SDL_Texture* original_texture, int frames) : Texture(original_texture) {
+Animated_texture::Animated_texture(SDL_Texture* original_texture, int frames, int x_offset, int y_offset) : Texture(original_texture, x_offset, y_offset) {
 	all_frame_width = width;
 	all_frame_height = height;
 

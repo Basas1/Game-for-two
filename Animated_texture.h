@@ -2,7 +2,7 @@
 #include "Texture.h"
 class Animated_texture : public Texture {
 public:
-	Animated_texture(SDL_Texture* original_texture, int frames);
+	Animated_texture(SDL_Texture* original_texture, int frames, int x_offset, int y_offset);
 	~Animated_texture();
 
 	//Prepare clips from texture
