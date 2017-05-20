@@ -3,7 +3,7 @@
 #include "tools.h"
 
 
-Texture::Texture(SDL_Texture* t) {
+Texture::Texture(SDL_Texture* t, int x_offset, int y_offset) {
 	//Initialize
 	//Get Texture width and height
 	SDL_QueryTexture(t, NULL, NULL, &width, &height);
@@ -21,6 +21,9 @@ Texture::Texture(SDL_Texture* t) {
 	original_texture = copy_texture;
 	//Set flip to none
 	flip = SDL_FLIP_NONE;
+	//Set offsets for texture from actual player position
+	x_off = x_offset;
+	y_off = y_offset;
 }
 
 bool Texture::load_from_file(std::string path) {
@@ -88,11 +91,11 @@ void Texture::render(int x, int y, bool flip_right, SDL_Rect* clip, double angle
 		flip = SDL_FLIP_HORIZONTAL;
 	}
 	//Set rendering space
-	SDL_Rect renderQuad = { x - camera->get_x() - (width / 3), y - camera->get_y(), width, height };
+	SDL_Rect renderQuad = { x - camera->get_x() + x_off, y - camera->get_y() + y_off, width, height };
 
 	//Rectangle of texture
 	//SDL_SetRenderDrawColor(main_renderer, 0, 0, 0, 255);
-	//SDL_RenderFillRect(main_renderer, &renderQuad);
+	//SDL_RenderDrawRect(main_renderer, &renderQuad);
 
 	//Render to screen
 	SDL_RenderCopyEx(main_renderer, original_texture, clip, &renderQuad, angle, center, flip);

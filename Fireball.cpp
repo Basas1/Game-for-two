@@ -4,8 +4,8 @@
 
 
 Fireball::Fireball(int x, int y, bool right) : Movable_object() {
-	width = 50;
-	height = 50;
+	width = 14;
+	height = 14;
 	pos_x = x;
 	pos_y = y;
 	can_rise = 0;
@@ -19,10 +19,8 @@ Fireball::Fireball(int x, int y, bool right) : Movable_object() {
 		vel_x = -acceleration * 3;
 	}
 
-	fireball_animation = new Animated_texture(fireball_texture, 3);
+	fireball_animation = new Animated_texture(fireball_texture, 3, -17, -17);
 	fireball_animation->set_clips();
-	fireball_animation->set_width(width);
-	fireball_animation->set_height(height);
 
 	collision_box = { (int)pos_x, (int)pos_y, width, height };
 }
@@ -41,8 +39,15 @@ void Fireball::logic() {
 }
 
 void Fireball::render() {
+	//Set rendering space
+	SDL_Rect renderQuad = { pos_x - camera->get_x(), pos_y - camera->get_y(), width, height };
+
 	fireball_animation->render(pos_x, pos_y);
 	fireball_animation->next_frame();
+
+	//Outline of rectangle of texture
+	SDL_SetRenderDrawColor(main_renderer, 0, 0, 0, 255);
+	SDL_RenderDrawRect(main_renderer, &renderQuad);
 }
 
 Fireball::~Fireball() {

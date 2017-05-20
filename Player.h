@@ -32,9 +32,6 @@ public:
 	Animated_texture* jump_animation;
 	Animated_texture* hit_animation;
 
-	//point that camera follows
-	int center_x, center_y;
-
 	std::stack<Player_states*> state_stack;
 
 };
