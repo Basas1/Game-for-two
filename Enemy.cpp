@@ -8,20 +8,20 @@
 Enemy::Enemy() {
 	type = ENEMY;
 	width = 40;
-	height = 128;
+	height = 100;
 	pos_x = 600;
 	pos_y = 1500;
 	flip_right = false;
 
-	stand_animation = new Animated_texture(player_stand_texture, 3, -44, -8);
+	stand_animation = new Animated_texture(player_stand_texture, 3, -44, -28);
 	int order1[] = { 0, 1, 2, 1 };
 	stand_animation->set_frame_order(order1, sizeof(order1) / sizeof(int));
 	stand_animation->set_ticks_per_frame(25);
-	run_animation = new Animated_texture(player_run_texture, 10, -44, -8);
-	jump_animation = new Animated_texture(player_jump_texture, 3, -44, -8);
+	run_animation = new Animated_texture(player_run_texture, 10, -44, -28);
+	jump_animation = new Animated_texture(player_jump_texture, 3, -44, -28);
 	jump_animation->set_frame_order(order1, sizeof(order1) / sizeof(int));
 	jump_animation->set_ticks_per_frame(25);
-	hit_animation = new Animated_texture(player_hit_texture, 4, -44, -8);
+	hit_animation = new Animated_texture(player_hit_texture, 4, -44, -28);
 	int order2[] = { 0, 1, 2, 3, 1 };
 	hit_animation->set_frame_order(order2, sizeof(order2) / sizeof(int));
 
@@ -75,5 +75,12 @@ void Enemy::logic() {
 
 void Enemy::render() {
 	state_stack.top()->render(*this);
+
+	//Hit box rectangle
+	SDL_Rect renderQuad = { pos_x - camera->get_x(), pos_y - camera->get_y(), width, height };
+	//Outline of rectangle of texture
+	SDL_SetRenderDrawColor(main_renderer, 0, 0, 0, 255);
+	SDL_RenderDrawRect(main_renderer, &renderQuad);
+
 }
 
