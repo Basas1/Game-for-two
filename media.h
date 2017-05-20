@@ -16,7 +16,7 @@ extern SDL_Texture* fireball_texture;
 
 extern SDL_Texture* enemy_stand_texture;
 extern SDL_Texture* enemy_run_texture;
-extern SDL_Texture* enemy_hit12_texture;
+extern SDL_Texture* enemy_hit_texture;
 
 
 

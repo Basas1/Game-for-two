@@ -25,25 +25,6 @@ Enemy::Enemy() {
 	int order2[] = { 0, 1, 2, 3, 1 };
 	hit_animation->set_frame_order(order2, sizeof(order2) / sizeof(int));
 
-	//stand_animation = new Animated_texture(player_stand_texture, 12);
-	//run_animation = new Animated_texture(player_run_texture, 4);
-	//jump_animation = new Animated_texture(player_jump_texture, 4);
-	//stand_animation->set_height(height);
-	////stand_animation->set_width(width);
-	//run_animation->set_height(height);
-	////run_animation->set_width(width);
-	//jump_animation->set_height(height);
-	////jump_animation->set_width(width);
-
-	//int order[] = { 1, 2, 3 };
-	//jump_animation->set_frame_order(order, sizeof(order) / sizeof(int));
-	//run_animation->set_frame_order(order, sizeof(order) / sizeof(int));
-	//jump_animation->set_ticks_per_frame(30);
-	//run_animation->set_ticks_per_frame(30);
-
-
-
-
 	collision_box = { (int)pos_x, (int)pos_y, width, height };
 
 	state = new E_Stand;

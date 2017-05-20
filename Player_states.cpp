@@ -192,6 +192,15 @@ void Jump::handle_events(Player& p, SDL_Event& event) {
 			change_state(p, HIT1_STATE);
 			break;
 		}
+		case SDLK_f: {
+			Enemy* enemy;
+			enemy = new Enemy;
+			enemy->pos_x = p.pos_x + 100;
+			enemy->pos_y = p.pos_y;
+			objects.insert(objects.end(), enemy);
+			break;
+		}
+
 
 		}
 	}

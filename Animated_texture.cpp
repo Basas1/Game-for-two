@@ -2,20 +2,28 @@
 
 
 
-Animated_texture::Animated_texture(SDL_Texture* original_texture, int frames, int x_offset, int y_offset) : Texture(original_texture, x_offset, y_offset) {
-	all_frame_width = width;
-	all_frame_height = height;
+Animated_texture::Animated_texture(SDL_Texture* original_texture, int frames, int x_offset, int y_offset, int columns, int lines) : Texture(original_texture, x_offset, y_offset) {
+	if (lines == 0) {
+		clip_col = frames;
+		clip_line = 1;
+		width /= frames;
+	}
+	else {
+		clip_col = columns;
+		clip_line = lines;
+		width /= columns;
+		height /= lines;
+	}
 
-	sprite_clips = new SDL_Rect[frames];
-	total_frames = frames;
+	sprite_clips = new SDL_Rect[clip_col*clip_line];
+	total_frames = clip_col*clip_line;
 	current_frame = 0;
 	replay_counter = 0;
 	ticks_per_frame = 15;
 	ticks_counter = ticks_per_frame;
-	width /= frames;
 	set_clips();
 	int i;
-	for (i = 0; i < frames; i++) {
+	for (i = 0; i < total_frames; i++) {
 		frame_order[i] = i;
 	}
 	for (i; i < (sizeof(frame_order) / sizeof(*frame_order)); i++) {
@@ -24,12 +32,17 @@ Animated_texture::Animated_texture(SDL_Texture* original_texture, int frames, in
 }
 
 void Animated_texture::set_clips() {
-	for (int i = 0; i < total_frames; i++) {
-		sprite_clips[i].x = i * width;
-		sprite_clips[i].y = 0;
-		sprite_clips[i].w = width;
-		sprite_clips[i].h = height;
+	int c=0;
+	for (int j = 0; j < clip_line; j++) {
+		for (int i = 0; i < clip_col; i++) {
+			sprite_clips[c].x = i * width;
+			sprite_clips[c].y = j * height;
+			sprite_clips[c].w = width;
+			sprite_clips[c].h = height;
+			c++;
+		}
 	}
+	printf("c=%d\n",c);
 	current_clip = &sprite_clips[frame_order[current_frame]];
 }
 

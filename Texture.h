@@ -5,7 +5,7 @@
 class Texture {
 public:
 	//Initializes variables
-	Texture(SDL_Texture* original_texture, int x_offset, int y_offset);
+	Texture(SDL_Texture* original_texture, int x_offset=0, int y_offset=0);
 
 	//Deallocates memory
 	~Texture();

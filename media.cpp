@@ -19,7 +19,7 @@ SDL_Texture* fireball_texture = NULL;
 //Enemy1 textures
 SDL_Texture* enemy_stand_texture = NULL;
 SDL_Texture* enemy_run_texture = NULL;
-SDL_Texture* enemy_hit12_texture = NULL;
+SDL_Texture* enemy_hit_texture = NULL;
 
 
 
@@ -87,8 +87,8 @@ bool load_media() {
 	//	printf("Failed to load player texture!\n");
 	//	success = false;
 	//}
-	//enemy_hit12_texture = load_texture("Images/attack12f35.png");
-	//if (enemy_hit12_texture == NULL) {
+	//enemy_hit_texture = load_texture("Images/attack123.png");
+	//if (enemy_hit_texture == NULL) {
 	//	printf("Failed to load player texture!\n");
 	//	success = false;
 	//}

@@ -2,7 +2,7 @@
 #include "Texture.h"
 class Animated_texture : public Texture {
 public:
-	Animated_texture(SDL_Texture* original_texture, int frames, int x_offset, int y_offset);
+	Animated_texture(SDL_Texture* original_texture, int frames, int x_offset=0, int y_offset=0, int columns=0, int lines=0);
 	~Animated_texture();
 
 	//Prepare clips from texture
@@ -26,9 +26,8 @@ public:
 
 
 protected:
-	int all_frame_width;
-	int all_frame_height;
-	int frame_order[50];
+	int clip_col, clip_line;
+	int frame_order[100];
 	SDL_Rect* sprite_clips;
 	SDL_Rect* current_clip;
 	int current_frame;

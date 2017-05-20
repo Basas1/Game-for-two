@@ -31,6 +31,7 @@ public:
 	Animated_texture* run_animation;
 	Animated_texture* jump_animation;
 	Animated_texture* hit_animation;
+	Animated_texture* hit2_animation;
 
 	std::stack<Player_states*> state_stack;
 
