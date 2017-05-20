@@ -46,7 +46,7 @@ void Fireball::render() {
 	fireball_animation->next_frame();
 
 	//Outline of rectangle of texture
-	SDL_SetRenderDrawColor(main_renderer, 0, 0, 0, 255);
+	SDL_SetRenderDrawColor(main_renderer, 0, 0, 255, 255);
 	SDL_RenderDrawRect(main_renderer, &renderQuad);
 }
 
