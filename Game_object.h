@@ -8,6 +8,7 @@ public:
 		ENEMY,
 		FIREBALL,
 		OTHER,
+		PLATFORM,
 	};
 	int type;
 
@@ -21,8 +22,16 @@ public:
 	bool is_exist();
 	void kill();
 
+	bool collidable;
 	//Collision box
 	SDL_Rect collision_box;
+
+	//Object's coordinates
+	double pos_x, pos_y;
+
+	//Object size
+	int width, height;
+
 protected:
 	//Flag of object existance
 	bool exist;

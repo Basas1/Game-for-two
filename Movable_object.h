@@ -41,11 +41,9 @@ public:
 	//Check all collisions
 	bool check_map_collision_all();
 
-	//Object's coordinates
-	double pos_x, pos_y;
-
-	//Object size
-	int width, height;
+	//Check if object can go to the side without stomping into something or falling
+	bool can_go_left();
+	bool can_go_right();
 
 	//Object's velocity
 	double vel_x, vel_y;

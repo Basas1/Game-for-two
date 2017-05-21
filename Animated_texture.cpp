@@ -42,7 +42,6 @@ void Animated_texture::set_clips() {
 			c++;
 		}
 	}
-	printf("c=%d\n",c);
 	current_clip = &sprite_clips[frame_order[current_frame]];
 }
 

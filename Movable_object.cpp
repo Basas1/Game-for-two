@@ -26,6 +26,26 @@ Movable_object::Movable_object() : Game_object() {
 
 //Check for map collision in coordinate (x,y)
 bool Movable_object::check_map_collision(int x, int y) {
+	for (int i = 0; i < static_objects.size(); i++) {
+		if (static_objects[i]->collidable) {
+			SDL_Rect check = { x, y, 1, 1 };
+			if (check_collision(check, static_objects[i]->collision_box)) {
+				return true;
+			}
+		}
+	}
+	for (int i = 0; i < objects.size(); i++) {
+		if (objects[i] != this) {
+			if (objects[i]->collidable) {
+				SDL_Rect check = { x, y, 1, 1 };
+				if (check_collision(check, objects[i]->collision_box)) {
+					return true;
+				}
+			}
+		}
+	}
+
+
 	if (x >= 0 && x < map_surface->w && y >= 0 && y < map_surface->h) {
 		return (getpixel(map_surface, x, y) != 15);
 	}
@@ -96,6 +116,33 @@ bool Movable_object::check_map_collision_right() {
 	}
 	return false;
 }
+
+bool Movable_object::can_go_right() {
+	if (!check_map_collision_right()) {
+		if (!check_map_collision(pos_x + width, pos_y + height + can_rise)) {
+			return false;
+		}
+	}
+	else {
+		return false;
+	}
+	if (check_map_collision(pos_x + width * 3 / 2, pos_y - height / 2)) return false;
+	return true;
+}
+
+bool Movable_object::can_go_left() {
+	if (!check_map_collision_left()) {
+		if (!check_map_collision(pos_x, pos_y + height + can_rise)) {
+			return false;
+		}
+	}
+	else {
+		return false;
+	}
+	if (check_map_collision(pos_x - width, pos_y - height / 2)) return false;
+	return true;
+}
+
 
 //Move object according to it's velocity
 void Movable_object::move() {

@@ -3,9 +3,11 @@
 #include "init.h"
 #include "Fireball.h"
 #include "Enemy_states.h"
+#include "AI_states.h"
 
 
 Enemy::Enemy() {
+	//collidable = true;
 	type = ENEMY;
 	width = 40;
 	height = 100;
@@ -29,8 +31,24 @@ Enemy::Enemy() {
 
 	state = new E_Stand;
 	state_stack.push(state);
+
+	AI_states* ai_state;
+	ai_state = new AI_move;
+	ai_state_stack.push(ai_state);
+
+	vel_x = -2;
 }
 
+
+void Enemy::move() {
+	if (vel_x > 0) {
+		flip_right = true;
+	}
+	else if (vel_x < 0) {
+		flip_right = false;
+	}
+	Movable_object::move();
+}
 
 Enemy::~Enemy() {
 	delete texture;
@@ -50,6 +68,7 @@ int Enemy::get_y() {
 }
 
 void Enemy::logic() {
+	ai_state_stack.top()->logic(*this);
 	state_stack.top()->logic(*this);
 	collision_box = { (int)pos_x, (int)pos_y, width, height };
 };

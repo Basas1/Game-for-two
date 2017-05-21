@@ -32,7 +32,6 @@ void Enemy_states::change_state(Enemy& p, int state) {
 
 
 void E_On_ground::logic(Enemy& p) {
-	p.vel_x = p.acc_x;
 	p.move();
 	if (p.vel_y != 0 && !p.check_map_collision_under()) {
 		change_state(p, JUMP_STATE);
@@ -40,7 +39,7 @@ void E_On_ground::logic(Enemy& p) {
 }
 
 void E_Stand::logic(Enemy& p) {
-	if (p.acc_x != 0) {
+	if (p.vel_x != 0) {
 		change_state(p, RUN_STATE);
 	}
 	E_On_ground::logic(p);
@@ -53,7 +52,7 @@ void E_Stand::render(Enemy& p) {
 
 void E_Run::logic(Enemy& p) {
 	E_On_ground::logic(p);
-	if (p.acc_x == 0) {
+	if (p.vel_x == 0) {
 		p.run_animation->set_frame(0);
 		p.state_stack.pop();
 	}
@@ -65,7 +64,6 @@ void E_Run::render(Enemy& p) {
 }
 
 void E_Jump::logic(Enemy& p) {
-	p.vel_x += p.acc_x;
 	//Speed limit
 	if (p.vel_x > p.max_vel_x) p.vel_x = p.max_vel_x;
 	if (p.vel_x < -p.max_vel_x) p.vel_x = -p.max_vel_x;

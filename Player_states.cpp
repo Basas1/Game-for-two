@@ -1,8 +1,10 @@
+#pragma once
 #include "Player_states.h"
 #include "Fireball.h"
 #include "init.h"
 #include "Enemy.h"
 #include <vector>
+#include "Platform.h"
 
 void Player_states::change_state(Player& p, int state) {
 	switch (state) {
@@ -91,6 +93,12 @@ void On_ground::handle_events(Player& p, SDL_Event& event) {
 			enemy->pos_x = p.pos_x + 100;
 			enemy->pos_y = p.pos_y;
 			objects.insert(objects.end(), enemy);
+			break;
+		}
+		case SDLK_d: {
+			Platform* platform;
+			platform = new Platform((int)p.pos_x, (int)p.pos_y + p.height);
+			static_objects.insert(static_objects.end(), platform);
 			break;
 		}
 		}
@@ -200,8 +208,12 @@ void Jump::handle_events(Player& p, SDL_Event& event) {
 			objects.insert(objects.end(), enemy);
 			break;
 		}
-
-
+		case SDLK_d: {
+			Platform* platform;
+			platform = new Platform((int)p.pos_x, (int)p.pos_y + p.height);
+			static_objects.insert(static_objects.end(), platform);
+			break;
+		}
 		}
 	}
 }

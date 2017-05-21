@@ -12,6 +12,7 @@ Game::Game() {
 	enemy = new Enemy;
 
 	objects.reserve(10);
+	static_objects.reserve(10);
 	objects.insert(objects.end(), player);
 	objects.insert(objects.end(), enemy);
 }
@@ -64,9 +65,18 @@ void Game::render() {
 	SDL_SetRenderDrawColor(main_renderer, 0, 0, 0, 0xFF);
 	SDL_RenderClear(main_renderer);
 
+
 	//Render background
 	SDL_RenderCopyEx(main_renderer, background, camera->get_rect(), NULL, 0.0, NULL, SDL_FLIP_NONE);
 
+	//Render static objects
+	for (int i = 0; i < static_objects.size(); i++) {
+		if (static_objects[i]->is_exist()) {
+			static_objects[i]->render();
+		}
+	}
+
+	//Render Player and other objects
 	for (int i = objects.size()-1; i >= 0; i--) {
 		if (objects[i]->is_exist()) {
 			objects[i]->render();

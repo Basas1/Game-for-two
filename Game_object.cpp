@@ -3,6 +3,7 @@
 
 Game_object::Game_object() {
 	exist = true;
+	collidable = false;
 	type = OTHER;
 }
 

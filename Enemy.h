@@ -4,12 +4,14 @@
 #include <stack>
 
 class Enemy_states;
+class AI_states;
 
 class Enemy : public Movable_object {
 public:
 	Enemy();
 	~Enemy();
 	void handle_events(SDL_Event& event) {};
+	void move();
 	void logic();
 	void render();
 
@@ -25,6 +27,7 @@ public:
 	Animated_texture* hit_animation;
 
 	std::stack<Enemy_states*> state_stack;
+	std::stack<AI_states*> ai_state_stack;
 
 };
 

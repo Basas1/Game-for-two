@@ -9,6 +9,7 @@ SDL_Texture* background_texture = NULL;
 
 //Globally used textures
 SDL_Texture* map = NULL;
+SDL_Texture* platform = NULL;
 //Player textures
 SDL_Texture* player_texture = NULL;
 SDL_Texture* player_stand_texture = NULL;
@@ -50,6 +51,12 @@ bool load_media() {
 		printf("Failed to load map texture!\n");
 		success = false;
 	}
+	platform = load_texture("Images/platform.bmp");
+	if (platform == NULL) {
+		printf("Failed to load platform texture!\n");
+		success = false;
+	}
+
 	//PLAYER TEXTURES:
 	player_texture = load_texture("Images/stand.gif");
 	if (player_texture == NULL) {

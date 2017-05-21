@@ -11,6 +11,7 @@
 
 
 std::vector<Game_object*> objects;
+std::vector<Game_object*> static_objects;
 
 int state_id = STATE_NULL;
 int next_state = STATE_NULL;
