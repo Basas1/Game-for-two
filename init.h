@@ -22,12 +22,8 @@ extern std::vector<Game_object*> objects;
 extern std::vector<Game_object*> static_objects;
 
 //Screen dimension constants
-const int SCREEN_WIDTH = 1600;
-const int SCREEN_HEIGHT = 900;
-
-//Level dimension constants
-const int LEVEL_WIDTH = 3200;
-const int LEVEL_HEIGHT = 900;
+const int SCREEN_WIDTH = 1920;
+const int SCREEN_HEIGHT = 1080;
 
 
 //Fps constants
