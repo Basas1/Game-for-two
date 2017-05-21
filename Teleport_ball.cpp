@@ -15,10 +15,12 @@ Teleport_ball::Teleport_ball(int x, int y, bool right) : Movable_object() {
 	if (right) {
 		pos_x = x + 5;
 		vel_x = acceleration * 2;
+		//vel_y = acceleration * 2;
 	}
 	else {
 		pos_x = x - width - 5;
 		vel_x = -acceleration * 2;
+		//vel_y = -acceleration * 2;
 	}
 
 	teleport_ball_animation = new Animated_texture(fireball_texture, 3, -32, -32);
@@ -67,8 +69,7 @@ void Teleport_ball::move() {
 				break;
 			}
 		}
-	}
-	else if (vel_y > 0) {
+	} else if (vel_y > 0) {
 		for (pos_y; pos_y <= old_pos_y + vel_y; pos_y++) {
 			if (check_map_collision(pos_x, pos_y + 1) && check_map_collision(pos_x + 1, pos_y)) {
 				vel_x = -abs(vel_y);
