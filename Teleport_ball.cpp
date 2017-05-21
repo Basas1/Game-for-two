@@ -40,6 +40,10 @@ void Teleport_ball::move() {
 				vel_y = -abs(vel_x);
 				vel_x = 0;
 				break;
+			} else if (check_map_collision(pos_x + 1, pos_y) && check_map_collision(pos_x, pos_y - 1)) {
+				vel_y = abs(vel_x);
+				vel_x = 0;
+				break;
 			}
 			if (check_map_collision(pos_x + 1,pos_y)) {
 				vel_x = -vel_x;
@@ -51,6 +55,10 @@ void Teleport_ball::move() {
 		for (pos_x; pos_x >= old_pos_x + vel_x; pos_x--) {
 			if (check_map_collision(pos_x - 1, pos_y) && check_map_collision(pos_x, pos_y + 1)) {
 				vel_y = -abs(vel_x);
+				vel_x = 0;
+				break;
+			} else if (check_map_collision(pos_x - 1, pos_y) && check_map_collision(pos_x, pos_y - 1)) {
+				vel_y = abs(vel_x);
 				vel_x = 0;
 				break;
 			}
@@ -66,7 +74,12 @@ void Teleport_ball::move() {
 				vel_x = -abs(vel_y);
 				vel_y = 0;
 				break;
+			} else if (check_map_collision(pos_x, pos_y + 1) && check_map_collision(pos_x - 1, pos_y)) {
+				vel_x = abs(vel_y);
+				vel_y = 0;
+				break;
 			}
+
 			if (check_map_collision(pos_x, pos_y + 1)) {
 				vel_y = -vel_y;
 				break;
@@ -77,6 +90,10 @@ void Teleport_ball::move() {
 		for (pos_y; pos_y >= old_pos_y + vel_y; pos_y--) {
 			if (check_map_collision(pos_x, pos_y - 1) && check_map_collision(pos_x + 1, pos_y)) {
 				vel_x = -abs(vel_y);
+				vel_y = 0;
+				break;
+			} else if (check_map_collision(pos_x, pos_y - 1) && check_map_collision(pos_x - 1, pos_y)) {
+				vel_x = abs(vel_y);
 				vel_y = 0;
 				break;
 			}

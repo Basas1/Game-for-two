@@ -45,8 +45,8 @@ bool load_media() {
 		success = false;
 	}
 	//Loading other textures
-	map = load_texture("Images/map.jpg");
-	//map = load_texture("Images/map_box.bmp");
+	//map = load_texture("Images/map.jpg");
+	map = load_texture("Images/map_box.bmp");
 	if (map == NULL) {
 		printf("Failed to load map texture!\n");
 		success = false;

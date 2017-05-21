@@ -244,6 +244,24 @@ void Jump::handle_events(Player& p, SDL_Event& event) {
 			static_objects.insert(static_objects.end(), platform);
 			break;
 		}
+		case SDLK_r: {
+			if (p.t_ball == NULL) {
+				if (p.flip_right) {
+					p.t_ball = new Teleport_ball(p.pos_x + p.width + 1, p.pos_y + p.height / 3, p.flip_right);
+				}
+				else {
+					p.t_ball = new Teleport_ball(p.pos_x - 1, p.pos_y + p.height / 3, p.flip_right);
+				}
+				objects.insert(objects.end(), p.t_ball);
+			}
+			else {
+				p.pos_x = p.t_ball->pos_x + p.width / 2;
+				p.pos_y = p.t_ball->pos_y - p.height / 2;
+				p.t_ball->kill();
+				p.t_ball = NULL;
+			}
+			break;
+		}
 		}
 	}
 }
