@@ -215,17 +215,6 @@ void Jump::handle_events(Player& p, SDL_Event& event) {
 			objects.insert(objects.end(), ball);
 			break;
 		}
-		case SDLK_r: {
-			Teleport_ball *ball;
-			if (p.flip_right) {
-				ball = new Teleport_ball(p.pos_x + p.width + 1, p.pos_y + p.height / 3, p.flip_right);
-			}
-			else {
-				ball = new Teleport_ball(p.pos_x - 1, p.pos_y + p.height / 3, p.flip_right);
-			}
-			objects.insert(objects.end(), ball);
-			break;
-		}
 		case SDLK_e: {
 			change_state(p, HIT1_STATE);
 			break;
