@@ -7,6 +7,7 @@ public:
 		PLAYER,
 		ENEMY,
 		FIREBALL,
+		TELEPORT,
 		OTHER,
 		PLATFORM,
 	};

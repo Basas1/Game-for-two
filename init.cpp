@@ -9,6 +9,8 @@
 #include "Menu.h"
 #include "Game.h"
 
+Player* player = NULL;
+
 
 std::vector<Game_object*> objects;
 std::vector<Game_object*> static_objects;

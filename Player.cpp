@@ -9,7 +9,7 @@ Player::Player() : Movable_object() {
 	type = PLAYER;
 	width = 40;
 	height = 100;
-	pos_x = 50;
+	pos_x = 2800;
 	pos_y = 1500;
 	jump_vel = 7;
 	flip_right = true;
@@ -29,6 +29,8 @@ Player::Player() : Movable_object() {
 
 	state = new Stand;
 	state_stack.push(state);
+
+	t_ball = NULL;
 }
 
 Player::~Player() {

@@ -2,6 +2,7 @@
 #include "Movable_object.h"
 #include "Animated_texture.h"
 #include <stack>
+#include "Teleport_ball.h"
 
 class Player_states;
 
@@ -32,6 +33,8 @@ public:
 	Animated_texture* jump_animation;
 	Animated_texture* hit_animation;
 	Animated_texture* hit2_animation;
+
+	Teleport_ball* t_ball;
 
 	std::stack<Player_states*> state_stack;
 

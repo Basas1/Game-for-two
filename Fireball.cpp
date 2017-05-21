@@ -21,7 +21,7 @@ Fireball::Fireball(int x, int y, bool right) : Movable_object() {
 		vel_x = -acceleration * 3;
 	}
 
-	fireball_animation = new Animated_texture(fireball_texture, 3, -17, -17);
+	fireball_animation = new Animated_texture(fireball_texture, 3, -25, -25);
 	fireball_animation->set_clips();
 
 	collision_box = { (int)pos_x, (int)pos_y, width, height };

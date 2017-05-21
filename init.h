@@ -10,6 +10,12 @@
 #include <vector>
 #include "Game_object.h"
 #include "Static_object.h"
+#include "Player.h"
+
+//Players
+extern Player* player;
+
+
 
 //Vector of all objects in game
 extern std::vector<Game_object*> objects;
@@ -45,9 +51,10 @@ enum object_types {
 	PLAYER,
 	ENEMY,
 	FIREBALL,
+	TELEPORT,
 	OTHER,
+	PLATFORM,
 };
-
 
 //State variables
 extern int state_id;
