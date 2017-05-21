@@ -39,11 +39,11 @@ bool load_media() {
 	bool success = true;
 
 	//Load background texture
-	background_texture = load_texture("Images/background.jpg");
-	if (background_texture == NULL) {
-		printf("Failed to load bg texture!\n");
-		success = false;
-	}
+	//background_texture = load_texture("Images/background.jpg");
+	//if (background_texture == NULL) {
+	//	printf("Failed to load bg texture!\n");
+	//	success = false;
+	//}
 	//Loading other textures
 	//map = load_texture("Images/map.jpg");
 	map = load_texture("Images/map_box.bmp");

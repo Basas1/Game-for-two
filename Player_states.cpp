@@ -102,6 +102,12 @@ void On_ground::handle_events(Player& p, SDL_Event& event) {
 			}
 			break;
 		}
+		case SDLK_t: {
+			if (p.t_ball != NULL) {
+				p.t_ball->kill();
+				p.t_ball = NULL;
+			}
+		}
 		case SDLK_e: {
 			change_state(p, HIT1_STATE);
 			break;
@@ -250,6 +256,12 @@ void Jump::handle_events(Player& p, SDL_Event& event) {
 				p.t_ball = NULL;
 			}
 			break;
+		}
+		case SDLK_t: {
+			if (p.t_ball != NULL) {
+				p.t_ball->kill();
+				p.t_ball = NULL;
+			}
 		}
 		}
 	}
