@@ -4,7 +4,7 @@
 
 class Teleport_ball : public Movable_object {
 public:
-	Teleport_ball(int x, int y, bool left);
+	Teleport_ball(int x, int y, int side);
 	~Teleport_ball();
 
 	//Move method

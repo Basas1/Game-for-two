@@ -13,7 +13,7 @@ public:
 	};
 	void change_state(Player& p, int state);
 	virtual ~Player_states() {};
-	virtual void handle_events(Player& p, SDL_Event& event) {};
+	virtual void handle_events(Player& p, SDL_Event& event);
 	virtual void logic(Player& p) {};
 	virtual void render(Player& p) {};
 };

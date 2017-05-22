@@ -83,6 +83,6 @@ void Game::render() {
 		}
 	}
 
-	printf("object count: %d;\n", objects.size());
+	//printf("object count: %d;\n", objects.size());
 
 }

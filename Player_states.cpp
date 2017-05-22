@@ -34,6 +34,75 @@ void Player_states::change_state(Player& p, int state) {
 	}
 }
 
+void Player_states::handle_events(Player& p, SDL_Event& event) {
+	if (event.type == SDL_KEYDOWN) {
+		switch (event.key.keysym.sym) {
+		case SDLK_r: {
+			//const Uint8* currentKeyStates = SDL_GetKeyboardState(NULL);
+			//if (currentKeyStates[SDL_SCANCODE_UP]) {
+			//}
+			//if (currentKeyStates[SDL_SCANCODE_DOWN]) {
+			//}
+			//if (currentKeyStates[SDL_SCANCODE_LEFT]) {
+			//}
+			//if (currentKeyStates[SDL_SCANCODE_RIGHT]) {
+			//}
+
+			if (p.t_ball == NULL) {
+				const Uint8* currentKeyStates = SDL_GetKeyboardState(NULL);
+				if (currentKeyStates[SDL_SCANCODE_UP] && !currentKeyStates[SDL_SCANCODE_RIGHT] && !currentKeyStates[SDL_SCANCODE_LEFT] && !currentKeyStates[SDL_SCANCODE_DOWN]) {
+					p.t_ball = new Teleport_ball(p.pos_x + p.width / 2, p.pos_y + p.height / 2, UP);
+				} else if (!currentKeyStates[SDL_SCANCODE_UP] && !currentKeyStates[SDL_SCANCODE_RIGHT] && !currentKeyStates[SDL_SCANCODE_LEFT] && currentKeyStates[SDL_SCANCODE_DOWN]) {
+					p.t_ball = new Teleport_ball(p.pos_x + p.width / 2, p.pos_y + p.height / 2, DOWN);
+				}
+				else if (currentKeyStates[SDL_SCANCODE_UP] && currentKeyStates[SDL_SCANCODE_RIGHT] && !currentKeyStates[SDL_SCANCODE_LEFT] && !currentKeyStates[SDL_SCANCODE_DOWN]) {
+					p.t_ball = new Teleport_ball(p.pos_x + p.width / 2, p.pos_y + p.height / 2, UP_RIGHT);
+				}
+				else if (currentKeyStates[SDL_SCANCODE_UP] && !currentKeyStates[SDL_SCANCODE_RIGHT] && currentKeyStates[SDL_SCANCODE_LEFT] && !currentKeyStates[SDL_SCANCODE_DOWN]) {
+					p.t_ball = new Teleport_ball(p.pos_x + p.width / 2, p.pos_y + p.height / 2, UP_LEFT);
+				}
+				else if (!currentKeyStates[SDL_SCANCODE_UP] && currentKeyStates[SDL_SCANCODE_RIGHT] && !currentKeyStates[SDL_SCANCODE_LEFT] && currentKeyStates[SDL_SCANCODE_DOWN]) {
+					p.t_ball = new Teleport_ball(p.pos_x + p.width / 2, p.pos_y + p.height / 2, DOWN_RIGHT);
+				}
+				else if (!currentKeyStates[SDL_SCANCODE_UP] && !currentKeyStates[SDL_SCANCODE_RIGHT] && currentKeyStates[SDL_SCANCODE_LEFT] && currentKeyStates[SDL_SCANCODE_DOWN]) {
+					p.t_ball = new Teleport_ball(p.pos_x + p.width / 2, p.pos_y + p.height / 2, DOWN_LEFT);
+				}
+				else {
+					if (p.flip_right) {
+						p.t_ball = new Teleport_ball(p.pos_x + p.width / 2, p.pos_y + p.height / 2, RIGHT);
+					}
+					else {
+						p.t_ball = new Teleport_ball(p.pos_x + p.width / 2, p.pos_y + p.height / 2, LEFT);
+					}
+				}
+				//if (p.flip_right) {
+				//	p.t_ball = new Teleport_ball(p.pos_x + p.width + 1, p.pos_y + p.height / 3, 0);
+				//}
+				//else {
+				//	p.t_ball = new Teleport_ball(p.pos_x - 1, p.pos_y + p.height / 3, 1);
+				//}
+				objects.insert(objects.end(), p.t_ball);
+			}
+			else {
+				p.pos_x = p.t_ball->pos_x + p.width / 2;
+				p.pos_y = p.t_ball->pos_y - p.height / 2;
+				p.t_ball->kill();
+				p.t_ball = NULL;
+			}
+			break;
+		}
+		case SDLK_t: {
+			if (p.t_ball != NULL) {
+				p.t_ball->kill();
+				p.t_ball = NULL;
+			}
+			break;
+		}
+
+		}
+	}
+}
+
 
 void On_ground::logic(Player& p) {
 	p.vel_x = p.acc_x;
@@ -61,7 +130,6 @@ void On_ground::handle_events(Player& p, SDL_Event& event) {
 
 	//If a key was pressed
 	if (event.type == SDL_KEYDOWN && event.key.repeat == 0) {
-	//if (event.type == SDL_KEYDOWN) {
 		switch (event.key.keysym.sym) {
 		case SDLK_SPACE: p.vel_y = -p.jump_vel; break;
 		case SDLK_p: p.pos_x = 0; p.pos_y = 0; break;
@@ -84,31 +152,6 @@ void On_ground::handle_events(Player& p, SDL_Event& event) {
 			objects.insert(objects.end(), ball);
 			break;
 		}
-		case SDLK_r: {
-			if (p.t_ball == NULL) {
-				if (p.flip_right) {
-					p.t_ball = new Teleport_ball(p.pos_x + p.width + 1, p.pos_y + p.height / 3, p.flip_right);
-				}
-				else {
-					p.t_ball = new Teleport_ball(p.pos_x - 1, p.pos_y + p.height / 3, p.flip_right);
-				}
-				objects.insert(objects.end(), p.t_ball);
-			}
-			else {
-				p.pos_x = p.t_ball->pos_x + p.width / 2;
-				p.pos_y = p.t_ball->pos_y - p.height / 2;
-				p.t_ball->kill();
-				p.t_ball = NULL;
-			}
-			break;
-		}
-		case SDLK_t: {
-			if (p.t_ball != NULL) {
-				p.t_ball->kill();
-				p.t_ball = NULL;
-			}
-			break;
-		}
 		case SDLK_e: {
 			change_state(p, HIT1_STATE);
 			break;
@@ -127,6 +170,8 @@ void On_ground::handle_events(Player& p, SDL_Event& event) {
 			static_objects.insert(static_objects.end(), platform);
 			break;
 		}
+		default:
+			Player_states::handle_events(p, event);
 		}
 	}
 
@@ -240,31 +285,8 @@ void Jump::handle_events(Player& p, SDL_Event& event) {
 			static_objects.insert(static_objects.end(), platform);
 			break;
 		}
-		case SDLK_r: {
-			if (p.t_ball == NULL) {
-				if (p.flip_right) {
-					p.t_ball = new Teleport_ball(p.pos_x + p.width + 1, p.pos_y + p.height / 3, p.flip_right);
-				}
-				else {
-					p.t_ball = new Teleport_ball(p.pos_x - 1, p.pos_y + p.height / 3, p.flip_right);
-				}
-				objects.insert(objects.end(), p.t_ball);
-			}
-			else {
-				p.pos_x = p.t_ball->pos_x + p.width / 2;
-				p.pos_y = p.t_ball->pos_y - p.height / 2;
-				p.t_ball->kill();
-				p.t_ball = NULL;
-			}
-			break;
-		}
-		case SDLK_t: {
-			if (p.t_ball != NULL) {
-				p.t_ball->kill();
-				p.t_ball = NULL;
-			}
-			break;
-		}
+		default:
+			Player_states::handle_events(p, event);
 		}
 	}
 }

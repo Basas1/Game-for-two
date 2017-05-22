@@ -9,8 +9,8 @@ Player::Player() : Movable_object() {
 	type = PLAYER;
 	width = 40;
 	height = 100;
-	pos_x = 2800;
-	pos_y = 1500;
+	pos_x = 2000;
+	pos_y = 1100;
 	jump_vel = 7;
 	flip_right = true;
 

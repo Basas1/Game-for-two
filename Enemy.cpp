@@ -11,8 +11,8 @@ Enemy::Enemy() {
 	type = ENEMY;
 	width = 40;
 	height = 100;
-	pos_x = 600;
-	pos_y = 1500;
+	pos_x = 2700;
+	pos_y = 1100;
 	flip_right = false;
 
 	stand_animation = new Animated_texture(player_stand_texture, 3, -44, -28);

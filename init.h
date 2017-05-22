@@ -22,8 +22,8 @@ extern std::vector<Game_object*> objects;
 extern std::vector<Game_object*> static_objects;
 
 //Screen dimension constants
-const int SCREEN_WIDTH = 1920;
-const int SCREEN_HEIGHT = 1080;
+const int SCREEN_WIDTH = 1600;
+const int SCREEN_HEIGHT = 900;
 
 
 //Fps constants
@@ -35,12 +35,24 @@ const int WINDOW_START_X = (1920 - SCREEN_WIDTH) / 2;
 const int WINDOW_START_Y = (1080 - SCREEN_HEIGHT) / 2;
 
 //Game states
-enum GameStates {
+enum game_states {
 	STATE_NULL,
 	STATE_MENU,
 	STATE_GAME,
 	STATE_EXIT,
 };
+
+enum sides {
+	UP,
+	DOWN,
+	RIGHT,
+	LEFT,
+	UP_RIGHT,
+	UP_LEFT,
+	DOWN_RIGHT,
+	DOWN_LEFT,
+};
+
 
 //Types of objects
 enum object_types {

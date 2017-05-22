@@ -92,8 +92,6 @@ bool init() {
 	state_id = STATE_MENU;
 	current_state = new Game();
 
-
-
 	return success;
 }
 
