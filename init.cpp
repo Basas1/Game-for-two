@@ -9,7 +9,12 @@
 #include "Menu.h"
 #include "Game.h"
 
-Player* player = NULL;
+Player* player1 = NULL;
+Player2* player2 = NULL;
+
+SDL_GameController* game_controller = NULL;
+SDL_Joystick* joystick = NULL;
+
 
 
 std::vector<Game_object*> objects;
@@ -33,9 +38,9 @@ bool init() {
 	camera = new Camera;
 	//Initialization flag
 	bool success = true;
-
+	//SDL_SetHint(SDL_HINT_JOYSTICK_ALLOW_BACKGROUND_EVENTS, "1");
 	//Initialize SDL
-	if (SDL_Init(SDL_INIT_VIDEO | SDL_INIT_AUDIO) < 0) {
+	if (SDL_Init(SDL_INIT_VIDEO | SDL_INIT_AUDIO | SDL_INIT_GAMECONTROLLER) < 0) {
 		printf("SDL could not initialize! SDL Error: %s\n", SDL_GetError());
 		//success = false;
 	}
@@ -44,6 +49,10 @@ bool init() {
 		if (!SDL_SetHint(SDL_HINT_RENDER_SCALE_QUALITY, "1")) {
 			printf("Warning: Linear texture filtering not enabled!");
 		}
+
+		//Load joystick
+		game_controller = SDL_GameControllerOpen(0);
+		joystick = SDL_GameControllerGetJoystick(game_controller);
 
 		//Create window
 		main_window = SDL_CreateWindow("Epic AAA-game", WINDOW_START_X, WINDOW_START_Y, SCREEN_WIDTH, SCREEN_HEIGHT, SDL_WINDOW_SHOWN);

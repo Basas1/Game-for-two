@@ -3,6 +3,7 @@
 #include "Game_object.h"
 #include <SDL.h>
 #include "Player.h"
+#include "Player2.h"
 #include "Enemy.h"
 
 

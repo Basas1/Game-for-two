@@ -4,7 +4,7 @@
 #include <stack>
 #include "Teleport_ball.h"
 
-class Player_states;
+class Player1_states;
 
 class Player : public Movable_object {
 public:
@@ -22,7 +22,7 @@ public:
 	int get_y();
 
 	//Player state
-	Player_states* state;
+	Player1_states* state;
 
 	//Jump speed
 	int jump_vel;
@@ -36,6 +36,6 @@ public:
 
 	Teleport_ball* t_ball;
 
-	std::stack<Player_states*> state_stack;
+	std::stack<Player1_states*> state_stack;
 
 };

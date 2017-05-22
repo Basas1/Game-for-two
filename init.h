@@ -11,11 +11,15 @@
 #include "Game_object.h"
 #include "Static_object.h"
 #include "Player.h"
+#include "Player2.h"
 
 //Players
-extern Player* player;
+extern Player* player1;
+extern Player2* player2;
 
-
+//Game Controller 1 handler
+extern SDL_GameController* game_controller;
+extern SDL_Joystick* joystick;
 
 //Vector of all objects in game
 extern std::vector<Game_object*> objects;
@@ -33,6 +37,9 @@ const int SCREEN_TICKS_PER_FRAME = 1000 / SCREEN_FPS;
 //Window position
 const int WINDOW_START_X = (1920 - SCREEN_WIDTH) / 2;
 const int WINDOW_START_Y = (1080 - SCREEN_HEIGHT) / 2;
+
+//Analog joystick dead zone
+const int JOYSTICK_DEAD_ZONE = 16000;
 
 //Game states
 enum game_states {
