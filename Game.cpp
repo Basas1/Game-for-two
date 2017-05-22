@@ -62,6 +62,8 @@ void Game::logic() {
 	follow_x = (player1->get_x() + player2->get_x()) / 2;
 	follow_y = (player1->get_y() + player2->get_y()) / 2;
 	camera->follow(follow_x, follow_y);
+
+	camera->follow(player1->get_x(), player1->get_y());
 }
 
 void Game::render() {
