@@ -61,8 +61,6 @@ Teleport_ball::Teleport_ball(int x, int y, int side) : Movable_object() {
 	teleport_ball_animation = new Animated_texture(fireball_texture, 3, -32, -32);
 	teleport_ball_animation->set_clips();
 	teleport_ball_animation->set_ñolor(50, 50, 255);
-	//teleport_ball_animation->set_width(1);
-	//teleport_ball_animation->set_height(1);
 
 	collision_box = { (int)pos_x, (int)pos_y, width, height };
 }

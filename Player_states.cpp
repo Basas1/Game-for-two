@@ -38,16 +38,6 @@ void Player_states::handle_events(Player& p, SDL_Event& event) {
 	if (event.type == SDL_KEYDOWN) {
 		switch (event.key.keysym.sym) {
 		case SDLK_r: {
-			//const Uint8* currentKeyStates = SDL_GetKeyboardState(NULL);
-			//if (currentKeyStates[SDL_SCANCODE_UP]) {
-			//}
-			//if (currentKeyStates[SDL_SCANCODE_DOWN]) {
-			//}
-			//if (currentKeyStates[SDL_SCANCODE_LEFT]) {
-			//}
-			//if (currentKeyStates[SDL_SCANCODE_RIGHT]) {
-			//}
-
 			if (p.t_ball == NULL) {
 				const Uint8* currentKeyStates = SDL_GetKeyboardState(NULL);
 				if (currentKeyStates[SDL_SCANCODE_UP] && !currentKeyStates[SDL_SCANCODE_RIGHT] && !currentKeyStates[SDL_SCANCODE_LEFT] && !currentKeyStates[SDL_SCANCODE_DOWN]) {
@@ -75,12 +65,6 @@ void Player_states::handle_events(Player& p, SDL_Event& event) {
 						p.t_ball = new Teleport_ball(p.pos_x + p.width / 2, p.pos_y + p.height / 2, LEFT);
 					}
 				}
-				//if (p.flip_right) {
-				//	p.t_ball = new Teleport_ball(p.pos_x + p.width + 1, p.pos_y + p.height / 3, 0);
-				//}
-				//else {
-				//	p.t_ball = new Teleport_ball(p.pos_x - 1, p.pos_y + p.height / 3, 1);
-				//}
 				objects.insert(objects.end(), p.t_ball);
 			}
 			else {
@@ -98,7 +82,6 @@ void Player_states::handle_events(Player& p, SDL_Event& event) {
 			}
 			break;
 		}
-
 		}
 	}
 }
