@@ -3,7 +3,7 @@
 
 Camera::Camera() {
 	vel_x, vel_y = 0;
-	scale = 100;
+	scale = 2;
 	camera = { 0, 0, SCREEN_WIDTH, SCREEN_HEIGHT };
 }
 
@@ -13,6 +13,10 @@ int Camera::get_x() {
 
 int Camera::get_y() {
 	return camera.y;
+}
+
+double Camera::get_scale() {
+	return scale;
 }
 
 SDL_Rect* Camera::get_rect() {

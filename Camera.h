@@ -9,6 +9,8 @@ public:
 	int get_x();
 	int get_y();
 
+	double get_scale();
+
 	//get obliterated, son
 	SDL_Rect* get_rect();
 
@@ -20,7 +22,7 @@ private:
 	SDL_Rect camera;
 
 	//scale of rendered field. 100 is default
-	int scale;
+	double scale;
 
 	//speed of camera movement
 	double vel_x, vel_y;

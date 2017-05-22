@@ -24,9 +24,10 @@ Game::~Game() {
 }
 
 void Game::handle_events() {
-	//Handle events on queue
-	while (SDL_PollEvent(&event) != 0) {
+	//Handle events
+	bool pe = SDL_PollEvent(&event);
 
+	if (pe != 0) {
 		if (event.type == SDL_QUIT) {
 			//Quit the program
 			set_next_state(STATE_EXIT);
@@ -37,49 +38,10 @@ void Game::handle_events() {
 				objects[i]->handle_events(event);
 			}
 		}
-
 	}
-	//player1->handle_events(event);
-
-
-	////Handle events
-	//SDL_PollEvent(&event);
-
-
-	////Sint16 x;
-	////x = SDL_GameControllerGetAxis(game_controller, SDL_CONTROLLER_AXIS_TRIGGERRIGHT);
-	////printf("tr=%d; ", x);
-	////x = SDL_GameControllerGetAxis(game_controller, SDL_CONTROLLER_AXIS_LEFTX);
-	////printf("lx=%d; ", x);
-	////x = SDL_GameControllerGetAxis(game_controller, SDL_CONTROLLER_AXIS_LEFTY);
-	////printf("ly=%d; ", x);
-	////x = SDL_GameControllerGetAxis(game_controller, SDL_CONTROLLER_AXIS_RIGHTX);
-	////printf("rx=%d; ", x);
-	////x = SDL_GameControllerGetAxis(game_controller, SDL_CONTROLLER_AXIS_RIGHTY);
-	////printf("ry=%d;\n", x);
-
-	//if (event.type == SDL_CONTROLLERBUTTONDOWN) {
-	//	printf("key=%d;\n", event.cbutton.button);
-	//}
-
-
-	////If the user has Xed out the window
-	//if (event.type == SDL_QUIT) {
-	//	//Quit the program
-	//	set_next_state(STATE_EXIT);
-	//}
-	////If the user pressed enter
-	//else if ((event.type == SDL_KEYDOWN) && (event.key.keysym.sym == SDLK_RETURN)) {
-	//	//Move to the title screen
-	//	set_next_state(STATE_MENU);
-	//}
-
-	//for (int i = 0; i < objects.size(); i++) {
-	//	if (objects[i]->is_exist()) {
-	//		objects[i]->handle_events(event);
-	//	}
-	//} 
-
+	else {
+		player1->handle_events(event);
+	}
 }
 
 void Game::logic() {
@@ -96,8 +58,10 @@ void Game::logic() {
 		}
 	}
 
-	//camera->follow(player1->get_x(), player1->get_y());
-	camera->follow(player2->get_x(), player2->get_y());
+	int follow_x, follow_y;
+	follow_x = (player1->get_x() + player2->get_x()) / 2;
+	follow_y = (player1->get_y() + player2->get_y()) / 2;
+	camera->follow(follow_x, follow_y);
 }
 
 void Game::render() {
@@ -107,7 +71,12 @@ void Game::render() {
 
 
 	//Render background
-	SDL_RenderCopyEx(main_renderer, background, camera->get_rect(), NULL, 0.0, NULL, SDL_FLIP_NONE);
+	SDL_Rect back;
+	back = *camera->get_rect();
+	back.w /= 2;
+	back.h /= 2;
+	//SDL_RenderCopyEx(main_renderer, background, camera->get_rect(), NULL, 0.0, NULL, SDL_FLIP_NONE);
+	SDL_RenderCopyEx(main_renderer, background, &back, NULL, 0.0, NULL, SDL_FLIP_NONE);
 
 	//Render static objects
 	for (int i = 0; i < static_objects.size(); i++) {
