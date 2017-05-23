@@ -3,7 +3,7 @@
 
 Camera::Camera() {
 	vel_x, vel_y = 0;
-	scale = 2;
+	scale = 0.75;
 	camera = { 0, 0, SCREEN_WIDTH, SCREEN_HEIGHT };
 }
 
@@ -32,8 +32,8 @@ void Camera::set_scale(int target_scale) {
 }
 
 void Camera::move_to(int vision_focus_x, int vision_focus_y) {
-	camera.x = vision_focus_x - (SCREEN_WIDTH / 2) / scale;
-	camera.y = vision_focus_y - (SCREEN_HEIGHT / 2) / scale;
+	camera.x = vision_focus_x - ((SCREEN_WIDTH / 2) / scale);
+	camera.y = vision_focus_y - ((SCREEN_HEIGHT / 2) / scale);
 
 	if (camera.x < 0) {
 		camera.x = 0;
@@ -41,10 +41,10 @@ void Camera::move_to(int vision_focus_x, int vision_focus_y) {
 	if (camera.y < 0) {
 		camera.y = 0;
 	}
-	if (camera.x > map_surface->w * scale - camera.w) {
-		camera.x = map_surface->w * scale - camera.w;
+	if (camera.x > map_surface->w - camera.w / scale) {
+		camera.x = map_surface->w - camera.w / scale;
 	}
-	if (camera.y > map_surface->h * scale - camera.h) {
-		camera.y = map_surface->h * scale - camera.h;
+	if (camera.y > map_surface->h - camera.h / scale) {
+		camera.y = map_surface->h - camera.h / scale;
 	}
 }

@@ -69,6 +69,7 @@ bool init() {
 			}
 			else {
 				//Initialize renderer color
+				SDL_SetRenderDrawBlendMode(main_renderer, SDL_BLENDMODE_BLEND);
 				SDL_SetRenderDrawColor(main_renderer, 0xFF, 0xFF, 0xFF, 0xFF);
 
 				//Initialize PNG loading

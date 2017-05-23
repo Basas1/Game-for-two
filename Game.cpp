@@ -1,6 +1,7 @@
 #include "Game.h"
 #include "media.h"
 #include "init.h"
+#include "math.h"
 
 
 
@@ -58,10 +59,14 @@ void Game::logic() {
 		}
 	}
 
-	int follow_x, follow_y;
-	follow_x = (player1->get_x() + player2->get_x()) / 2;
-	follow_y = (player1->get_y() + player2->get_y()) / 2;
-	camera->follow(follow_x, follow_y);
+	//int follow_x, follow_y;
+	//follow_x = (player1->get_x() + player2->get_x()) / 2;
+	//follow_y = (player1->get_y() + player2->get_y()) / 2;
+	//double scale;
+	//scale = 500 / fabs(player1->get_x() - player2->get_x() + (player1->get_y() - player2->get_y()));
+	//camera->set_scale(scale);
+	//printf("%f\n", scale);
+	//camera->follow(follow_x, follow_y);
 
 	camera->follow(player1->get_x(), player1->get_y());
 }
@@ -70,13 +75,12 @@ void Game::render() {
 	//Clear screen
 	SDL_SetRenderDrawColor(main_renderer, 0, 0, 0, 0xFF);
 	SDL_RenderClear(main_renderer);
-
-
+	
 	//Render background
 	SDL_Rect back;
 	back = *camera->get_rect();
-	back.w /= 2;
-	back.h /= 2;
+	back.w /= camera->get_scale();
+	back.h /= camera->get_scale();
 	//SDL_RenderCopyEx(main_renderer, background, camera->get_rect(), NULL, 0.0, NULL, SDL_FLIP_NONE);
 	SDL_RenderCopyEx(main_renderer, background, &back, NULL, 0.0, NULL, SDL_FLIP_NONE);
 

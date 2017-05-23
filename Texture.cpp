@@ -92,8 +92,9 @@ void Texture::render(int x, int y, bool flip_right, SDL_Rect* clip, double angle
 	}
 
 	//Set rendering space
+	double scale = camera->get_scale();
 	//SDL_Rect renderQuad = { x - camera->get_x() + x_off, y - camera->get_y() + y_off, width , height };
-	SDL_Rect renderQuad = { (x - camera->get_x() + x_off) * camera->get_scale(), (y - camera->get_y() + y_off) * camera->get_scale(), width * camera->get_scale() , height * camera->get_scale() };
+	SDL_Rect renderQuad = { (x - camera->get_x() + x_off) * scale, (y - camera->get_y() + y_off) * scale, width * scale, height * scale };
 	//Render to screen
 	SDL_RenderCopyEx(main_renderer, original_texture, clip, &renderQuad, angle, center, flip);
 }

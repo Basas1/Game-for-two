@@ -50,13 +50,14 @@ void Fireball::logic() {
 
 void Fireball::render() {
 	//Set rendering space
-	SDL_Rect renderQuad = { pos_x - camera->get_x(), pos_y - camera->get_y(), width, height };
+	double scale = camera->get_scale();
+	SDL_Rect renderQuad = { (pos_x - camera->get_x()) * camera->get_scale(), (pos_y - camera->get_y()) * camera->get_scale(), width * scale, height * scale };
 
 	fireball_animation->render(pos_x, pos_y);
 	fireball_animation->next_frame();
 
 	//Outline of rectangle of texture
-	SDL_SetRenderDrawColor(main_renderer, 0, 0, 255, 255);
+	SDL_SetRenderDrawColor(main_renderer, 0, 0, 255, 100);
 	SDL_RenderDrawRect(main_renderer, &renderQuad);
 }
 
