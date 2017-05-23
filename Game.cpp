@@ -26,9 +26,8 @@ Game::~Game() {
 
 void Game::handle_events() {
 	//Handle events
-	bool pe = SDL_PollEvent(&event);
 
-	if (pe != 0) {
+	while (SDL_PollEvent(&event) != 0) {
 		if (event.type == SDL_QUIT) {
 			//Quit the program
 			set_next_state(STATE_EXIT);
@@ -40,9 +39,9 @@ void Game::handle_events() {
 			}
 		}
 	}
-	else {
-		player1->handle_events(event);
-	}
+	SDL_PollEvent(&event);
+	player1->handle_events(event);
+
 }
 
 void Game::logic() {
