@@ -35,6 +35,7 @@ public:
 
 	//Fireball cooldown
 	int fireball_cooldown;
+	int hit_cooldown;
 
 	void reduce_cooldowns();
 

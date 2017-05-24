@@ -23,6 +23,7 @@ Player::Player(int x, int y, int control) : Movable_object() {
 	jump_vel = 7;
 	flip_right = true;
 	fireball_cooldown = 0;
+	hit_cooldown = 0;
 
 	stand_animation = new Animated_texture(player_stand_texture, 3, -44, -28);
 	int order1[] = { 0, 1, 2, 1 };
@@ -93,6 +94,7 @@ void Player::render() {
 void Player::reduce_cooldowns() {
 	int time = SDL_GetTicks();
 	if (time - fireball_cooldown >= 500) fireball_cooldown = 0;
+	if (time - hit_cooldown >= 1000) hit_cooldown = 0;
 }
 
 void Player::teleport_to_ball() {

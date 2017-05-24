@@ -63,37 +63,24 @@ void Game::logic() {
 	follow_y = (player1->get_y() + player2->get_y()) / 2;
 
 	double sc1,sc2;
-	int p1_x, p2_x, p1_y, p2_y;
-	p1_x = (int)player1->get_x();
-	p2_x = (int)player2->get_x();
-	p1_y = (int)player1->get_y();
-	p2_y = (int)player2->get_y();
+	double p1_x, p2_x, p1_y, p2_y;
+	p1_x = (double)player1->get_x();
+	p2_x = (double)player2->get_x();
+	p1_y = (double)player1->get_y();
+	p2_y = (double)player2->get_y();
+	double dist_x = fabs(p1_x - p2_x);
+	double dist_y = fabs(p1_y - p2_y);
+	double dist = sqrt(dist_x*dist_x + dist_y*dist_y);
 
-	if (abs(p1_x - p2_x) <= SCREEN_WIDTH / 3 * 1) {
-		sc1 = 1;
-	} else if (abs(p1_x - p2_x) >= SCREEN_WIDTH / 5 * 4) {
+	sc1 = 1 / (dist / (SCREEN_HEIGHT / 5 * 5 - SCREEN_HEIGHT / 3 * 1));
+	if (sc1 <= 0.5) {
 		sc1 = 0.5;
 	}
-	else {
-		sc1 = 0.75;
+	else if (sc1 >= 1) {
+		sc1 = 1;
 	}
 
-	if (abs(p1_y - p2_y) <= SCREEN_HEIGHT / 3 * 2) {
-		sc2 = 1;
-	}
-	else if (abs(p1_y - p2_y) >= SCREEN_HEIGHT / 5 * 4) {
-		sc2 = 0.5;
-	}
-	else {
-		sc2 = 0.75;
-	}
-
-	if (sc1 < sc2) {
-		camera->set_scale(sc1);
-	}
-	else {
-		camera->set_scale(sc2);
-	}
+	camera->set_scale(sc1);
 
 	//printf("%f\n", camera->get_scale());
 	camera->follow(follow_x, follow_y);

@@ -291,7 +291,9 @@ void On_ground::handle_events(Player& p, SDL_Event& event) {
 				break;
 			}
 			case SDLK_e: {
-				change_state(p, HIT1_STATE);
+				if (p.hit_cooldown == 0) {
+					change_state(p, HIT1_STATE);
+				}
 				break;
 			}
 			default:
@@ -324,7 +326,9 @@ void On_ground::handle_events(Player& p, SDL_Event& event) {
 				break;
 			}
 			case 10: {
-				change_state(p, HIT1_STATE);
+				if (p.hit_cooldown == 0) {
+					change_state(p, HIT1_STATE);
+				}
 				break;
 			}
 			default:
@@ -411,7 +415,9 @@ void Jump::handle_events(Player& p, SDL_Event& event) {
 				break;
 			}
 			case SDLK_e: {
-				change_state(p, HIT1_STATE);
+				if (p.hit_cooldown == 0) {
+					change_state(p, HIT1_STATE);
+				}
 				break;
 			}
 			default:
@@ -448,7 +454,9 @@ void Jump::handle_events(Player& p, SDL_Event& event) {
 				break;
 			}
 			case 10: {
-				change_state(p, HIT1_STATE);
+				if (p.hit_cooldown == 0) {
+					change_state(p, HIT1_STATE);
+				}
 				break;
 			}
 			default:
@@ -468,27 +476,9 @@ void Hit1::logic(Player& p) {
 	if (p.hit_animation->get_replay_count() > 0) {
 		p.hit_animation->reset();
 		p.vel_x = 0;
+		p.hit_cooldown = SDL_GetTicks();
 		p.state_stack.pop();
 	}
-	//if (p.hit_animation->get_frame_number() == 2) {
-	//	std::vector<Game_object*> collisions;
-	//	SDL_Rect hit_box;
-
-	//	if (p.flip_right) {
-	//		hit_box = { (int)p.pos_x + (int)p.width / 2, (int)p.pos_y + (int)(p.height / 2), (int)(p.width), (int)(p.height/2) };
-	//	}
-	//	else {
-	//		hit_box = { (int)p.pos_x - (int)(p.width / 2), (int)p.pos_y + (int)(p.height / 2), (int)(p.width), (int)(p.height / 2) };
-	//	}
-	//	collisions = p.get_collisions(&hit_box);
-	//	if (collisions.size() != 0) {
-	//		for (int i = 0; i < collisions.size(); i++) {
-	//			if (collisions[i]->type == ENEMY || collisions[i]->type == PLAYER) {
-	//				collisions[i]->kill();
-	//			}
-	//		}
-	//	}
-	//}
 
 	std::vector<Game_object*> collisions;
 	SDL_Rect hit_box;
