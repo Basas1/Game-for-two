@@ -15,7 +15,7 @@ public:
 	SDL_Rect* get_rect();
 
 	void follow(int vision_focus_x, int vision_focus_y);
-	void set_scale(int target_scale);
+	void set_scale(double target_scale);
 
 private:
 	//square of the camera

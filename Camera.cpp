@@ -3,7 +3,7 @@
 
 Camera::Camera() {
 	vel_x, vel_y = 0;
-	scale = 0.75;
+	scale = 1;
 	camera = { 0, 0, SCREEN_WIDTH, SCREEN_HEIGHT };
 }
 
@@ -27,7 +27,7 @@ void Camera::follow(int vision_focus_x, int vision_focus_y) {
 	move_to(vision_focus_x, vision_focus_y);
 }
 
-void Camera::set_scale(int target_scale) {
+void Camera::set_scale(double target_scale) {
 	scale = target_scale;
 }
 

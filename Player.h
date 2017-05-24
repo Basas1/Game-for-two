@@ -36,7 +36,6 @@ public:
 	//Fireball cooldown
 	int fireball_cooldown;
 
-
 	void reduce_cooldowns();
 
 	//Object's textures
@@ -47,6 +46,7 @@ public:
 	Animated_texture* hit2_animation;
 
 	Teleport_ball* t_ball;
+	void teleport_to_ball();
 
 	std::stack<Player_states*> state_stack;
 

@@ -169,8 +169,7 @@ void Player_states::cast_teleport_ball(Player& p) {
 		objects.insert(objects.end(), p.t_ball);
 	}
 	else {
-		p.pos_x = p.t_ball->pos_x + p.width / 2;
-		p.pos_y = p.t_ball->pos_y - p.height / 2;
+		p.teleport_to_ball();
 		p.t_ball->kill();
 		p.t_ball = NULL;
 	}
