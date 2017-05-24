@@ -21,7 +21,8 @@ extern Player2* player2;
 //Game Controller 1 handler
 extern SDL_GameController* gamepad1;
 extern SDL_GameController* gamepad2;
-extern SDL_Joystick* joystick;
+extern SDL_Joystick* joystick1;
+extern SDL_Joystick* joystick2;
 
 //Vector of all objects in game
 extern std::vector<Game_object*> objects;

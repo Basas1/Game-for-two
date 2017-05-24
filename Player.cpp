@@ -11,11 +11,18 @@ Player::Player(int x, int y, int control) : Movable_object() {
 
 	pos_x = 2000;
 	pos_y = 1100;
+
 	controller = control;
 	switch (controller) {
 	case 0: gamepad = NULL; break;
-	case 1: gamepad = gamepad1; break;
-	case 2: gamepad = gamepad2; break;
+	case 1: 
+		gamepad = gamepad1;
+		gamepad_id = SDL_JoystickInstanceID(joystick1);
+		break;
+	case 2: 
+		gamepad = gamepad2; 
+		gamepad_id = SDL_JoystickInstanceID(joystick2);
+		break;
 	}
 
 	width = 40;

@@ -8,11 +8,12 @@ class Player_states;
 
 class Player : public Movable_object {
 public:
-	Player(int x = 2000, int y = 1100, int controller = 0 );
+	Player(int x = 2000, int y = 1100, int control = 0 );
 	~Player();
 
 	
 	int controller;
+	SDL_JoystickID gamepad_id;
 	SDL_GameController* gamepad;
 
 	//Event handler

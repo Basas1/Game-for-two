@@ -16,8 +16,14 @@ Player2::Player2(int x, int y, int control) : Player() {
 	controller = control;
 	switch (controller) {
 	case 0: gamepad = NULL; break;
-	case 1: gamepad = gamepad1; break;
-	case 2: gamepad = gamepad2; break;
+	case 1:
+		gamepad = gamepad1;
+		gamepad_id = SDL_JoystickInstanceID(joystick1);
+		break;
+	case 2:
+		gamepad = gamepad2;
+		gamepad_id = SDL_JoystickInstanceID(joystick2);
+		break;
 	}
 
 

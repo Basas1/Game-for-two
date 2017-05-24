@@ -228,25 +228,18 @@ void Player_states::handle_events(Player& p, SDL_Event& event) {
 	}
 	else {
 		//Handle event for gamepad control
-		int ox, oy;
-		ox = SDL_GameControllerGetAxis(p.gamepad, SDL_CONTROLLER_AXIS_LEFTX);
-		oy = SDL_GameControllerGetAxis(p.gamepad, SDL_CONTROLLER_AXIS_LEFTY);
-		if (ox > JOYSTICK_DEAD_ZONE) {
-		}
-		if (ox < -JOYSTICK_DEAD_ZONE) {
-		}
-
-
 		if (event.type == SDL_CONTROLLERBUTTONDOWN) {
-			switch (event.cbutton.button) {
-			case 1: {
-				cast_teleport_ball(p);
-				break;
-			}
-			case 2: {
-				blast_teleport_ball(p);
-				break;
-			}
+			if (event.cbutton.which == p.gamepad_id) {
+				switch (event.cbutton.button) {
+				case 1: {
+					cast_teleport_ball(p);
+					break;
+				}
+				case 2: {
+					blast_teleport_ball(p);
+					break;
+				}
+				}
 			}
 		}
 	}
@@ -302,9 +295,7 @@ void On_ground::handle_events(Player& p, SDL_Event& event) {
 		}
 	}
 	else {
-		//If a key is pressed
 		int a_x = 0;
-
 		int ox, oy;
 		ox = SDL_GameControllerGetAxis(p.gamepad, SDL_CONTROLLER_AXIS_LEFTX);
 		oy = SDL_GameControllerGetAxis(p.gamepad, SDL_CONTROLLER_AXIS_LEFTY);
@@ -314,25 +305,26 @@ void On_ground::handle_events(Player& p, SDL_Event& event) {
 		if (ox < -JOYSTICK_DEAD_ZONE) {
 			a_x -= p.acceleration;
 		}
-
 		p.acc_x = a_x;
 
 		//If a key was pressed
 		if (event.type == SDL_CONTROLLERBUTTONDOWN) {
-			switch (event.cbutton.button) {
-			case 0: p.vel_y = -p.jump_vel; break;
-			case 3: {
-				cast_fireball(p);
-				break;
-			}
-			case 10: {
-				if (p.hit_cooldown == 0) {
-					change_state(p, HIT1_STATE);
+			if (event.cbutton.which == p.gamepad_id) {
+				switch (event.cbutton.button) {
+				case 0: p.vel_y = -p.jump_vel; break;
+				case 3: {
+					cast_fireball(p);
+					break;
 				}
-				break;
-			}
-			default:
-				Player_states::handle_events(p, event);
+				case 10: {
+					if (p.hit_cooldown == 0) {
+						change_state(p, HIT1_STATE);
+					}
+					break;
+				}
+				default:
+					Player_states::handle_events(p, event);
+				}
 			}
 		}
 
@@ -426,7 +418,6 @@ void Jump::handle_events(Player& p, SDL_Event& event) {
 		}
 	}
 	else {
-		//If a key is pressed
 		double a_x = 0;
 		int ox, oy;
 		ox = SDL_GameControllerGetAxis(p.gamepad, SDL_CONTROLLER_AXIS_LEFTX);
@@ -441,26 +432,28 @@ void Jump::handle_events(Player& p, SDL_Event& event) {
 
 		//If a key was pressed
 		if (event.type == SDL_CONTROLLERBUTTONDOWN) {
-			switch (event.jbutton.button) {
-			case 0: {
-				if (jump_count > 0) {
-					p.vel_y = -p.jump_vel;
-					jump_count--;
+			if (event.cbutton.which == p.gamepad_id) {
+				switch (event.jbutton.button) {
+				case 0: {
+					if (jump_count > 0) {
+						p.vel_y = -p.jump_vel;
+						jump_count--;
+					}
+					break;
 				}
-				break;
-			}
-			case 3: {
-				cast_fireball(p);
-				break;
-			}
-			case 10: {
-				if (p.hit_cooldown == 0) {
-					change_state(p, HIT1_STATE);
+				case 3: {
+					cast_fireball(p);
+					break;
 				}
-				break;
-			}
-			default:
-				Player_states::handle_events(p, event);
+				case 10: {
+					if (p.hit_cooldown == 0) {
+						change_state(p, HIT1_STATE);
+					}
+					break;
+				}
+				default:
+					Player_states::handle_events(p, event);
+				}
 			}
 		}
 	}

@@ -14,7 +14,8 @@ Player2* player2 = NULL;
 
 SDL_GameController* gamepad1 = NULL;
 SDL_GameController* gamepad2 = NULL;
-SDL_Joystick* joystick = NULL;
+SDL_Joystick* joystick1 = NULL;
+SDL_Joystick* joystick2 = NULL;
 
 //timer for fps capping
 Timer fps;
@@ -55,7 +56,8 @@ bool init() {
 		//Load joystick
 		gamepad1 = SDL_GameControllerOpen(0);
 		gamepad2 = SDL_GameControllerOpen(1);
-		joystick = SDL_GameControllerGetJoystick(gamepad1);
+		joystick1 = SDL_GameControllerGetJoystick(gamepad1);
+		joystick2 = SDL_GameControllerGetJoystick(gamepad2);
 
 		//Create window
 		main_window = SDL_CreateWindow("Epic AAA-game", WINDOW_START_X, WINDOW_START_Y, SCREEN_WIDTH, SCREEN_HEIGHT, SDL_WINDOW_SHOWN);
