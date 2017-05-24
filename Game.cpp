@@ -58,16 +58,17 @@ void Game::logic() {
 		}
 	}
 
-	//int follow_x, follow_y;
-	//follow_x = (player1->get_x() + player2->get_x()) / 2;
-	//follow_y = (player1->get_y() + player2->get_y()) / 2;
+	int follow_x, follow_y;
+	follow_x = (player1->get_x() + player2->get_x()) / 2;
+	follow_y = (player1->get_y() + player2->get_y()) / 2;
+
 	//double scale;
 	//scale = 500 / fabs(player1->get_x() - player2->get_x() + (player1->get_y() - player2->get_y()));
 	//camera->set_scale(scale);
 	//printf("%f\n", scale);
-	//camera->follow(follow_x, follow_y);
 
-	camera->follow(player1->get_x(), player1->get_y());
+
+	camera->follow(follow_x, follow_y);
 }
 
 void Game::render() {

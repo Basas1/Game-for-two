@@ -85,7 +85,7 @@ bool load_media() {
 		printf("Failed to load player texture!\n");
 		success = false;
 	}
-	player_hit_texture = load_texture("Images/stab.gif");
+	player_hit_texture = load_texture("Images/stab.png");
 	if (player_hit_texture == NULL) {
 		printf("Failed to load player texture!\n");
 		success = false;
@@ -112,7 +112,7 @@ bool load_media() {
 		printf("Failed to load player texture!\n");
 		success = false;
 	}
-	player2_hit_texture = load_texture("Images/stab2.gif");
+	player2_hit_texture = load_texture("Images/stab2.png");
 	if (player_hit_texture == NULL) {
 		printf("Failed to load player texture!\n");
 		success = false;

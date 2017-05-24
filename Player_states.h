@@ -13,6 +13,8 @@ public:
 	};
 	void change_state(Player& p, int state);
 	void cast_fireball(Player& p);
+	void cast_teleport_ball(Player& p);
+	void blast_teleport_ball(Player& p);
 	virtual ~Player_states() {};
 	virtual void handle_events(Player& p, SDL_Event& event);
 	virtual void logic(Player& p) {};

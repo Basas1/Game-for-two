@@ -34,7 +34,7 @@ Player2::Player2(int x, int y, int control) : Player() {
 	jump_animation = new Animated_texture(player2_jump_texture, 3, -44, -28);
 	jump_animation->set_frame_order(order1, sizeof(order1) / sizeof(int));
 	jump_animation->set_ticks_per_frame(25);
-	hit_animation = new Animated_texture(player2_hit_texture, 8, -44, -28);
+	hit_animation = new Animated_texture(player2_hit_texture, 4, -44, -28);
 
 
 	collision_box = { (int)pos_x, (int)pos_y, width, height };

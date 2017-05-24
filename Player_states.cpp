@@ -103,55 +103,113 @@ void Player_states::cast_fireball(Player& p) {
 	}
 }
 
+void Player_states::cast_teleport_ball(Player& p) {
+	if (p.t_ball == NULL) {
+		if (p.controller == NULL) {
+			const Uint8* currentKeyStates = SDL_GetKeyboardState(NULL);
+			if (currentKeyStates[SDL_SCANCODE_UP] && !currentKeyStates[SDL_SCANCODE_RIGHT] && !currentKeyStates[SDL_SCANCODE_LEFT] && !currentKeyStates[SDL_SCANCODE_DOWN]) {
+				p.t_ball = new Teleport_ball(p.pos_x + p.width / 2, p.pos_y + p.height / 2, UP);
+			}
+			else if (!currentKeyStates[SDL_SCANCODE_UP] && !currentKeyStates[SDL_SCANCODE_RIGHT] && !currentKeyStates[SDL_SCANCODE_LEFT] && currentKeyStates[SDL_SCANCODE_DOWN]) {
+				p.t_ball = new Teleport_ball(p.pos_x + p.width / 2, p.pos_y + p.height / 2, DOWN);
+			}
+			else if (currentKeyStates[SDL_SCANCODE_UP] && currentKeyStates[SDL_SCANCODE_RIGHT] && !currentKeyStates[SDL_SCANCODE_LEFT] && !currentKeyStates[SDL_SCANCODE_DOWN]) {
+				p.t_ball = new Teleport_ball(p.pos_x + p.width / 2, p.pos_y + p.height / 2, UP_RIGHT);
+			}
+			else if (currentKeyStates[SDL_SCANCODE_UP] && !currentKeyStates[SDL_SCANCODE_RIGHT] && currentKeyStates[SDL_SCANCODE_LEFT] && !currentKeyStates[SDL_SCANCODE_DOWN]) {
+				p.t_ball = new Teleport_ball(p.pos_x + p.width / 2, p.pos_y + p.height / 2, UP_LEFT);
+			}
+			else if (!currentKeyStates[SDL_SCANCODE_UP] && currentKeyStates[SDL_SCANCODE_RIGHT] && !currentKeyStates[SDL_SCANCODE_LEFT] && currentKeyStates[SDL_SCANCODE_DOWN]) {
+				p.t_ball = new Teleport_ball(p.pos_x + p.width / 2, p.pos_y + p.height / 2, DOWN_RIGHT);
+			}
+			else if (!currentKeyStates[SDL_SCANCODE_UP] && !currentKeyStates[SDL_SCANCODE_RIGHT] && currentKeyStates[SDL_SCANCODE_LEFT] && currentKeyStates[SDL_SCANCODE_DOWN]) {
+				p.t_ball = new Teleport_ball(p.pos_x + p.width / 2, p.pos_y + p.height / 2, DOWN_LEFT);
+			}
+			else {
+				if (p.flip_right) {
+					p.t_ball = new Teleport_ball(p.pos_x + p.width / 2, p.pos_y + p.height / 2, RIGHT);
+				}
+				else {
+					p.t_ball = new Teleport_ball(p.pos_x + p.width / 2, p.pos_y + p.height / 2, LEFT);
+				}
+			}
+		}
+		else {
+			int ox, oy, dz;
+			dz = JOYSTICK_DEAD_ZONE;
+			ox = SDL_GameControllerGetAxis(p.gamepad, SDL_CONTROLLER_AXIS_LEFTX);
+			oy = SDL_GameControllerGetAxis(p.gamepad, SDL_CONTROLLER_AXIS_LEFTY);
+			if (oy < -dz && ox < dz && ox > -dz) {
+				p.t_ball = new Teleport_ball(p.pos_x + p.width / 2, p.pos_y + p.height / 2, UP);
+			}
+			else if (oy > dz && ox < dz && ox > -dz) {
+				p.t_ball = new Teleport_ball(p.pos_x + p.width / 2, p.pos_y + p.height / 2, DOWN);
+			}
+			else if (oy < -dz / 2 && ox > dz / 2) {
+				p.t_ball = new Teleport_ball(p.pos_x + p.width / 2, p.pos_y + p.height / 2, UP_RIGHT);
+			}
+			else if (oy < -dz / 2 && ox < -dz / 2) {
+				p.t_ball = new Teleport_ball(p.pos_x + p.width / 2, p.pos_y + p.height / 2, UP_LEFT);
+			}
+			else if (oy > dz / 2 && ox > dz / 2) {
+				p.t_ball = new Teleport_ball(p.pos_x + p.width / 2, p.pos_y + p.height / 2, DOWN_RIGHT);
+			}
+			else if (oy > dz / 2 && ox < -dz / 2) {
+				p.t_ball = new Teleport_ball(p.pos_x + p.width / 2, p.pos_y + p.height / 2, DOWN_LEFT);
+			}
+			else {
+				if (p.flip_right) {
+					p.t_ball = new Teleport_ball(p.pos_x + p.width / 2, p.pos_y + p.height / 2, RIGHT);
+				}
+				else {
+					p.t_ball = new Teleport_ball(p.pos_x + p.width / 2, p.pos_y + p.height / 2, LEFT);
+				}
+			}
+		}
+		objects.insert(objects.end(), p.t_ball);
+	}
+	else {
+		p.pos_x = p.t_ball->pos_x + p.width / 2;
+		p.pos_y = p.t_ball->pos_y - p.height / 2;
+		p.t_ball->kill();
+		p.t_ball = NULL;
+	}
+}
+
+void Player_states::blast_teleport_ball(Player& p) {
+	if (p.t_ball != NULL && p.t_ball->stage_two) {
+		std::vector<Game_object*> collisions;
+		SDL_Rect hit_box;
+		hit_box = { (int)p.t_ball->pos_x - (int)p.t_ball->b_width / 2, (int)p.t_ball->pos_y - (int)(p.t_ball->b_height / 2), (int)(p.t_ball->b_width), (int)(p.t_ball->b_height) };
+		collisions = p.get_collisions(&hit_box);
+		if (collisions.size() != 0) {
+			for (int i = 0; i < collisions.size(); i++) {
+				if (collisions[i]->type == ENEMY || collisions[i]->type == PLAYER) {
+					collisions[i]->kill();
+				}
+			}
+		}
+		if (p.t_ball->check_collision(hit_box, p.collision_box)) {
+			p.kill();
+		}
+		p.t_ball->kill();
+		p.t_ball = NULL;
+	}
+}
+
+
+
 void Player_states::handle_events(Player& p, SDL_Event& event) {
 	if (p.controller == NULL) {
 		//Handle Event for keyboard control
 		if (event.type == SDL_KEYDOWN) {
 			switch (event.key.keysym.sym) {
 			case SDLK_r: {
-				if (p.t_ball == NULL) {
-					const Uint8* currentKeyStates = SDL_GetKeyboardState(NULL);
-					if (currentKeyStates[SDL_SCANCODE_UP] && !currentKeyStates[SDL_SCANCODE_RIGHT] && !currentKeyStates[SDL_SCANCODE_LEFT] && !currentKeyStates[SDL_SCANCODE_DOWN]) {
-						p.t_ball = new Teleport_ball(p.pos_x + p.width / 2, p.pos_y + p.height / 2, UP);
-					}
-					else if (!currentKeyStates[SDL_SCANCODE_UP] && !currentKeyStates[SDL_SCANCODE_RIGHT] && !currentKeyStates[SDL_SCANCODE_LEFT] && currentKeyStates[SDL_SCANCODE_DOWN]) {
-						p.t_ball = new Teleport_ball(p.pos_x + p.width / 2, p.pos_y + p.height / 2, DOWN);
-					}
-					else if (currentKeyStates[SDL_SCANCODE_UP] && currentKeyStates[SDL_SCANCODE_RIGHT] && !currentKeyStates[SDL_SCANCODE_LEFT] && !currentKeyStates[SDL_SCANCODE_DOWN]) {
-						p.t_ball = new Teleport_ball(p.pos_x + p.width / 2, p.pos_y + p.height / 2, UP_RIGHT);
-					}
-					else if (currentKeyStates[SDL_SCANCODE_UP] && !currentKeyStates[SDL_SCANCODE_RIGHT] && currentKeyStates[SDL_SCANCODE_LEFT] && !currentKeyStates[SDL_SCANCODE_DOWN]) {
-						p.t_ball = new Teleport_ball(p.pos_x + p.width / 2, p.pos_y + p.height / 2, UP_LEFT);
-					}
-					else if (!currentKeyStates[SDL_SCANCODE_UP] && currentKeyStates[SDL_SCANCODE_RIGHT] && !currentKeyStates[SDL_SCANCODE_LEFT] && currentKeyStates[SDL_SCANCODE_DOWN]) {
-						p.t_ball = new Teleport_ball(p.pos_x + p.width / 2, p.pos_y + p.height / 2, DOWN_RIGHT);
-					}
-					else if (!currentKeyStates[SDL_SCANCODE_UP] && !currentKeyStates[SDL_SCANCODE_RIGHT] && currentKeyStates[SDL_SCANCODE_LEFT] && currentKeyStates[SDL_SCANCODE_DOWN]) {
-						p.t_ball = new Teleport_ball(p.pos_x + p.width / 2, p.pos_y + p.height / 2, DOWN_LEFT);
-					}
-					else {
-						if (p.flip_right) {
-							p.t_ball = new Teleport_ball(p.pos_x + p.width / 2, p.pos_y + p.height / 2, RIGHT);
-						}
-						else {
-							p.t_ball = new Teleport_ball(p.pos_x + p.width / 2, p.pos_y + p.height / 2, LEFT);
-						}
-					}
-					objects.insert(objects.end(), p.t_ball);
-				}
-				else {
-					p.pos_x = p.t_ball->pos_x + p.width / 2;
-					p.pos_y = p.t_ball->pos_y - p.height / 2;
-					p.t_ball->kill();
-					p.t_ball = NULL;
-				}
+				cast_teleport_ball(p);
 				break;
 			}
 			case SDLK_t: {
-				if (p.t_ball != NULL) {
-					p.t_ball->kill();
-					p.t_ball = NULL;
-				}
+				blast_teleport_ball(p);
 				break;
 			}
 			case SDLK_f: {
@@ -183,53 +241,11 @@ void Player_states::handle_events(Player& p, SDL_Event& event) {
 		if (event.type == SDL_CONTROLLERBUTTONDOWN) {
 			switch (event.cbutton.button) {
 			case 1: {
-				if (p.t_ball == NULL) {
-					int ox, oy, dz;
-					dz = JOYSTICK_DEAD_ZONE;
-					ox = SDL_GameControllerGetAxis(p.gamepad, SDL_CONTROLLER_AXIS_LEFTX);
-					oy = SDL_GameControllerGetAxis(p.gamepad, SDL_CONTROLLER_AXIS_LEFTY);
-
-					if (oy < -dz && ox < dz && ox > -dz) {
-						p.t_ball = new Teleport_ball(p.pos_x + p.width / 2, p.pos_y + p.height / 2, UP);
-					}
-					else if (oy > dz && ox < dz && ox > -dz) {
-						p.t_ball = new Teleport_ball(p.pos_x + p.width / 2, p.pos_y + p.height / 2, DOWN);
-					}
-					else if (oy < -dz / 2 && ox > dz / 2) {
-						p.t_ball = new Teleport_ball(p.pos_x + p.width / 2, p.pos_y + p.height / 2, UP_RIGHT);
-					}
-					else if (oy < -dz / 2 && ox < -dz / 2) {
-						p.t_ball = new Teleport_ball(p.pos_x + p.width / 2, p.pos_y + p.height / 2, UP_LEFT);
-					}
-					else if (oy > dz / 2 && ox > dz / 2) {
-						p.t_ball = new Teleport_ball(p.pos_x + p.width / 2, p.pos_y + p.height / 2, DOWN_RIGHT);
-					}
-					else if (oy > dz / 2 && ox < -dz / 2) {
-						p.t_ball = new Teleport_ball(p.pos_x + p.width / 2, p.pos_y + p.height / 2, DOWN_LEFT);
-					}
-					else {
-						if (p.flip_right) {
-							p.t_ball = new Teleport_ball(p.pos_x + p.width / 2, p.pos_y + p.height / 2, RIGHT);
-						}
-						else {
-							p.t_ball = new Teleport_ball(p.pos_x + p.width / 2, p.pos_y + p.height / 2, LEFT);
-						}
-					}
-					objects.insert(objects.end(), p.t_ball);
-				}
-				else {
-					p.pos_x = p.t_ball->pos_x + p.width / 2;
-					p.pos_y = p.t_ball->pos_y - p.height / 2;
-					p.t_ball->kill();
-					p.t_ball = NULL;
-				}
+				cast_teleport_ball(p);
 				break;
 			}
 			case 2: {
-				if (p.t_ball != NULL) {
-					p.t_ball->kill();
-					p.t_ball = NULL;
-				}
+				blast_teleport_ball(p);
 				break;
 			}
 			}
@@ -452,28 +468,54 @@ void Jump::render(Player& p) {
 void Hit1::logic(Player& p) {
 	if (p.hit_animation->get_replay_count() > 0) {
 		p.hit_animation->reset();
+		p.vel_x = 0;
 		p.state_stack.pop();
 	}
-	if (p.hit_animation->get_frame_number() == 6) {
-		std::vector<Game_object*> collisions;
-		SDL_Rect hit_box;
+	//if (p.hit_animation->get_frame_number() == 2) {
+	//	std::vector<Game_object*> collisions;
+	//	SDL_Rect hit_box;
 
-		if (p.flip_right) {
-			hit_box = { (int)p.pos_x + (int)p.width / 2, (int)p.pos_y + (int)(p.height / 2), (int)(p.width), (int)(p.height/2) };
-		}
-		else {
-			hit_box = { (int)p.pos_x - (int)(p.width / 2), (int)p.pos_y + (int)(p.height / 2), (int)(p.width), (int)(p.height / 2) };
-		}
-		collisions = p.get_collisions(&hit_box);
-		if (collisions.size() != 0) {
-			for (int i = 0; i < collisions.size(); i++) {
-				if (collisions[i]->type == ENEMY) {
-					collisions[i]->kill();
-				}
+	//	if (p.flip_right) {
+	//		hit_box = { (int)p.pos_x + (int)p.width / 2, (int)p.pos_y + (int)(p.height / 2), (int)(p.width), (int)(p.height/2) };
+	//	}
+	//	else {
+	//		hit_box = { (int)p.pos_x - (int)(p.width / 2), (int)p.pos_y + (int)(p.height / 2), (int)(p.width), (int)(p.height / 2) };
+	//	}
+	//	collisions = p.get_collisions(&hit_box);
+	//	if (collisions.size() != 0) {
+	//		for (int i = 0; i < collisions.size(); i++) {
+	//			if (collisions[i]->type == ENEMY || collisions[i]->type == PLAYER) {
+	//				collisions[i]->kill();
+	//			}
+	//		}
+	//	}
+	//}
+
+	std::vector<Game_object*> collisions;
+	SDL_Rect hit_box;
+
+	if (p.flip_right) {
+		hit_box = { (int)p.pos_x + (int)p.width / 2, (int)p.pos_y + (int)(p.height / 2), (int)(p.width), (int)(p.height / 2) };
+	}
+	else {
+		hit_box = { (int)p.pos_x - (int)(p.width / 2), (int)p.pos_y + (int)(p.height / 2), (int)(p.width), (int)(p.height / 2) };
+	}
+	collisions = p.get_collisions(&hit_box);
+	if (collisions.size() != 0) {
+		for (int i = 0; i < collisions.size(); i++) {
+			if (collisions[i]->type == ENEMY || collisions[i]->type == PLAYER) {
+				collisions[i]->kill();
 			}
 		}
 	}
-	p.vel_x = 0;
+
+	if (p.flip_right) {
+		p.vel_x = p.acceleration * 2;
+	}
+	else {
+		p.vel_x = -p.acceleration * 2;
+	}
+	p.vel_y = 0;
 	p.move();
 }
 

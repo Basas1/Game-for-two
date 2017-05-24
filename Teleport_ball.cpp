@@ -17,6 +17,8 @@ Teleport_ball::Teleport_ball(int x, int y, int side) : Movable_object() {
 	vel_x = 0;
 	vel_y = 0;
 	exist = true;
+	create_time = SDL_GetTicks();
+	stage_two = false;
 
 	switch (side) {
 	case RIGHT: {
@@ -60,6 +62,8 @@ Teleport_ball::Teleport_ball(int x, int y, int side) : Movable_object() {
 	teleport_ball_animation = new Animated_texture(fireball_texture, 3, -32, -32);
 	teleport_ball_animation->set_clips();
 	teleport_ball_animation->set_ñolor(50, 50, 255);
+	b_width = 64;
+	b_height = 64;
 
 	collision_box = { (int)pos_x, (int)pos_y, width, height };
 }
@@ -127,6 +131,12 @@ void Teleport_ball::move() {
 
 
 void Teleport_ball::logic() {
+	if (!stage_two) {
+		if (SDL_GetTicks() - create_time >= 2000) {
+			teleport_ball_animation->set_ñolor(120, 20, 255);
+			stage_two = true;
+		}
+	}
 	move();
 }
 
