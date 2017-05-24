@@ -8,6 +8,8 @@
 Game::Game() {
 	//Load the background
 	background = map;
+	background2 = background_texture;
+
 	//Create player object
 	player1 = new Player(0,0,1);
 	player2 = new Player2(0,0,2);
@@ -92,6 +94,8 @@ void Game::render() {
 	SDL_RenderClear(main_renderer);
 	
 	//Render background
+	SDL_RenderCopyEx(main_renderer, background2, NULL, NULL, 0.0, NULL, SDL_FLIP_NONE);
+
 	SDL_Rect back;
 	back = *camera->get_rect();
 	back.w /= camera->get_scale();

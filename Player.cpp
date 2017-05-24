@@ -44,6 +44,7 @@ Player::Player(int x, int y, int control) : Movable_object() {
 
 	
 	collision_box = { (int)pos_x, (int)pos_y, width, height };
+	vulnerable = true;
 
 	state = new Stand;
 	state_stack.push(state);
@@ -52,8 +53,10 @@ Player::Player(int x, int y, int control) : Movable_object() {
 }
 
 void Player::kill() {
-	pos_x = 1200;
-	pos_y = 135;
+	if (vulnerable) {
+		pos_x = 1200;
+		pos_y = 135;
+	}
 }
 
 Player::~Player() {

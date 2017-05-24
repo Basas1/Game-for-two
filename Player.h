@@ -23,6 +23,8 @@ public:
 
 	void render();
 
+	bool vulnerable;
+
 	void kill();
 
 	int get_x();

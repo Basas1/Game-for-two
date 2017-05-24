@@ -17,6 +17,7 @@ public:
 
 private:
 	SDL_Texture* background;
+	SDL_Texture* background2;
 	//Player* player;
 	Enemy* enemy;
 };

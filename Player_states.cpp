@@ -25,6 +25,7 @@ void Player_states::change_state(Player& p, int state) {
 		p.state_stack.push(jump_state);
 		break;
 	case HIT1_STATE:
+		p.vulnerable = false;
 		Hit1* hit1_state;
 		hit1_state = new Hit1;
 		p.state_stack.push(hit1_state);
@@ -470,6 +471,7 @@ void Hit1::logic(Player& p) {
 		p.hit_animation->reset();
 		p.vel_x = 0;
 		p.hit_cooldown = SDL_GetTicks();
+		p.vulnerable = true;
 		p.state_stack.pop();
 	}
 
