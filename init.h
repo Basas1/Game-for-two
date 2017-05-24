@@ -12,18 +12,23 @@
 #include "Static_object.h"
 #include "Player.h"
 #include "Player2.h"
+#include "Timer.h"
 
 //Players
 extern Player* player1;
 extern Player2* player2;
 
 //Game Controller 1 handler
-extern SDL_GameController* game_controller;
+extern SDL_GameController* gamepad1;
+extern SDL_GameController* gamepad2;
 extern SDL_Joystick* joystick;
 
 //Vector of all objects in game
 extern std::vector<Game_object*> objects;
 extern std::vector<Game_object*> static_objects;
+
+//timer for fps capping
+extern Timer fps;
 
 //Screen dimension constants
 const int SCREEN_WIDTH = 1600;

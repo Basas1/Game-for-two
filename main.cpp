@@ -13,9 +13,6 @@ int main(int argc, char* args[]) {
 
 	SDL_Surface* screen_surface = NULL;
 
-	//timer for fps capping
-	Timer fps;
-
 	//Start up SDL and create window
 	if (!init()) {
 		printf("Failed to initialize!\n");

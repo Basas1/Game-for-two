@@ -3,23 +3,71 @@
 
 
 
-Fireball::Fireball(int x, int y, bool right) : Movable_object() {
+Fireball::Fireball(int x, int y, int side) : Movable_object() {
 	type = FIREBALL;
+	int start_speed = acceleration * 3;
 	width = 14;
 	height = 14;
+	pos_x = x;
 	pos_y = y;
-	can_rise = 0;
 	gravity = 0.005;
-	vel_y = -0.5; 
+	vel_x = 0;
+	vel_y = 0;
 	exist = true;
-	if (right) {
+
+	switch (side) {
+	case RIGHT: {
 		pos_x = x + 5;
-		vel_x = acceleration * 3;
+		vel_x = start_speed;
+		vel_y = -0.5;
+		break;
 	}
-	else {
+	case LEFT: {
 		pos_x = x - width - 5;
-		vel_x = -acceleration * 3;
+		vel_x = -start_speed;
+		vel_y = -0.5;
+		break;
 	}
+	case UP: {
+		pos_y = y - height - 5;
+		vel_y = -start_speed;
+		break;
+	}
+	case DOWN: {
+		pos_y = y + height + 5;
+		vel_y = start_speed;
+		break;
+	}
+	case UP_RIGHT: {
+		pos_y = y - height - 5;
+		pos_x = x + 5;
+		vel_x = start_speed;
+		vel_y = -start_speed;
+		break;
+	}
+	case UP_LEFT: {
+		pos_y = y - height - 5;
+		pos_x = x - width - 5;
+		vel_x = -start_speed;
+		vel_y = -start_speed;
+		break;
+	}
+	case DOWN_RIGHT: {
+		pos_y = y + height + 5;
+		pos_x = x + 5;
+		vel_x = start_speed;
+		vel_y = start_speed;
+		break;
+	}
+	case DOWN_LEFT: {
+		pos_y = y + height + 5;
+		pos_x = x - width - 5;
+		vel_x = -start_speed;
+		vel_y = start_speed;
+		break;
+	}
+	}
+
 
 	fireball_animation = new Animated_texture(fireball_texture, 3, -25, -25);
 	fireball_animation->set_clips();
@@ -39,7 +87,7 @@ void Fireball::logic() {
 	collisions = get_collisions();
 	if (collisions.size() != 0) {
 		for (int i = 0; i < collisions.size(); i++) {
-			if (collisions[i]->type == ENEMY) {
+			if (collisions[i]->type == ENEMY || collisions[i]->type == PLAYER) {
 				collisions[i]->kill();
 				exist = false;
 			}

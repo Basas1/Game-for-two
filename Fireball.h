@@ -4,7 +4,7 @@
 
 class Fireball : public Movable_object {
 public:
-	Fireball(int x, int y, bool left);
+	Fireball(int x, int y, int side);
 	~Fireball();
 
 	//Move method

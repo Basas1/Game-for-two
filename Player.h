@@ -4,12 +4,16 @@
 #include <stack>
 #include "Teleport_ball.h"
 
-class Player1_states;
+class Player_states;
 
 class Player : public Movable_object {
 public:
-	Player();
+	Player(int x = 2000, int y = 1100, int controller = 0 );
 	~Player();
+
+	
+	int controller;
+	SDL_GameController* gamepad;
 
 	//Event handler
 	void handle_events(SDL_Event& event);
@@ -18,14 +22,22 @@ public:
 
 	void render();
 
+	void kill();
+
 	int get_x();
 	int get_y();
 
 	//Player state
-	Player1_states* state;
+	Player_states* state;
 
 	//Jump speed
 	int jump_vel;
+
+	//Fireball cooldown
+	int fireball_cooldown;
+
+
+	void reduce_cooldowns();
 
 	//Object's textures
 	Animated_texture* stand_animation;
@@ -36,6 +48,6 @@ public:
 
 	Teleport_ball* t_ball;
 
-	std::stack<Player1_states*> state_stack;
+	std::stack<Player_states*> state_stack;
 
 };

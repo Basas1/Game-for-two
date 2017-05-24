@@ -9,8 +9,8 @@ Game::Game() {
 	//Load the background
 	background = map;
 	//Create player object
-	player1 = new Player;
-	player2 = new Player2;
+	player1 = new Player();
+	player2 = new Player2(0,0,1);
 	enemy = new Enemy;
 
 	objects.reserve(10);

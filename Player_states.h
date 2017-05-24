@@ -2,7 +2,7 @@
 #include <SDL.h>
 #include "Player.h"
 
-class Player1_states {
+class Player_states {
 public:
 	enum states {
 		STAND_STATE,
@@ -12,13 +12,14 @@ public:
 		HIT1_STATE,
 	};
 	void change_state(Player& p, int state);
-	virtual ~Player1_states() {};
+	void cast_fireball(Player& p);
+	virtual ~Player_states() {};
 	virtual void handle_events(Player& p, SDL_Event& event);
 	virtual void logic(Player& p) {};
 	virtual void render(Player& p) {};
 };
 
-class On_ground : public Player1_states {
+class On_ground : public Player_states {
 public:
 	On_ground() {};
 	void handle_events(Player& p, SDL_Event& event);
@@ -38,7 +39,7 @@ public:
 	void render(Player& p);
 };
 
-class Jump : public Player1_states {
+class Jump : public Player_states {
 public:
 	Jump();
 	void handle_events(Player& p, SDL_Event& event);
@@ -48,7 +49,7 @@ private:
 	char jump_count;
 };
 
-class Hit1 : public Player1_states {
+class Hit1 : public Player_states {
 	void logic(Player& p);
 	void render(Player& p);
 };

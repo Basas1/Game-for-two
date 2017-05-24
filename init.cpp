@@ -12,10 +12,12 @@
 Player* player1 = NULL;
 Player2* player2 = NULL;
 
-SDL_GameController* game_controller = NULL;
+SDL_GameController* gamepad1 = NULL;
+SDL_GameController* gamepad2 = NULL;
 SDL_Joystick* joystick = NULL;
 
-
+//timer for fps capping
+Timer fps;
 
 std::vector<Game_object*> objects;
 std::vector<Game_object*> static_objects;
@@ -51,8 +53,9 @@ bool init() {
 		}
 
 		//Load joystick
-		game_controller = SDL_GameControllerOpen(0);
-		joystick = SDL_GameControllerGetJoystick(game_controller);
+		gamepad1 = SDL_GameControllerOpen(0);
+		gamepad2 = SDL_GameControllerOpen(1);
+		joystick = SDL_GameControllerGetJoystick(gamepad1);
 
 		//Create window
 		main_window = SDL_CreateWindow("Epic AAA-game", WINDOW_START_X, WINDOW_START_Y, SCREEN_WIDTH, SCREEN_HEIGHT, SDL_WINDOW_SHOWN);

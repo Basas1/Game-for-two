@@ -21,7 +21,7 @@ public:
 	//Check if object exist
 
 	bool is_exist();
-	void kill();
+	virtual void kill();
 
 	bool collidable;
 	//Collision box

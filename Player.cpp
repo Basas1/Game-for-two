@@ -6,14 +6,23 @@
 #include "Player_states.h"
 
 
-Player::Player() : Movable_object() {
+Player::Player(int x, int y, int control) : Movable_object() {
 	type = PLAYER;
-	width = 40;
-	height = 100;
+
 	pos_x = 2000;
 	pos_y = 1100;
+	controller = control;
+	switch (controller) {
+	case 0: gamepad = NULL; break;
+	case 1: gamepad = gamepad1; break;
+	case 2: gamepad = gamepad2; break;
+	}
+
+	width = 40;
+	height = 100;
 	jump_vel = 7;
 	flip_right = true;
+	fireball_cooldown = 0;
 
 	stand_animation = new Animated_texture(player_stand_texture, 3, -44, -28);
 	int order1[] = { 0, 1, 2, 1 };
@@ -34,6 +43,11 @@ Player::Player() : Movable_object() {
 	t_ball = NULL;
 }
 
+void Player::kill() {
+	pos_x = 1200;
+	pos_y = 135;
+}
+
 Player::~Player() {
 	delete texture;
 	delete stand_animation;
@@ -51,6 +65,7 @@ int Player::get_y() {
 }
 
 void Player::logic() {
+	reduce_cooldowns();
 	//printf("x=%f; y=%f\n", pos_x, pos_y);
 	state_stack.top()->logic(*this);
 
@@ -72,4 +87,11 @@ void Player::render() {
 	//Outline of rectangle of texture
 	SDL_SetRenderDrawColor(main_renderer, 0, 255, 50, 100);
 	SDL_RenderDrawRect(main_renderer, &renderQuad);
+}
+
+
+void Player::reduce_cooldowns() {
+	int time = SDL_GetTicks();
+	printf("time=%d\n", time);
+	if (time - fireball_cooldown >= 500) fireball_cooldown = 0;
 }

@@ -55,7 +55,6 @@ Teleport_ball::Teleport_ball(int x, int y, int side) : Movable_object() {
 		vel_y = start_speed;
 		break;
 	}
-
 	}
 
 	teleport_ball_animation = new Animated_texture(fireball_texture, 3, -32, -32);

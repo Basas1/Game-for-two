@@ -7,7 +7,7 @@
 #include "Platform.h"
 #include "Teleport_ball.h"
 
-void Player1_states::change_state(Player& p, int state) {
+void Player_states::change_state(Player& p, int state) {
 	switch (state) {
 	case STAND_STATE:
 		Stand* stand_state;
@@ -34,75 +34,205 @@ void Player1_states::change_state(Player& p, int state) {
 	}
 }
 
-void Player1_states::handle_events(Player& p, SDL_Event& event) {
-	if (event.type == SDL_KEYDOWN) {
-		switch (event.key.keysym.sym) {
-		case SDLK_r: {
-			if (p.t_ball == NULL) {
-				const Uint8* currentKeyStates = SDL_GetKeyboardState(NULL);
-				if (currentKeyStates[SDL_SCANCODE_UP] && !currentKeyStates[SDL_SCANCODE_RIGHT] && !currentKeyStates[SDL_SCANCODE_LEFT] && !currentKeyStates[SDL_SCANCODE_DOWN]) {
-					p.t_ball = new Teleport_ball(p.pos_x + p.width / 2, p.pos_y + p.height / 2, UP);
-				} else if (!currentKeyStates[SDL_SCANCODE_UP] && !currentKeyStates[SDL_SCANCODE_RIGHT] && !currentKeyStates[SDL_SCANCODE_LEFT] && currentKeyStates[SDL_SCANCODE_DOWN]) {
-					p.t_ball = new Teleport_ball(p.pos_x + p.width / 2, p.pos_y + p.height / 2, DOWN);
-				}
-				else if (currentKeyStates[SDL_SCANCODE_UP] && currentKeyStates[SDL_SCANCODE_RIGHT] && !currentKeyStates[SDL_SCANCODE_LEFT] && !currentKeyStates[SDL_SCANCODE_DOWN]) {
-					p.t_ball = new Teleport_ball(p.pos_x + p.width / 2, p.pos_y + p.height / 2, UP_RIGHT);
-				}
-				else if (currentKeyStates[SDL_SCANCODE_UP] && !currentKeyStates[SDL_SCANCODE_RIGHT] && currentKeyStates[SDL_SCANCODE_LEFT] && !currentKeyStates[SDL_SCANCODE_DOWN]) {
-					p.t_ball = new Teleport_ball(p.pos_x + p.width / 2, p.pos_y + p.height / 2, UP_LEFT);
-				}
-				else if (!currentKeyStates[SDL_SCANCODE_UP] && currentKeyStates[SDL_SCANCODE_RIGHT] && !currentKeyStates[SDL_SCANCODE_LEFT] && currentKeyStates[SDL_SCANCODE_DOWN]) {
-					p.t_ball = new Teleport_ball(p.pos_x + p.width / 2, p.pos_y + p.height / 2, DOWN_RIGHT);
-				}
-				else if (!currentKeyStates[SDL_SCANCODE_UP] && !currentKeyStates[SDL_SCANCODE_RIGHT] && currentKeyStates[SDL_SCANCODE_LEFT] && currentKeyStates[SDL_SCANCODE_DOWN]) {
-					p.t_ball = new Teleport_ball(p.pos_x + p.width / 2, p.pos_y + p.height / 2, DOWN_LEFT);
-				}
-				else {
-					if (p.flip_right) {
-						p.t_ball = new Teleport_ball(p.pos_x + p.width / 2, p.pos_y + p.height / 2, RIGHT);
-					}
-					else {
-						p.t_ball = new Teleport_ball(p.pos_x + p.width / 2, p.pos_y + p.height / 2, LEFT);
-					}
-				}
-				objects.insert(objects.end(), p.t_ball);
+void Player_states::cast_fireball(Player& p) {
+	if (p.fireball_cooldown <= 0) {
+		Fireball *ball = NULL;
+		if (p.controller == NULL) {
+			const Uint8* currentKeyStates = SDL_GetKeyboardState(NULL);
+			if (currentKeyStates[SDL_SCANCODE_UP] && !currentKeyStates[SDL_SCANCODE_RIGHT] && !currentKeyStates[SDL_SCANCODE_LEFT] && !currentKeyStates[SDL_SCANCODE_DOWN]) {
+				ball = new Fireball(p.pos_x + p.width / 2, p.pos_y - 1, UP);
+			}
+			else if (!currentKeyStates[SDL_SCANCODE_UP] && !currentKeyStates[SDL_SCANCODE_RIGHT] && !currentKeyStates[SDL_SCANCODE_LEFT] && currentKeyStates[SDL_SCANCODE_DOWN]) {
+				ball = new Fireball(p.pos_x + p.width / 2, p.pos_y + p.height + 1, DOWN);
+			}
+			else if (currentKeyStates[SDL_SCANCODE_UP] && currentKeyStates[SDL_SCANCODE_RIGHT] && !currentKeyStates[SDL_SCANCODE_LEFT] && !currentKeyStates[SDL_SCANCODE_DOWN]) {
+				ball = new Fireball(p.pos_x + p.width + 1, p.pos_y - 1, UP_RIGHT);
+			}
+			else if (currentKeyStates[SDL_SCANCODE_UP] && !currentKeyStates[SDL_SCANCODE_RIGHT] && currentKeyStates[SDL_SCANCODE_LEFT] && !currentKeyStates[SDL_SCANCODE_DOWN]) {
+				ball = new Fireball(p.pos_x - 1, p.pos_y - 1, UP_LEFT);
+			}
+			else if (!currentKeyStates[SDL_SCANCODE_UP] && currentKeyStates[SDL_SCANCODE_RIGHT] && !currentKeyStates[SDL_SCANCODE_LEFT] && currentKeyStates[SDL_SCANCODE_DOWN]) {
+				ball = new Fireball(p.pos_x + p.width + 1, p.pos_y + p.height + 1, DOWN_RIGHT);
+			}
+			else if (!currentKeyStates[SDL_SCANCODE_UP] && !currentKeyStates[SDL_SCANCODE_RIGHT] && currentKeyStates[SDL_SCANCODE_LEFT] && currentKeyStates[SDL_SCANCODE_DOWN]) {
+				ball = new Fireball(p.pos_x - 1, p.pos_y + p.height + 1, DOWN_LEFT);
 			}
 			else {
-				p.pos_x = p.t_ball->pos_x + p.width / 2;
-				p.pos_y = p.t_ball->pos_y - p.height / 2;
-				p.t_ball->kill();
-				p.t_ball = NULL;
+				if (p.flip_right) {
+					ball = new Fireball(p.pos_x + p.width + 1, p.pos_y + p.height / 3, RIGHT);
+				}
+				else {
+					ball = new Fireball(p.pos_x - 1, p.pos_y + p.height / 3, LEFT);
+				}
 			}
-			break;
 		}
-		case SDLK_t: {
-			if (p.t_ball != NULL) {
-				p.t_ball->kill();
-				p.t_ball = NULL;
+		else {
+			int ox, oy, dz;
+			dz = JOYSTICK_DEAD_ZONE;
+			ox = SDL_GameControllerGetAxis(p.gamepad, SDL_CONTROLLER_AXIS_LEFTX);
+			oy = SDL_GameControllerGetAxis(p.gamepad, SDL_CONTROLLER_AXIS_LEFTY);
+			if (oy < -dz && ox < dz && ox > -dz) {
+				ball = new Fireball(p.pos_x + p.width / 2, p.pos_y - 1, UP);
 			}
-			break;
+			else if (oy > dz && ox < dz && ox > -dz) {
+				ball = new Fireball(p.pos_x + p.width / 2, p.pos_y + p.height + 1, DOWN);
+			}
+			else if (oy < -dz / 2 && ox > dz / 2) {
+				ball = new Fireball(p.pos_x + p.width + 1, p.pos_y - 1, UP_RIGHT);
+			}
+			else if (oy < -dz / 2 && ox < -dz / 2) {
+				ball = new Fireball(p.pos_x - 1, p.pos_y - 1, UP_LEFT);
+			}
+			else if (oy > dz / 2 && ox > dz / 2) {
+				ball = new Fireball(p.pos_x + p.width + 1, p.pos_y + p.height + 1, DOWN_RIGHT);
+			}
+			else if (oy > dz / 2 && ox < -dz / 2) {
+				ball = new Fireball(p.pos_x - 1, p.pos_y + p.height + 1, DOWN_LEFT);
+			}
+			else {
+				if (p.flip_right) {
+					ball = new Fireball(p.pos_x + p.width + 1, p.pos_y + p.height / 3, RIGHT);
+				}
+				else {
+					ball = new Fireball(p.pos_x - 1, p.pos_y + p.height / 3, LEFT);
+				}
+			}
 		}
-		case SDLK_f: {
-			Enemy* enemy;
-			enemy = new Enemy;
-			enemy->pos_x = p.pos_x + 100;
-			enemy->pos_y = p.pos_y;
-			objects.insert(objects.end(), enemy);
-			break;
+		objects.insert(objects.end(), ball);
+		p.fireball_cooldown = SDL_GetTicks();
+	}
+}
+
+void Player_states::handle_events(Player& p, SDL_Event& event) {
+	if (p.controller == NULL) {
+		//Handle Event for keyboard control
+		if (event.type == SDL_KEYDOWN) {
+			switch (event.key.keysym.sym) {
+			case SDLK_r: {
+				if (p.t_ball == NULL) {
+					const Uint8* currentKeyStates = SDL_GetKeyboardState(NULL);
+					if (currentKeyStates[SDL_SCANCODE_UP] && !currentKeyStates[SDL_SCANCODE_RIGHT] && !currentKeyStates[SDL_SCANCODE_LEFT] && !currentKeyStates[SDL_SCANCODE_DOWN]) {
+						p.t_ball = new Teleport_ball(p.pos_x + p.width / 2, p.pos_y + p.height / 2, UP);
+					}
+					else if (!currentKeyStates[SDL_SCANCODE_UP] && !currentKeyStates[SDL_SCANCODE_RIGHT] && !currentKeyStates[SDL_SCANCODE_LEFT] && currentKeyStates[SDL_SCANCODE_DOWN]) {
+						p.t_ball = new Teleport_ball(p.pos_x + p.width / 2, p.pos_y + p.height / 2, DOWN);
+					}
+					else if (currentKeyStates[SDL_SCANCODE_UP] && currentKeyStates[SDL_SCANCODE_RIGHT] && !currentKeyStates[SDL_SCANCODE_LEFT] && !currentKeyStates[SDL_SCANCODE_DOWN]) {
+						p.t_ball = new Teleport_ball(p.pos_x + p.width / 2, p.pos_y + p.height / 2, UP_RIGHT);
+					}
+					else if (currentKeyStates[SDL_SCANCODE_UP] && !currentKeyStates[SDL_SCANCODE_RIGHT] && currentKeyStates[SDL_SCANCODE_LEFT] && !currentKeyStates[SDL_SCANCODE_DOWN]) {
+						p.t_ball = new Teleport_ball(p.pos_x + p.width / 2, p.pos_y + p.height / 2, UP_LEFT);
+					}
+					else if (!currentKeyStates[SDL_SCANCODE_UP] && currentKeyStates[SDL_SCANCODE_RIGHT] && !currentKeyStates[SDL_SCANCODE_LEFT] && currentKeyStates[SDL_SCANCODE_DOWN]) {
+						p.t_ball = new Teleport_ball(p.pos_x + p.width / 2, p.pos_y + p.height / 2, DOWN_RIGHT);
+					}
+					else if (!currentKeyStates[SDL_SCANCODE_UP] && !currentKeyStates[SDL_SCANCODE_RIGHT] && currentKeyStates[SDL_SCANCODE_LEFT] && currentKeyStates[SDL_SCANCODE_DOWN]) {
+						p.t_ball = new Teleport_ball(p.pos_x + p.width / 2, p.pos_y + p.height / 2, DOWN_LEFT);
+					}
+					else {
+						if (p.flip_right) {
+							p.t_ball = new Teleport_ball(p.pos_x + p.width / 2, p.pos_y + p.height / 2, RIGHT);
+						}
+						else {
+							p.t_ball = new Teleport_ball(p.pos_x + p.width / 2, p.pos_y + p.height / 2, LEFT);
+						}
+					}
+					objects.insert(objects.end(), p.t_ball);
+				}
+				else {
+					p.pos_x = p.t_ball->pos_x + p.width / 2;
+					p.pos_y = p.t_ball->pos_y - p.height / 2;
+					p.t_ball->kill();
+					p.t_ball = NULL;
+				}
+				break;
+			}
+			case SDLK_t: {
+				if (p.t_ball != NULL) {
+					p.t_ball->kill();
+					p.t_ball = NULL;
+				}
+				break;
+			}
+			case SDLK_f: {
+				Enemy* enemy;
+				enemy = new Enemy;
+				enemy->pos_x = p.pos_x + 100;
+				enemy->pos_y = p.pos_y;
+				objects.insert(objects.end(), enemy);
+				break;
+			}
+			case SDLK_y: p.pos_y -= 100; break;
+			case SDLK_g: p.pos_x -= 10; break;
+			case SDLK_h: p.pos_y += 10; break;
+			case SDLK_j: p.pos_x += 10; break;
+			}
 		}
-		case SDLK_y: p.pos_y -= 100; break;
-		case SDLK_g: p.pos_x -= 10; break;
-		case SDLK_h: p.pos_y += 10; break;
-		case SDLK_j: p.pos_x += 10; break;
+	}
+	else {
+		//Handle event for gamepad control
+		int ox, oy;
+		ox = SDL_GameControllerGetAxis(p.gamepad, SDL_CONTROLLER_AXIS_LEFTX);
+		oy = SDL_GameControllerGetAxis(p.gamepad, SDL_CONTROLLER_AXIS_LEFTY);
+		if (ox > JOYSTICK_DEAD_ZONE) {
+		}
+		if (ox < -JOYSTICK_DEAD_ZONE) {
+		}
 
-		//case SDLK_d: {
-		//	Platform* platform;
-		//	platform = new Platform((int)p.pos_x, (int)p.pos_y + p.height);
-		//	static_objects.insert(static_objects.end(), platform);
-		//	break;
-		//}
 
+		if (event.type == SDL_CONTROLLERBUTTONDOWN) {
+			switch (event.cbutton.button) {
+			case 1: {
+				if (p.t_ball == NULL) {
+					int ox, oy, dz;
+					dz = JOYSTICK_DEAD_ZONE;
+					ox = SDL_GameControllerGetAxis(p.gamepad, SDL_CONTROLLER_AXIS_LEFTX);
+					oy = SDL_GameControllerGetAxis(p.gamepad, SDL_CONTROLLER_AXIS_LEFTY);
 
+					if (oy < -dz && ox < dz && ox > -dz) {
+						p.t_ball = new Teleport_ball(p.pos_x + p.width / 2, p.pos_y + p.height / 2, UP);
+					}
+					else if (oy > dz && ox < dz && ox > -dz) {
+						p.t_ball = new Teleport_ball(p.pos_x + p.width / 2, p.pos_y + p.height / 2, DOWN);
+					}
+					else if (oy < -dz / 2 && ox > dz / 2) {
+						p.t_ball = new Teleport_ball(p.pos_x + p.width / 2, p.pos_y + p.height / 2, UP_RIGHT);
+					}
+					else if (oy < -dz / 2 && ox < -dz / 2) {
+						p.t_ball = new Teleport_ball(p.pos_x + p.width / 2, p.pos_y + p.height / 2, UP_LEFT);
+					}
+					else if (oy > dz / 2 && ox > dz / 2) {
+						p.t_ball = new Teleport_ball(p.pos_x + p.width / 2, p.pos_y + p.height / 2, DOWN_RIGHT);
+					}
+					else if (oy > dz / 2 && ox < -dz / 2) {
+						p.t_ball = new Teleport_ball(p.pos_x + p.width / 2, p.pos_y + p.height / 2, DOWN_LEFT);
+					}
+					else {
+						if (p.flip_right) {
+							p.t_ball = new Teleport_ball(p.pos_x + p.width / 2, p.pos_y + p.height / 2, RIGHT);
+						}
+						else {
+							p.t_ball = new Teleport_ball(p.pos_x + p.width / 2, p.pos_y + p.height / 2, LEFT);
+						}
+					}
+					objects.insert(objects.end(), p.t_ball);
+				}
+				else {
+					p.pos_x = p.t_ball->pos_x + p.width / 2;
+					p.pos_y = p.t_ball->pos_y - p.height / 2;
+					p.t_ball->kill();
+					p.t_ball = NULL;
+				}
+				break;
+			}
+			case 2: {
+				if (p.t_ball != NULL) {
+					p.t_ball->kill();
+					p.t_ball = NULL;
+				}
+				break;
+			}
+			}
 		}
 	}
 }
@@ -117,57 +247,77 @@ void On_ground::logic(Player& p) {
 }
 
 void On_ground::handle_events(Player& p, SDL_Event& event) {
-	//If a key is pressed
-	int a_x = 0;
-	const Uint8* currentKeyStates = SDL_GetKeyboardState(NULL);
-	if (currentKeyStates[SDL_SCANCODE_UP]) {
-	}
-	if (currentKeyStates[SDL_SCANCODE_DOWN]) {
-	}
-	if (currentKeyStates[SDL_SCANCODE_LEFT]) {
-		a_x -= p.acceleration;
-	}
-	if (currentKeyStates[SDL_SCANCODE_RIGHT]) {
-		a_x += p.acceleration;
-	}
-	p.acc_x = a_x;
-
-	//If a key was pressed
-	if (event.type == SDL_KEYDOWN && event.key.repeat == 0) {
-		switch (event.key.keysym.sym) {
-		case SDLK_SPACE: p.vel_y = -p.jump_vel; break;
+	if (p.controller == NULL) {
+		//If a key is pressed
+		int a_x = 0;
+		const Uint8* currentKeyStates = SDL_GetKeyboardState(NULL);
+		if (currentKeyStates[SDL_SCANCODE_UP]) {
 		}
-	}
-	if (event.type == SDL_KEYDOWN) {
-		switch (event.key.keysym.sym) {
-		case SDLK_w : {
-			Fireball *ball;
-			if (p.flip_right) {
-				ball = new Fireball(p.pos_x + p.width + 1, p.pos_y + p.height / 3, p.flip_right);
+		if (currentKeyStates[SDL_SCANCODE_DOWN]) {
+		}
+		if (currentKeyStates[SDL_SCANCODE_LEFT]) {
+			a_x -= p.acceleration;
+		}
+		if (currentKeyStates[SDL_SCANCODE_RIGHT]) {
+			a_x += p.acceleration;
+		}
+		p.acc_x = a_x;
+
+		//If a key was pressed
+		if (event.type == SDL_KEYDOWN && event.key.repeat == 0) {
+			switch (event.key.keysym.sym) {
+			case SDLK_SPACE: p.vel_y = -p.jump_vel; break;
 			}
-			else {
-				ball = new Fireball(p.pos_x - 1, p.pos_y + p.height / 3, p.flip_right);
+		}
+		if (event.type == SDL_KEYDOWN) {
+			switch (event.key.keysym.sym) {
+			case SDLK_w: {
+				cast_fireball(p);
+				break;
 			}
-			objects.insert(objects.end(), ball);
-			break;
-		}
-		case SDLK_e: {
-			change_state(p, HIT1_STATE);
-			break;
-		}
-		default:
-			Player1_states::handle_events(p, event);
+			case SDLK_e: {
+				change_state(p, HIT1_STATE);
+				break;
+			}
+			default:
+				Player_states::handle_events(p, event);
+			}
 		}
 	}
+	else {
+		//If a key is pressed
+		int a_x = 0;
 
-	//If a key was released
-	//else if (event.type == SDL_KEYUP && event.key.repeat == 0) {
-	//	switch (event.key.keysym.sym) {
-	//	case SDLK_RIGHT: acc_x = 0; break;
-	//	case SDLK_LEFT: acc_x = 0; break;
-	//	}
-	//}
+		int ox, oy;
+		ox = SDL_GameControllerGetAxis(p.gamepad, SDL_CONTROLLER_AXIS_LEFTX);
+		oy = SDL_GameControllerGetAxis(p.gamepad, SDL_CONTROLLER_AXIS_LEFTY);
+		if (ox > JOYSTICK_DEAD_ZONE) {
+			a_x += p.acceleration;
+		}
+		if (ox < -JOYSTICK_DEAD_ZONE) {
+			a_x -= p.acceleration;
+		}
 
+		p.acc_x = a_x;
+
+		//If a key was pressed
+		if (event.type == SDL_CONTROLLERBUTTONDOWN) {
+			switch (event.cbutton.button) {
+			case 0: p.vel_y = -p.jump_vel; break;
+			case 3: {
+				cast_fireball(p);
+				break;
+			}
+			case 10: {
+				change_state(p, HIT1_STATE);
+				break;
+			}
+			default:
+				Player_states::handle_events(p, event);
+			}
+		}
+
+	}
 }
 
 
@@ -215,48 +365,80 @@ void Jump::logic(Player& p) {
 }
 
 void Jump::handle_events(Player& p, SDL_Event& event) {
-	//If a key is pressed
-	double a_x = 0;
-	const Uint8* currentKeyStates = SDL_GetKeyboardState(NULL);
-	if (currentKeyStates[SDL_SCANCODE_UP]) {
-	}
-	if (currentKeyStates[SDL_SCANCODE_DOWN]) {
-	}
-	if (currentKeyStates[SDL_SCANCODE_LEFT]) {
-		a_x -= p.acceleration/20;
-	}
-	if (currentKeyStates[SDL_SCANCODE_RIGHT]) {
-		a_x += p.acceleration/20;
-	}
-	p.acc_x = a_x;
+	if (p.controller == NULL) {
+		//If a key is pressed
+		double a_x = 0;
+		const Uint8* currentKeyStates = SDL_GetKeyboardState(NULL);
+		if (currentKeyStates[SDL_SCANCODE_UP]) {
+		}
+		if (currentKeyStates[SDL_SCANCODE_DOWN]) {
+		}
+		if (currentKeyStates[SDL_SCANCODE_LEFT]) {
+			a_x -= p.acceleration / 20;
+		}
+		if (currentKeyStates[SDL_SCANCODE_RIGHT]) {
+			a_x += p.acceleration / 20;
+		}
+		p.acc_x = a_x;
 
-	//If a key was pressed
-	if (event.type == SDL_KEYDOWN && event.key.repeat == 0) {
-		switch (event.key.keysym.sym) {
-		case SDLK_SPACE: {
-			if (jump_count > 0) {
-				p.vel_y = -p.jump_vel;
-				jump_count--;
+		//If a key was pressed
+		if (event.type == SDL_KEYDOWN && event.key.repeat == 0) {
+			switch (event.key.keysym.sym) {
+			case SDLK_SPACE: {
+				if (jump_count > 0) {
+					p.vel_y = -p.jump_vel;
+					jump_count--;
+				}
+				break;
 			}
-			break;
-		}
-		case SDLK_w: {
-			Fireball *ball;
-			if (p.flip_right) {
-				ball = new Fireball(p.pos_x + p.width + 1, p.pos_y + p.height / 3, p.flip_right);
+			case SDLK_w: {
+				cast_fireball(p);
+				break;
 			}
-			else {
-				ball = new Fireball(p.pos_x - 1, p.pos_y + p.height / 3, p.flip_right);
+			case SDLK_e: {
+				change_state(p, HIT1_STATE);
+				break;
 			}
-			objects.insert(objects.end(), ball);
-			break;
+			default:
+				Player_states::handle_events(p, event);
+			}
 		}
-		case SDLK_e: {
-			change_state(p, HIT1_STATE);
-			break;
+	}
+	else {
+		//If a key is pressed
+		double a_x = 0;
+		int ox, oy;
+		ox = SDL_GameControllerGetAxis(p.gamepad, SDL_CONTROLLER_AXIS_LEFTX);
+		oy = SDL_GameControllerGetAxis(p.gamepad, SDL_CONTROLLER_AXIS_LEFTY);
+		if (ox > JOYSTICK_DEAD_ZONE) {
+			a_x += p.acceleration;
 		}
-		default:
-			Player1_states::handle_events(p, event);
+		if (ox < -JOYSTICK_DEAD_ZONE) {
+			a_x -= p.acceleration;
+		}
+		p.acc_x = a_x;
+
+		//If a key was pressed
+		if (event.type == SDL_CONTROLLERBUTTONDOWN) {
+			switch (event.jbutton.button) {
+			case 0: {
+				if (jump_count > 0) {
+					p.vel_y = -p.jump_vel;
+					jump_count--;
+				}
+				break;
+			}
+			case 3: {
+				cast_fireball(p);
+				break;
+			}
+			case 10: {
+				change_state(p, HIT1_STATE);
+				break;
+			}
+			default:
+				Player_states::handle_events(p, event);
+			}
 		}
 	}
 }
