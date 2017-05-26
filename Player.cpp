@@ -58,7 +58,7 @@ bool Player::kill() {
 	if (vulnerable && unkill_cooldown == 0) {
 		pos_x = 1305;
 		pos_y = 135;
-		player2->score += 100;
+		player2->score += 1000;
 		unkill_cooldown = SDL_GetTicks();
 		return true;
 	}
@@ -112,11 +112,11 @@ void Player::render() {
 	state_stack.top()->render(*this);
 
 	//Hit box rectangle
-	double scale = camera->get_scale();
-	SDL_Rect renderQuad = { (pos_x - camera->get_x()) * camera->get_scale(), (pos_y - camera->get_y()) * camera->get_scale(), width * scale, height * scale };
+	//double scale = camera->get_scale();
+	//SDL_Rect renderQuad = { (pos_x - camera->get_x()) * camera->get_scale(), (pos_y - camera->get_y()) * camera->get_scale(), width * scale, height * scale };
 	//Outline of rectangle of texture
-	SDL_SetRenderDrawColor(main_renderer, 0, 255, 50, 100);
-	SDL_RenderDrawRect(main_renderer, &renderQuad);
+	//SDL_SetRenderDrawColor(main_renderer, 0, 255, 50, 100);
+	//SDL_RenderDrawRect(main_renderer, &renderQuad);
 }
 
 

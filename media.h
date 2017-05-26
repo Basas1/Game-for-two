@@ -34,7 +34,7 @@ extern SDL_Texture* enemy_hit_texture;
 extern SDL_Surface* map_surface;
 
 //Globally used fonts
-//extern TTF_Font* font1;
+extern TTF_Font* font1;
 
 //Globaly used audio samples
 //extern Mix_Chunk *sound;

@@ -86,7 +86,7 @@ void Capture_platform::logic() {
 			}
 			if (collision_list[player_index]->on_platform) {
 				//printf("time=%d;\ttime on platform=%d;\n", time, collision_list[player_index]->time_on_platform);
-				if (time - collision_list[player_index]->time_on_platform >= 1000) {
+				if (time - collision_list[player_index]->time_on_platform >= 2000) {
 					collision_list[player_index]->score += 1;
 				}
 			}

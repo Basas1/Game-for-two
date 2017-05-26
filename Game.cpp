@@ -1,8 +1,9 @@
+#pragma once
 #include "Game.h"
 #include "media.h"
 #include "init.h"
 #include "math.h"
-
+#include "tools.h"
 
 
 Game::Game() {
@@ -87,7 +88,7 @@ void Game::logic() {
 	//printf("%f\n", camera->get_scale());
 	camera->follow(follow_x, follow_y);
 
-	printf("P1 SCORE: %f;\tP2 SCORE: %f;\n", player1->score, player2->score);
+	//printf("P1 SCORE: %f;\tP2 SCORE: %f;\n", player1->score, player2->score);
 	//printf("P1 ON PLAT = %d;\tP2 ON PLAT = %d;\n", player1->on_platform, player2->on_platform);
 }
 
@@ -119,4 +120,24 @@ void Game::render() {
 			objects[i]->render();
 		}
 	}
+
+
+
+	//Render score
+	int p1_score, p2_score;
+	p1_score = (int)player1->score;
+	p1_score /= 100;
+	p2_score = (int)player2->score;
+	p2_score /= 100;
+	printf("P1 SCORE: %d;\tP2 SCORE: %d;\n", p1_score, p2_score);
+
+	char buff[100];
+	snprintf(buff, sizeof(buff), "PLAYER 1 SCORE: %d", p1_score);
+	std::string score1 = buff;
+	snprintf(buff, sizeof(buff), "PLAYER 2 SCORE: %d", p2_score);
+	std::string score2 = buff;
+
+	//render_text(25, 25, score1);
+	//render_text(SCREEN_WIDTH - 315, 25, score2);
+
 }

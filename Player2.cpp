@@ -73,7 +73,7 @@ bool Player2::kill() {
 	if (vulnerable && unkill_cooldown == 0) {
 		pos_x = 2600;
 		pos_y = 135;
-		player1->score += 100;
+		player1->score += 1000;
 		unkill_cooldown = SDL_GetTicks();
 		return true;
 	}

@@ -184,8 +184,6 @@ void Player_states::blast_teleport_ball(Player& p) {
 	}
 }
 
-
-
 void Player_states::handle_events(Player& p, SDL_Event& event) {
 	if (p.controller == NULL) {
 		//Handle Event for keyboard control
@@ -320,7 +318,6 @@ void On_ground::handle_events(Player& p, SDL_Event& event) {
 }
 
 
-
 void Stand::logic(Player& p) {
 	if (p.acc_x != 0) {
 		change_state(p, RUN_STATE);
@@ -347,7 +344,7 @@ void Run::render(Player& p) {
 }
 
 Jump::Jump() {
-	jump_count = 9;
+	jump_count = 1;
 }
 
 void Jump::logic(Player& p) {	

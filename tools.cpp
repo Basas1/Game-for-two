@@ -33,20 +33,16 @@ SDL_Texture* load_texture(std::string path) {
 }
 
 //Render text to screen
-void render_text(int x, int y, std::string text, TTF_Font* font) {
-	//Text texture
-	//SDL_Texture* text_texture = NULL;
-	SDL_Texture* text_texture = SDL_CreateTexture(main_renderer, SDL_PIXELFORMAT_RGBA8888, SDL_TEXTUREACCESS_TARGET, 500, 500);
-	SDL_Color text_color = { 255, 255, 255 };
-	//Render text surface
-	SDL_Surface* text_surface = TTF_RenderText_Solid(font, text.c_str(), text_color);
-	//Create texture from surface pixels
-	text_texture = SDL_CreateTextureFromSurface(main_renderer, text_surface);
-	SDL_Rect render_quad = { x, y, text_surface->w, text_surface->h };
-	//SDL_RenderFillRect(main_renderer, &renderQuad);
-	SDL_RenderCopyEx(main_renderer, text_texture, NULL, &render_quad, 0.0, NULL, SDL_FLIP_NONE);
-	SDL_FreeSurface(text_surface);
-	SDL_DestroyTexture(text_texture);
+void render_text(int x, int y, std::string in_text) {
+	SDL_Color textColor = { 255, 255, 255, 0 };
+	SDL_Surface* textSurface = TTF_RenderText_Solid(font1, in_text.c_str(), textColor);
+	SDL_Texture* text = SDL_CreateTextureFromSurface(main_renderer, textSurface);
+	int text_width = textSurface->w;
+	int text_height = textSurface->h;
+	SDL_FreeSurface(textSurface);
+	SDL_Rect renderQuad = { x, y, text_width, text_height };
+	SDL_RenderCopy(main_renderer, text, NULL, &renderQuad);
+	SDL_DestroyTexture(text);
 }
 
 //Copy-pasted from "http://sdl.beuc.net/sdl.wiki/Pixel_Access"

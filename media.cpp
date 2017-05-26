@@ -36,7 +36,7 @@ SDL_Texture* enemy_hit_texture = NULL;
 SDL_Surface* map_surface = NULL;
 
 //Globally used font
-//TTF_Font* font1 = NULL;
+TTF_Font* font1 = NULL;
 
 //Globally used audio samples
 //Mix_Chunk *sound = NULL;
@@ -150,13 +150,12 @@ bool load_media() {
 		success = false;
 	}
 
-
 	//Open fonts
-	//font1 = TTF_OpenFont("Fonts/arial.ttf", 28);
-	//if (font1 == NULL ) {
-	//	printf("Failed to load fonts!\n");
-	//	success = false;
-	//}
+	font1 = TTF_OpenFont("Images/arial.ttf", 28);
+	if (font1 == NULL ) {
+		printf("Failed to load fonts!\n");
+		success = false;
+	}
 	
 	//Load music samples
 	//sound = Mix_LoadWAV("Audio/sound.wav");
