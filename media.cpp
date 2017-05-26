@@ -126,7 +126,7 @@ bool load_media() {
 	//	printf("Failed to load player texture!\n");
 	//	success = false;
 	//}
-	//enemy_run_texture = load_texture("Images/runf.png");
+	enemy_run_texture = load_texture("Images/run.jpg");
 	//if (enemy_run_texture == NULL) {
 	//	printf("Failed to load player texture!\n");
 	//	success = false;

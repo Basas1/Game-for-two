@@ -32,8 +32,8 @@ extern std::vector<Game_object*> static_objects;
 extern Timer fps;
 
 //Screen dimension constants
-const int SCREEN_WIDTH = 1920;
-const int SCREEN_HEIGHT = 1080;
+const int SCREEN_WIDTH = 1600;
+const int SCREEN_HEIGHT = 900;
 
 
 //Fps constants

@@ -10,8 +10,9 @@ Player2::Player2(int x, int y, int control) : Player() {
 	type = PLAYER;
 	width = 40;
 	height = 100;
-	pos_x = 2100;
-	pos_y = 1100;
+	pos_x = 2600;
+	pos_y = 135;
+	score = 0;
 
 	controller = control;
 	switch (controller) {
@@ -30,6 +31,13 @@ Player2::Player2(int x, int y, int control) : Player() {
 	jump_vel = 7;
 	flip_right = false;
 	fireball_cooldown = 0;
+	hit_cooldown = 0;
+	unkill_cooldown = 0;
+	time_on_platform = -1;
+	on_platform = false;
+
+
+
 
 
 	stand_animation = new Animated_texture(player2_stand_texture, 3, -44, -28);
@@ -62,9 +70,11 @@ Player2::~Player2() {
 
 
 bool Player2::kill() {
-	if (vulnerable) {
+	if (vulnerable && unkill_cooldown == 0) {
 		pos_x = 2600;
 		pos_y = 135;
+		player1->score += 100;
+		unkill_cooldown = SDL_GetTicks();
 		return true;
 	}
 	return false;

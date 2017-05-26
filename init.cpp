@@ -12,6 +12,7 @@
 Player* player1 = NULL;
 Player2* player2 = NULL;
 
+
 SDL_GameController* gamepad1 = NULL;
 SDL_GameController* gamepad2 = NULL;
 SDL_Joystick* joystick1 = NULL;
@@ -61,7 +62,7 @@ bool init() {
 
 		//Create window
 		main_window = SDL_CreateWindow("Epic AAA-game", WINDOW_START_X, WINDOW_START_Y, SCREEN_WIDTH, SCREEN_HEIGHT, SDL_WINDOW_SHOWN);
-		SDL_SetWindowFullscreen(main_window, SDL_WINDOW_FULLSCREEN);
+		//SDL_SetWindowFullscreen(main_window, SDL_WINDOW_FULLSCREEN);
 		if (main_window == NULL) {
 			printf("Window could not be created! SDL Error: %s\n", SDL_GetError());
 			success = false;

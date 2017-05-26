@@ -45,17 +45,11 @@ public:
 	bool can_go_left();
 	bool can_go_right();
 
-	//Object's velocity
-	double vel_x, vel_y;
-
 	//Max object's velocity
 	int max_vel_x, max_vel_y;
 
 	//Object's current acceleration
 	double acc_x, acc_y;
-
-	//Object constant acceleration in motion
-	double acceleration;
 
 	//Gravity
 	double gravity;

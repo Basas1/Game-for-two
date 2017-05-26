@@ -4,7 +4,7 @@
 
 class Fireball : public Movable_object {
 public:
-	Fireball(int x, int y, int side);
+	Fireball(int x, int y, int side, Game_object* p);
 	~Fireball();
 
 	//Move method
@@ -14,6 +14,8 @@ public:
 
 	//Render object
 	void render();
+
+	void reverse();
 
 	Animated_texture* fireball_animation;
 

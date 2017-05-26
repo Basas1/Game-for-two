@@ -8,6 +8,8 @@ Game_object::Game_object() {
 	exist = true;
 	collidable = false;
 	type = OTHER;
+	parent = NULL;
+	collision_box = { 0,0,0,0 };
 }
 
 bool Game_object::is_exist() {
@@ -25,7 +27,8 @@ std::vector<Game_object*> Game_object::get_collisions(SDL_Rect* check_box) {
 	std::vector<Game_object*> collisions;
 	for (int i = 0; i < objects.size(); i++) {
 		if (objects[i]->is_exist()) {
-			if (objects[i]->type == PLAYER || objects[i]->type == ENEMY || objects[i]->type == FIREBALL)
+			//if (objects[i]->type == PLAYER || objects[i]->type == ENEMY || objects[i]->type == FIREBALL) {
+			//}
 				if (check_collision(*check_box, objects[i]->collision_box)) {
 					if (this != objects[i]) {
 						collisions.insert(collisions.end(), objects[i]);

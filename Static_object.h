@@ -26,3 +26,11 @@ public:
 	void render();
 	Animated_texture* blast_t;
 };
+
+class Capture_platform : public Static_object {
+public:
+	Capture_platform(int x, int y, int w, int h);
+	void logic();
+};
+
+

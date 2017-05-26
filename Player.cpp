@@ -8,9 +8,18 @@
 
 Player::Player(int x, int y, int control) : Movable_object() {
 	type = PLAYER;
-
-	pos_x = 2000;
-	pos_y = 1100;
+	pos_x = 1305;
+	pos_y = 135;
+	score = 0;
+	width = 40;
+	height = 100;
+	jump_vel = 7;
+	flip_right = true;
+	fireball_cooldown = 0;
+	hit_cooldown = 0;
+	unkill_cooldown = 0;
+	time_on_platform = -1;
+	on_platform = false;
 
 	controller = control;
 	switch (controller) {
@@ -24,13 +33,6 @@ Player::Player(int x, int y, int control) : Movable_object() {
 		gamepad_id = SDL_JoystickInstanceID(joystick2);
 		break;
 	}
-
-	width = 40;
-	height = 100;
-	jump_vel = 7;
-	flip_right = true;
-	fireball_cooldown = 0;
-	hit_cooldown = 0;
 
 	stand_animation = new Animated_texture(player_stand_texture, 3, -44, -28);
 	int order1[] = { 0, 1, 2, 1 };
@@ -53,9 +55,11 @@ Player::Player(int x, int y, int control) : Movable_object() {
 }
 
 bool Player::kill() {
-	if (vulnerable) {
-		pos_x = 1200;
+	if (vulnerable && unkill_cooldown == 0) {
+		pos_x = 1305;
 		pos_y = 135;
+		player2->score += 100;
+		unkill_cooldown = SDL_GetTicks();
 		return true;
 	}
 	return false;
@@ -78,12 +82,25 @@ int Player::get_y() {
 }
 
 void Player::logic() {
-	reduce_cooldowns();
 	//printf("x=%f; y=%f\n", pos_x, pos_y);
+	reduce_cooldowns();
 	state_stack.top()->logic(*this);
 
 	std::vector<Game_object*> collision_list;
 	collision_list = get_collisions();
+	bool on_plat = false;
+	if (collision_list.size() != 0) {
+		for (int i = 0; i < collision_list.size(); i++) {
+			if (collision_list[i]->type == PLATFORM) {
+				on_plat = true;
+				break;
+			}
+		}
+	}
+	if (!on_plat) {
+		on_platform = false;
+	}
+
 	//printf("count=%d;\n", collision_list.size());
 };
 
@@ -107,6 +124,7 @@ void Player::reduce_cooldowns() {
 	int time = SDL_GetTicks();
 	if (time - fireball_cooldown >= 500) fireball_cooldown = 0;
 	if (time - hit_cooldown >= 1000) hit_cooldown = 0;
+	if (time - unkill_cooldown >= 1000) unkill_cooldown = 0;
 }
 
 void Player::teleport_to_ball() {

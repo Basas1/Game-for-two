@@ -3,14 +3,15 @@
 
 
 
-Fireball::Fireball(int x, int y, int side) : Movable_object() {
+Fireball::Fireball(int x, int y, int side, Game_object* p) : Movable_object() {
 	type = FIREBALL;
-	int start_speed = acceleration * 3;
+	parent = p;
+	int start_speed = acceleration * 4;
 	width = 14;
 	height = 14;
 	pos_x = x;
 	pos_y = y;
-	gravity = 0.005;
+	gravity = 0;
 	vel_x = 0;
 	vel_y = 0;
 	exist = true;
@@ -19,13 +20,13 @@ Fireball::Fireball(int x, int y, int side) : Movable_object() {
 	case RIGHT: {
 		pos_x = x + 5;
 		vel_x = start_speed;
-		vel_y = -0.5;
+		vel_y = 0;
 		break;
 	}
 	case LEFT: {
 		pos_x = x - width - 5;
 		vel_x = -start_speed;
-		vel_y = -0.5;
+		vel_y = 0;
 		break;
 	}
 	case UP: {
@@ -34,36 +35,36 @@ Fireball::Fireball(int x, int y, int side) : Movable_object() {
 		break;
 	}
 	case DOWN: {
-		pos_y = y + height + 5;
+		pos_y = y + height + 1;
 		vel_y = start_speed;
 		break;
 	}
 	case UP_RIGHT: {
 		pos_y = y - height - 5;
 		pos_x = x + 5;
-		vel_x = start_speed;
-		vel_y = -start_speed;
+		vel_x = start_speed * 7 / 10;
+		vel_y = -start_speed * 7 / 10;
 		break;
 	}
 	case UP_LEFT: {
 		pos_y = y - height - 5;
 		pos_x = x - width - 5;
-		vel_x = -start_speed;
-		vel_y = -start_speed;
+		vel_x = -start_speed * 7 / 10;
+		vel_y = -start_speed * 7 / 10;
 		break;
 	}
 	case DOWN_RIGHT: {
-		pos_y = y + height + 5;
+		pos_y = y + height + 1;
 		pos_x = x + 5;
-		vel_x = start_speed;
-		vel_y = start_speed;
+		vel_x = start_speed * 7 / 10;
+		vel_y = start_speed * 7 / 10;
 		break;
 	}
 	case DOWN_LEFT: {
-		pos_y = y + height + 5;
+		pos_y = y + height + 1;
 		pos_x = x - width - 5;
-		vel_x = -start_speed;
-		vel_y = start_speed;
+		vel_x = -start_speed * 7 / 10;
+		vel_y = start_speed * 7 / 10;
 		break;
 	}
 	}
@@ -87,7 +88,7 @@ void Fireball::logic() {
 	collisions = get_collisions();
 	if (collisions.size() != 0) {
 		for (int i = 0; i < collisions.size(); i++) {
-			if (collisions[i]->type == ENEMY || collisions[i]->type == PLAYER) {
+			if (collisions[i]->type == ENEMY || collisions[i]->type == PLAYER && collisions[i]!=parent) {
 				if (collisions[i]->kill()) {
 					exist = false;
 				}
@@ -109,6 +110,12 @@ void Fireball::render() {
 	SDL_SetRenderDrawColor(main_renderer, 0, 0, 255, 100);
 	SDL_RenderDrawRect(main_renderer, &renderQuad);
 }
+
+void Fireball::reverse() {
+	vel_x = -vel_x;
+	vel_y = -vel_y;
+}
+
 
 Fireball::~Fireball() {
 	delete fireball_animation;

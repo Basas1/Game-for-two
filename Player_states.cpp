@@ -41,29 +41,29 @@ void Player_states::cast_fireball(Player& p) {
 		if (p.controller == NULL) {
 			const Uint8* currentKeyStates = SDL_GetKeyboardState(NULL);
 			if (currentKeyStates[SDL_SCANCODE_UP] && !currentKeyStates[SDL_SCANCODE_RIGHT] && !currentKeyStates[SDL_SCANCODE_LEFT] && !currentKeyStates[SDL_SCANCODE_DOWN]) {
-				ball = new Fireball(p.pos_x + p.width / 2, p.pos_y - 1, UP);
+				ball = new Fireball(p.pos_x + p.width / 2, p.pos_y - 1, UP, &p);
 			}
 			else if (!currentKeyStates[SDL_SCANCODE_UP] && !currentKeyStates[SDL_SCANCODE_RIGHT] && !currentKeyStates[SDL_SCANCODE_LEFT] && currentKeyStates[SDL_SCANCODE_DOWN]) {
-				ball = new Fireball(p.pos_x + p.width / 2, p.pos_y + p.height + 1, DOWN);
+				ball = new Fireball(p.pos_x + p.width / 2, p.pos_y + p.height + 1, DOWN, &p);
 			}
 			else if (currentKeyStates[SDL_SCANCODE_UP] && currentKeyStates[SDL_SCANCODE_RIGHT] && !currentKeyStates[SDL_SCANCODE_LEFT] && !currentKeyStates[SDL_SCANCODE_DOWN]) {
-				ball = new Fireball(p.pos_x + p.width + 1, p.pos_y - 1, UP_RIGHT);
+				ball = new Fireball(p.pos_x + p.width + 1, p.pos_y - 1, UP_RIGHT, &p);
 			}
 			else if (currentKeyStates[SDL_SCANCODE_UP] && !currentKeyStates[SDL_SCANCODE_RIGHT] && currentKeyStates[SDL_SCANCODE_LEFT] && !currentKeyStates[SDL_SCANCODE_DOWN]) {
-				ball = new Fireball(p.pos_x - 1, p.pos_y - 1, UP_LEFT);
+				ball = new Fireball(p.pos_x - 1, p.pos_y - 1, UP_LEFT, &p);
 			}
 			else if (!currentKeyStates[SDL_SCANCODE_UP] && currentKeyStates[SDL_SCANCODE_RIGHT] && !currentKeyStates[SDL_SCANCODE_LEFT] && currentKeyStates[SDL_SCANCODE_DOWN]) {
-				ball = new Fireball(p.pos_x + p.width + 1, p.pos_y + p.height + 1, DOWN_RIGHT);
+				ball = new Fireball(p.pos_x + p.width + 1, p.pos_y + p.height + 1, DOWN_RIGHT, &p);
 			}
 			else if (!currentKeyStates[SDL_SCANCODE_UP] && !currentKeyStates[SDL_SCANCODE_RIGHT] && currentKeyStates[SDL_SCANCODE_LEFT] && currentKeyStates[SDL_SCANCODE_DOWN]) {
-				ball = new Fireball(p.pos_x - 1, p.pos_y + p.height + 1, DOWN_LEFT);
+				ball = new Fireball(p.pos_x - 1, p.pos_y + p.height + 1, DOWN_LEFT, &p);
 			}
 			else {
 				if (p.flip_right) {
-					ball = new Fireball(p.pos_x + p.width + 1, p.pos_y + p.height / 3, RIGHT);
+					ball = new Fireball(p.pos_x + p.width + 1, p.pos_y + p.height / 3, RIGHT, &p);
 				}
 				else {
-					ball = new Fireball(p.pos_x - 1, p.pos_y + p.height / 3, LEFT);
+					ball = new Fireball(p.pos_x - 1, p.pos_y + p.height / 3, LEFT, &p);
 				}
 			}
 		}
@@ -73,29 +73,29 @@ void Player_states::cast_fireball(Player& p) {
 			ox = SDL_GameControllerGetAxis(p.gamepad, SDL_CONTROLLER_AXIS_LEFTX);
 			oy = SDL_GameControllerGetAxis(p.gamepad, SDL_CONTROLLER_AXIS_LEFTY);
 			if (oy < -dz && ox < dz && ox > -dz) {
-				ball = new Fireball(p.pos_x + p.width / 2, p.pos_y - 1, UP);
+				ball = new Fireball(p.pos_x + p.width / 2, p.pos_y - 1, UP, &p);
 			}
 			else if (oy > dz && ox < dz && ox > -dz) {
-				ball = new Fireball(p.pos_x + p.width / 2, p.pos_y + p.height + 1, DOWN);
+				ball = new Fireball(p.pos_x + p.width / 2, p.pos_y + p.height + 1, DOWN, &p);
 			}
-			else if (oy < -dz / 2 && ox > dz / 2) {
-				ball = new Fireball(p.pos_x + p.width + 1, p.pos_y - 1, UP_RIGHT);
+			else if (oy < -dz * 5 / 4 && ox > dz / 2) {
+				ball = new Fireball(p.pos_x + p.width + 1, p.pos_y - 1, UP_RIGHT, &p);
 			}
-			else if (oy < -dz / 2 && ox < -dz / 2) {
-				ball = new Fireball(p.pos_x - 1, p.pos_y - 1, UP_LEFT);
+			else if (oy < -dz * 5 / 4 && ox < -dz / 2) {
+				ball = new Fireball(p.pos_x - 1, p.pos_y - 1, UP_LEFT, &p);
 			}
-			else if (oy > dz / 2 && ox > dz / 2) {
-				ball = new Fireball(p.pos_x + p.width + 1, p.pos_y + p.height + 1, DOWN_RIGHT);
+			else if (oy > dz * 5 / 4 && ox > dz / 2) {
+				ball = new Fireball(p.pos_x + p.width + 1, p.pos_y + p.height + 1, DOWN_RIGHT, &p);
 			}
-			else if (oy > dz / 2 && ox < -dz / 2) {
-				ball = new Fireball(p.pos_x - 1, p.pos_y + p.height + 1, DOWN_LEFT);
+			else if (oy > dz * 5 / 4 && ox < -dz / 2) {
+				ball = new Fireball(p.pos_x - 1, p.pos_y + p.height + 1, DOWN_LEFT, &p);
 			}
 			else {
 				if (p.flip_right) {
-					ball = new Fireball(p.pos_x + p.width + 1, p.pos_y + p.height / 3, RIGHT);
+					ball = new Fireball(p.pos_x + p.width + 1, p.pos_y + p.height / 3, RIGHT, &p);
 				}
 				else {
-					ball = new Fireball(p.pos_x - 1, p.pos_y + p.height / 3, LEFT);
+					ball = new Fireball(p.pos_x - 1, p.pos_y + p.height / 3, LEFT, &p);
 				}
 			}
 		}
@@ -146,16 +146,16 @@ void Player_states::cast_teleport_ball(Player& p) {
 			else if (oy > dz && ox < dz && ox > -dz) {
 				p.t_ball = new Teleport_ball(p.pos_x + p.width / 2, p.pos_y + p.height / 2, DOWN);
 			}
-			else if (oy < -dz / 2 && ox > dz / 2) {
+			else if (oy < -dz * 5 / 4 && ox > dz / 2) {
 				p.t_ball = new Teleport_ball(p.pos_x + p.width / 2, p.pos_y + p.height / 2, UP_RIGHT);
 			}
-			else if (oy < -dz / 2 && ox < -dz / 2) {
+			else if (oy < -dz * 5 / 4 && ox < -dz / 2) {
 				p.t_ball = new Teleport_ball(p.pos_x + p.width / 2, p.pos_y + p.height / 2, UP_LEFT);
 			}
-			else if (oy > dz / 2 && ox > dz / 2) {
+			else if (oy > dz * 5 / 4 && ox > dz / 2) {
 				p.t_ball = new Teleport_ball(p.pos_x + p.width / 2, p.pos_y + p.height / 2, DOWN_RIGHT);
 			}
-			else if (oy > dz / 2 && ox < -dz / 2) {
+			else if (oy > dz * 5 / 4 && ox < -dz / 2) {
 				p.t_ball = new Teleport_ball(p.pos_x + p.width / 2, p.pos_y + p.height / 2, DOWN_LEFT);
 			}
 			else {
@@ -466,16 +466,21 @@ void Hit1::logic(Player& p) {
 	SDL_Rect hit_box;
 
 	if (p.flip_right) {
-		hit_box = { (int)p.pos_x + (int)p.width / 2, (int)p.pos_y + (int)(p.height / 2), (int)(p.width), (int)(p.height / 2) };
+		hit_box = { (int)p.pos_x + (int)p.width / 2, (int)p.pos_y, (int)(p.width), (int)(p.height) };
 	}
 	else {
-		hit_box = { (int)p.pos_x - (int)(p.width / 2), (int)p.pos_y + (int)(p.height / 2), (int)(p.width), (int)(p.height / 2) };
+		hit_box = { (int)p.pos_x - (int)(p.width / 2), (int)p.pos_y, (int)(p.width), (int)(p.height) };
 	}
 	collisions = p.get_collisions(&hit_box);
 	if (collisions.size() != 0) {
 		for (int i = 0; i < collisions.size(); i++) {
 			if (collisions[i]->type == ENEMY || collisions[i]->type == PLAYER) {
 				collisions[i]->kill();
+			}
+			if (collisions[i]->type == FIREBALL && collisions[i]->parent!=&p) {
+				collisions[i]->parent = &p;
+				collisions[i]->vel_x = -collisions[i]->vel_x * 7 / 5;
+				collisions[i]->vel_y = -collisions[i]->vel_y * 7 / 5;
 			}
 		}
 	}

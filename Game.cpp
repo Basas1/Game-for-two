@@ -13,13 +13,14 @@ Game::Game() {
 	//Create player object
 	player1 = new Player(0,0,0);
 	player2 = new Player2(0,0,1);
-	enemy = new Enemy;
+
+	platform = new Capture_platform(1445, 900, 1675, 300);
 
 	objects.reserve(10);
 	static_objects.reserve(10);
 	objects.insert(objects.end(), player1);
 	objects.insert(objects.end(), player2);
-	//objects.insert(objects.end(), enemy);
+	objects.insert(objects.end(), platform);
 }
 
 
@@ -85,11 +86,14 @@ void Game::logic() {
 
 	//printf("%f\n", camera->get_scale());
 	camera->follow(follow_x, follow_y);
+
+	printf("P1 SCORE: %f;\tP2 SCORE: %f;\n", player1->score, player2->score);
+	//printf("P1 ON PLAT = %d;\tP2 ON PLAT = %d;\n", player1->on_platform, player2->on_platform);
 }
 
 void Game::render() {
 	//Clear screen
-	SDL_SetRenderDrawColor(main_renderer, 0, 0, 0, 0xFF);
+	SDL_SetRenderDrawColor(main_renderer, 255, 255, 255, 0xFF);
 	SDL_RenderClear(main_renderer);
 	
 	//Render background
@@ -115,12 +119,4 @@ void Game::render() {
 			objects[i]->render();
 		}
 	}
-	//for (int i = objects.size() - 1; i >= 0; i--) {
-	//	if (objects[i]->is_exist()) {
-	//		objects[i]->render();
-	//	}
-	//}
-
-	//printf("object count: %d;\n", objects.size());
-
 }

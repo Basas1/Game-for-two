@@ -134,7 +134,7 @@ void Teleport_ball::move() {
 
 void Teleport_ball::logic() {
 	if (!stage_two) {
-		if (SDL_GetTicks() - create_time >= 1000) {
+		if (SDL_GetTicks() - create_time >= 750) {
 			teleport_ball_animation->set_ñolor(120, 20, 255);
 			stage_two = true;
 		}

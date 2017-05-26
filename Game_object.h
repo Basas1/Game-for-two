@@ -34,12 +34,23 @@ public:
 	//Check for collision between two collision boxes
 	bool check_collision(SDL_Rect a, SDL_Rect b);
 
-
 	//Object's coordinates
 	double pos_x, pos_y;
 
+	//Object's velocity
+	double vel_x, vel_y;
+
+	//Object constant acceleration in motion
+	double acceleration;
+
+	double score;
+	bool on_platform;
+	int time_on_platform;
+
 	//Object size
 	int width, height;
+
+	Game_object* parent;
 
 protected:
 	//Flag of object existance
