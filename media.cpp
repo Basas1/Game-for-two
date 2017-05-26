@@ -24,6 +24,7 @@ SDL_Texture* player2_jump_texture = NULL;
 SDL_Texture* player2_hit_texture = NULL;
 
 SDL_Texture* fireball_texture = NULL;
+SDL_Texture* blast_texture = NULL;
 //Enemy1 textures
 SDL_Texture* enemy_stand_texture = NULL;
 SDL_Texture* enemy_run_texture = NULL;
@@ -31,7 +32,7 @@ SDL_Texture* enemy_hit_texture = NULL;
 
 
 
-//Map surface
+//Map surface 
 SDL_Surface* map_surface = NULL;
 
 //Globally used font
@@ -46,13 +47,13 @@ bool load_media() {
 	bool success = true;
 
 	//Load background texture
-	background_texture = load_texture("Images/space.jpg");
+	background_texture = load_texture("Images/kek.jpg");
 	if (background_texture == NULL) {
 		printf("Failed to load bg texture!\n");
 		success = false;
 	}
 	//Loading other textures
-	map = load_texture("Images/map_box2.png");
+	map = load_texture("Images/map_box_transparent.png");
 	//map = load_texture("Images/map_box.bmp");
 	if (map == NULL) {
 		printf("Failed to load map texture!\n");
@@ -141,6 +142,11 @@ bool load_media() {
 	fireball_texture = load_texture("Images/fireball.gif");
 	if (fireball_texture == NULL) {
 		printf("Failed to load fireball texture!\n");
+		success = false;
+	}
+	blast_texture = load_texture("Images/blast.png");
+	if (blast_texture == NULL) {
+		printf("Failed to load blast texture!\n");
 		success = false;
 	}
 

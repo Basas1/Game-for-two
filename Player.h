@@ -25,7 +25,7 @@ public:
 
 	bool vulnerable;
 
-	void kill();
+	bool kill();
 
 	int get_x();
 	int get_y();

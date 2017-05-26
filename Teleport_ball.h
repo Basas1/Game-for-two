@@ -15,10 +15,13 @@ public:
 	//Render object
 	void render();
 
+	void blast();
+
 	int create_time;
 	bool stage_two;
 
 	Animated_texture* teleport_ball_animation;
+	int blast_rad;
 	int b_width, b_height;
 };
 

@@ -1,5 +1,6 @@
 #pragma once
 #include <SDL.h>
+#include <vector>
 
 class Game_object {
 public:
@@ -21,11 +22,18 @@ public:
 	//Check if object exist
 
 	bool is_exist();
-	virtual void kill();
+	virtual bool kill();
 
 	bool collidable;
 	//Collision box
 	SDL_Rect collision_box;
+
+	//Checks for collision with other game objects
+	std::vector<Game_object*> get_collisions(SDL_Rect* check_box = NULL);
+
+	//Check for collision between two collision boxes
+	bool check_collision(SDL_Rect a, SDL_Rect b);
+
 
 	//Object's coordinates
 	double pos_x, pos_y;

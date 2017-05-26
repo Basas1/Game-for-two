@@ -52,11 +52,13 @@ Player::Player(int x, int y, int control) : Movable_object() {
 	t_ball = NULL;
 }
 
-void Player::kill() {
+bool Player::kill() {
 	if (vulnerable) {
 		pos_x = 1200;
 		pos_y = 135;
+		return true;
 	}
+	return false;
 }
 
 Player::~Player() {

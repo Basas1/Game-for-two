@@ -88,8 +88,9 @@ void Fireball::logic() {
 	if (collisions.size() != 0) {
 		for (int i = 0; i < collisions.size(); i++) {
 			if (collisions[i]->type == ENEMY || collisions[i]->type == PLAYER) {
-				collisions[i]->kill();
-				exist = false;
+				if (collisions[i]->kill()) {
+					exist = false;
+				}
 			}
 		}
 	}

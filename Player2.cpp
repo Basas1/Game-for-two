@@ -61,10 +61,12 @@ Player2::~Player2() {
 }
 
 
-void Player2::kill() {
+bool Player2::kill() {
 	if (vulnerable) {
 		pos_x = 2600;
 		pos_y = 135;
+		return true;
 	}
+	return false;
 }
 

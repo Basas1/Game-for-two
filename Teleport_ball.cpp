@@ -2,11 +2,12 @@
 #include "Teleport_ball.h"
 #include "media.h"
 #include "init.h"
+#include "Static_object.h"
 
 
 
 Teleport_ball::Teleport_ball(int x, int y, int side) : Movable_object() {
-	int start_speed = acceleration * 2;
+	int start_speed = acceleration * 4;
 	type = TELEPORT;
 	width = 0;
 	height = 0;
@@ -38,23 +39,23 @@ Teleport_ball::Teleport_ball(int x, int y, int side) : Movable_object() {
 		break;
 	}
 	case UP_RIGHT: {
-		vel_x = start_speed;
-		vel_y = -start_speed;
+		vel_x = start_speed * 7 / 10;
+		vel_y = -start_speed * 7 / 10;
 		break;
 	}
 	case UP_LEFT: {
-		vel_x = -start_speed;
-		vel_y = -start_speed;
+		vel_x = -start_speed * 7 / 10;
+		vel_y = -start_speed * 7 / 10;
 		break;
 	}
 	case DOWN_RIGHT: {
-		vel_x = start_speed;
-		vel_y = start_speed;
+		vel_x = start_speed * 7 / 10;
+		vel_y = start_speed * 7 / 10;
 		break;
 	}
 	case DOWN_LEFT: {
-		vel_x = -start_speed;
-		vel_y = start_speed;
+		vel_x = -start_speed * 7 / 10;
+		vel_y = start_speed * 7 / 10;
 		break;
 	}
 	}
@@ -64,6 +65,7 @@ Teleport_ball::Teleport_ball(int x, int y, int side) : Movable_object() {
 	teleport_ball_animation->set_ñolor(50, 50, 255);
 	b_width = 64;
 	b_height = 64;
+	blast_rad = 128;
 
 	collision_box = { (int)pos_x, (int)pos_y, width, height };
 }
@@ -132,7 +134,7 @@ void Teleport_ball::move() {
 
 void Teleport_ball::logic() {
 	if (!stage_two) {
-		if (SDL_GetTicks() - create_time >= 2000) {
+		if (SDL_GetTicks() - create_time >= 1000) {
 			teleport_ball_animation->set_ñolor(120, 20, 255);
 			stage_two = true;
 		}
@@ -155,3 +157,24 @@ Teleport_ball::~Teleport_ball() {
 	delete teleport_ball_animation;
 	teleport_ball_animation = NULL;
 }
+
+
+void Teleport_ball::blast() {
+	std::vector<Game_object*> collisions;
+	SDL_Rect hit_box;
+	hit_box = { (int)pos_x - blast_rad, (int)pos_y - blast_rad, blast_rad * 2, blast_rad * 2 };
+	collisions = get_collisions(&hit_box);
+	if (collisions.size() != 0) {
+		for (int i = 0; i < collisions.size(); i++) {
+			if (collisions[i]->type == ENEMY || collisions[i]->type == PLAYER) {
+				collisions[i]->kill();
+			}
+		}
+	}
+
+	Blast* blast;
+	blast = new Blast((int)pos_x, (int)pos_y);
+	objects.insert(objects.end(), blast);
+
+}
+

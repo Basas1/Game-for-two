@@ -11,15 +11,15 @@ Game::Game() {
 	background2 = background_texture;
 
 	//Create player object
-	player1 = new Player(0,0,1);
-	player2 = new Player2(0,0,2);
+	player1 = new Player(0,0,0);
+	player2 = new Player2(0,0,1);
 	enemy = new Enemy;
 
 	objects.reserve(10);
 	static_objects.reserve(10);
 	objects.insert(objects.end(), player1);
 	objects.insert(objects.end(), player2);
-	objects.insert(objects.end(), enemy);
+	//objects.insert(objects.end(), enemy);
 }
 
 
@@ -34,7 +34,6 @@ void Game::handle_events() {
 			//Quit the program
 			set_next_state(STATE_EXIT);
 		}
-
 		for (int i = 0; i < objects.size(); i++) {
 			if (objects[i]->is_exist()) {
 				objects[i]->handle_events(event);
@@ -111,11 +110,16 @@ void Game::render() {
 	}
 
 	//Render Player and other objects
-	for (int i = objects.size()-1; i >= 0; i--) {
+	for (int i = 0; i < objects.size(); i++) {
 		if (objects[i]->is_exist()) {
 			objects[i]->render();
 		}
 	}
+	//for (int i = objects.size() - 1; i >= 0; i--) {
+	//	if (objects[i]->is_exist()) {
+	//		objects[i]->render();
+	//	}
+	//}
 
 	//printf("object count: %d;\n", objects.size());
 

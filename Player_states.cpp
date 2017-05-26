@@ -178,20 +178,7 @@ void Player_states::cast_teleport_ball(Player& p) {
 
 void Player_states::blast_teleport_ball(Player& p) {
 	if (p.t_ball != NULL && p.t_ball->stage_two) {
-		std::vector<Game_object*> collisions;
-		SDL_Rect hit_box;
-		hit_box = { (int)p.t_ball->pos_x - (int)p.t_ball->b_width / 2, (int)p.t_ball->pos_y - (int)(p.t_ball->b_height / 2), (int)(p.t_ball->b_width), (int)(p.t_ball->b_height) };
-		collisions = p.get_collisions(&hit_box);
-		if (collisions.size() != 0) {
-			for (int i = 0; i < collisions.size(); i++) {
-				if (collisions[i]->type == ENEMY || collisions[i]->type == PLAYER) {
-					collisions[i]->kill();
-				}
-			}
-		}
-		if (p.t_ball->check_collision(hit_box, p.collision_box)) {
-			p.kill();
-		}
+		p.t_ball->blast();
 		p.t_ball->kill();
 		p.t_ball = NULL;
 	}

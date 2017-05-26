@@ -17,11 +17,11 @@ public:
 	//Move method
 	void move();
 
-	//Checks for collision with other game objects
-	std::vector<Game_object*> get_collisions(SDL_Rect* check_box=NULL);
+	////Checks for collision with other game objects
+	//std::vector<Game_object*> get_collisions(SDL_Rect* check_box=NULL);
 
-	//Check for collision between two collision boxes
-	bool check_collision(SDL_Rect a, SDL_Rect b);
+	////Check for collision between two collision boxes
+	//bool check_collision(SDL_Rect a, SDL_Rect b);
 
 	//Check for map collision in coordinate (x,y)
 	bool check_map_collision(int x, int y);
