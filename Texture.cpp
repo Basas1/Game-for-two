@@ -24,6 +24,7 @@ Texture::Texture(SDL_Texture* t, int x_offset, int y_offset) {
 	//Set offsets for texture from actual player position
 	x_off = x_offset;
 	y_off = y_offset;
+	relative_coord = true;
 }
 
 bool Texture::load_from_file(std::string path) {
@@ -75,6 +76,11 @@ void Texture::set_height(int h) {
 	height = h;
 }
 
+void Texture::set_absolute_coord() {
+	relative_coord = false;
+}
+
+
 int Texture::get_width() {
 	return width;
 }
@@ -91,12 +97,17 @@ void Texture::render(int x, int y, bool flip_right, SDL_Rect* clip, double angle
 		flip = SDL_FLIP_HORIZONTAL;
 	}
 
-	//Set rendering space
-	double scale = camera->get_scale();
-	//SDL_Rect renderQuad = { x - camera->get_x() + x_off, y - camera->get_y() + y_off, width , height };
-	SDL_Rect renderQuad = { (x - camera->get_x() + x_off) * scale, (y - camera->get_y() + y_off) * scale, width * scale, height * scale };
-	//Render to screen
-	SDL_RenderCopyEx(main_renderer, original_texture, clip, &renderQuad, angle, center, flip);
+	if (relative_coord) {
+		double scale = camera->get_scale();
+		//Set rendering space
+		SDL_Rect renderQuad = { (x - camera->get_x() + x_off) * scale, (y - camera->get_y() + y_off) * scale, width * scale, height * scale };
+		//Render to screen
+		SDL_RenderCopyEx(main_renderer, original_texture, clip, &renderQuad, angle, center, flip);
+	}
+	else {
+		SDL_Rect renderQuad = { x, y, width, height};
+		SDL_RenderCopyEx(main_renderer, original_texture, clip, &renderQuad, angle, center, flip);
+	}
 }
 
 void Texture::free() {

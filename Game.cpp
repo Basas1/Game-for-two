@@ -26,6 +26,18 @@ Game::Game() {
 
 
 Game::~Game() {
+	if (objects.size() != 0) {
+		for (int i = objects.size() - 1; i >= 0; i--) {
+			objects.erase(objects.begin() + i);
+		}
+	}
+	if (static_objects.size() != 0) {
+		for (int i = static_objects.size() - 1; i >= 0; i--) {
+			static_objects.erase(objects.begin() + i);
+		}
+	}
+	delete player1, player2, platform;
+
 }
 
 void Game::handle_events() {
@@ -121,23 +133,17 @@ void Game::render() {
 		}
 	}
 
-
-
 	//Render score
 	int p1_score, p2_score;
 	p1_score = (int)player1->score;
 	p1_score /= 100;
 	p2_score = (int)player2->score;
 	p2_score /= 100;
-	printf("P1 SCORE: %d;\tP2 SCORE: %d;\n", p1_score, p2_score);
+	//printf("P1 SCORE: %d;\tP2 SCORE: %d;\n", p1_score, p2_score);
 
-	char buff[100];
-	snprintf(buff, sizeof(buff), "PLAYER 1 SCORE: %d", p1_score);
-	std::string score1 = buff;
-	snprintf(buff, sizeof(buff), "PLAYER 2 SCORE: %d", p2_score);
-	std::string score2 = buff;
-
-	//render_text(25, 25, score1);
-	//render_text(SCREEN_WIDTH - 315, 25, score2);
+	score1->render(25, 25);
+	render_number(240, 20, p1_score);
+	score2->render(SCREEN_WIDTH - 315,25);
+	render_number(SCREEN_WIDTH - 95, 20, p2_score);
 
 }

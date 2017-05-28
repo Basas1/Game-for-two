@@ -28,6 +28,9 @@ extern SDL_Texture* enemy_stand_texture;
 extern SDL_Texture* enemy_run_texture;
 extern SDL_Texture* enemy_hit_texture;
 
+extern SDL_Texture* digits_texture;
+extern SDL_Texture* player1_score_texture;
+extern SDL_Texture* player2_score_texture;
 
 
 //Map surface

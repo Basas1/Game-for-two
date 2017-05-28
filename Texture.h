@@ -5,7 +5,7 @@
 class Texture {
 public:
 	//Initializes variables
-	Texture(SDL_Texture* original_texture, int x_offset=0, int y_offset=0);
+	Texture(SDL_Texture* original_texture, int x_offset = 0, int y_offset = 0);
 
 	//Deallocates memory
 	~Texture();
@@ -27,6 +27,9 @@ public:
 
 	//Set texture flip
 	void set_flip(SDL_RendererFlip change);
+
+	//Set absolute coordinate system
+	void set_absolute_coord();
 
 	//Deallocates texture
 	void free();
@@ -50,6 +53,8 @@ protected:
 
 	//Set offsets for texture from actual player position
 	int x_off, y_off;
+
+	bool relative_coord;
 };
 
 	

@@ -30,6 +30,11 @@ SDL_Texture* enemy_stand_texture = NULL;
 SDL_Texture* enemy_run_texture = NULL;
 SDL_Texture* enemy_hit_texture = NULL;
 
+SDL_Texture* digits_texture = NULL;
+SDL_Texture* player1_score_texture = NULL;
+SDL_Texture* player2_score_texture = NULL;
+
+
 
 
 //Map surface 
@@ -48,6 +53,7 @@ bool load_media() {
 
 	//Load background texture
 	background_texture = load_texture("Images/kek.jpg");
+	//background_texture = load_texture("Images/space.jpg");
 	if (background_texture == NULL) {
 		printf("Failed to load bg texture!\n");
 		success = false;
@@ -136,6 +142,12 @@ bool load_media() {
 	//	printf("Failed to load player texture!\n");
 	//	success = false;
 	//}
+
+	//Score textures
+	player1_score_texture = load_texture("Images/player1score.png");
+	player2_score_texture = load_texture("Images/player2score.png");
+	digits_texture = load_texture("Images/digits.png");
+
 
 
 

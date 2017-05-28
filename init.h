@@ -13,6 +13,7 @@
 #include "Player.h"
 #include "Player2.h"
 #include "Timer.h"
+#include "Animated_texture.h"
 
 //Players
 extern Player* player1;
@@ -95,6 +96,10 @@ extern SDL_Renderer* main_renderer;
 
 //Main camera
 extern Camera* camera;
+
+extern Animated_texture* digits;
+extern Texture* score1;
+extern Texture* score2;
 
 bool init();
 

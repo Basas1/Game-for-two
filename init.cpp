@@ -18,6 +18,9 @@ SDL_GameController* gamepad2 = NULL;
 SDL_Joystick* joystick1 = NULL;
 SDL_Joystick* joystick2 = NULL;
 
+Texture* score1 = NULL;
+Texture* score2 = NULL;
+
 //timer for fps capping
 Timer fps;
 
@@ -30,6 +33,8 @@ Programm_state* current_state = NULL;
 SDL_Event event;
 
 Camera* camera = NULL;
+
+Animated_texture* digits = NULL;
 
 //The window we'll be rendering to
 SDL_Window* main_window = NULL;
@@ -104,6 +109,13 @@ bool init() {
 		printf("Failed to load media!\n");
 		success = false;
 	}
+
+	digits = new Animated_texture(digits_texture, 10);
+	digits->set_absolute_coord();
+	score1 = new Texture(player1_score_texture);
+	score1->set_absolute_coord();
+	score2 = new Texture(player2_score_texture);
+	score2->set_absolute_coord();
 
 	//Set start programm state
 	state_id = STATE_MENU;

@@ -77,4 +77,34 @@ Uint32 getpixel(SDL_Surface *surface, int x, int y)
 	}
 }
 
+void render_number(int x, int y, int number) {
+	if (number == 0) {
+		digits->set_frame(0);
+		digits->render(x, y);
+	}
+	else {
+		int digit_count = 0;
+		int k,j;
+		int render_x = x;
+		int render_y = y;
+		int digit_list[10];
+		for (int i = 0; i < 10; i++) {
+			digit_list[i] = -1;
+		}
+		j = 9;
+		for (int i = number; i > 0; i /= 10) {
+			k = i % 10;
+			digit_list[j] = k;
+			j--;
+			digit_count++;
+		}
+		for (int m = 0; m < 10; m++) {
+			if (digit_list[m] == -1) continue;
+			printf("d[m]=%d\n", digit_list[m]);
+			digits->set_frame(digit_list[m]);
+			digits->render(render_x, render_y);
+			render_x += digits->get_width();
+		}
+	}
+}
 
