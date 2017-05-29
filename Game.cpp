@@ -109,7 +109,7 @@ void Game::logic() {
 	camera->set_scale(sc1);
 	camera->follow(follow_x, follow_y);
 
-	printf("g_time=%d\n", game_time.get_ticks());
+	//printf("g_time=%d\n", game_time.get_ticks());
 
 }
 

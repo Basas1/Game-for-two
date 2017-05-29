@@ -101,6 +101,14 @@ bool Movable_object::check_map_collision_left() {
 	return false;
 }
 
+bool Movable_object::check_map_collision_left_strict() {
+	for (int i = pos_y; i <= pos_y + height; i++) {
+		if (check_map_collision(pos_x - 1, i)) return true;
+	}
+	return false;
+}
+
+
 //Check right side of object collision box for collision with map
 bool Movable_object::check_map_collision_right() {
 	for (int i = pos_y; i <= pos_y + height - can_rise; i ++) {
@@ -113,6 +121,13 @@ bool Movable_object::check_map_collision_right() {
 			}
 			break;
 		}
+	}
+	return false;
+}
+
+bool Movable_object::check_map_collision_right_strict() {
+	for (int i = pos_y; i <= pos_y + height; i++) {
+		if (check_map_collision(pos_x + width + 1, i)) return true;
 	}
 	return false;
 }
@@ -205,18 +220,25 @@ void Movable_object::move() {
 	int old_x = pos_x;
 	if (vel_x > 0) {
 		for (pos_x; pos_x <= old_x + vel_x; pos_x++) {
-			if (check_map_collision_right()) {
-				//printf("COLLISION_R\n");
-				vel_x = 0;
-				break;
-			}
-			if (!check_map_collision(pos_x + width + 1, pos_y + height - can_rise) &&
-				check_map_collision(pos_x + width / 2, pos_y + height - 1)) {
-				for (int i = pos_y + height - can_rise; i < pos_y + height; i++) {
-					if (check_map_collision(pos_x + width / 2, i)) {
-						pos_y = i - height;
-						break;
+			if (vel_y == 0) {
+				if (check_map_collision_right()) {
+					vel_x = 0;
+					break;
+				}
+				if (!check_map_collision(pos_x + width + 1, pos_y + height - can_rise) &&
+					check_map_collision(pos_x + width / 2, pos_y + height - 1)) {
+					for (int i = pos_y + height - can_rise; i < pos_y + height; i++) {
+						if (check_map_collision(pos_x + width / 2, i)) {
+							pos_y = i - height;
+							break;
+						}
 					}
+				}
+			}
+			else {
+				if (check_map_collision_right_strict()) {
+					vel_x = 0;
+					break;
 				}
 			}
 		}
@@ -224,19 +246,27 @@ void Movable_object::move() {
 	//Left movement
 	else if (vel_x < 0) {
 		for (pos_x; pos_x >= old_x + vel_x; pos_x--) {
-			if (check_map_collision_left()) {
-				//printf("COLLISION_L\n");
-				vel_x = 0;
-				break;
-			}
-			if (!check_map_collision(pos_x - 1, pos_y + height - can_rise) &&
-				check_map_collision(pos_x + width / 2, pos_y + height - 1)) {
-				for (int i = pos_y + height - can_rise; i < pos_y + height; i++) {
-					if (check_map_collision(pos_x + width / 2, i)) {
-						pos_y = i - height;
-						break;
+			if (vel_y == 0) {
+				if (check_map_collision_left()) {
+					vel_x = 0;
+					break;
+				}
+				if (!check_map_collision(pos_x - 1, pos_y + height - can_rise) &&
+					check_map_collision(pos_x + width / 2, pos_y + height - 1)) {
+					for (int i = pos_y + height - can_rise; i < pos_y + height; i++) {
+						if (check_map_collision(pos_x + width / 2, i)) {
+							pos_y = i - height;
+							break;
+						}
 					}
 				}
+			}
+			else {
+				if (check_map_collision_left_strict()) {
+					vel_x = 0;
+					break;
+				}
+
 			}
 		}
 	}

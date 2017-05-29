@@ -36,7 +36,9 @@ public:
 
 	//Check side of object collision box for collision with map
 	bool check_map_collision_left();
+	bool check_map_collision_left_strict();
 	bool check_map_collision_right();
+	bool check_map_collision_right_strict();
 
 	//Check all collisions
 	bool check_map_collision_all();
