@@ -33,4 +33,12 @@ public:
 	void logic();
 };
 
+class Fireball_trail : public Static_object {
+public:
+	Fireball_trail(int x, int y);
+	~Fireball_trail();
+	void render();
+	Animated_texture* f_trail;
+};
+
 

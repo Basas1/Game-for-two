@@ -27,6 +27,7 @@ SDL_Texture* player2_dive_texture = NULL;
 
 
 SDL_Texture* fireball_texture = NULL;
+SDL_Texture* fireball_trail_texture = NULL;
 SDL_Texture* blast_texture = NULL;
 //Enemy1 textures
 SDL_Texture* enemy_stand_texture = NULL;
@@ -168,6 +169,11 @@ bool load_media() {
 
 	fireball_texture = load_texture("Images/fireball.gif");
 	if (fireball_texture == NULL) {
+		printf("Failed to load fireball texture!\n");
+		success = false;
+	}
+	fireball_trail_texture = load_texture("Images/fireball_trail.png");
+	if (fireball_trail_texture == NULL) {
 		printf("Failed to load fireball texture!\n");
 		success = false;
 	}

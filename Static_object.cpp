@@ -29,6 +29,7 @@ void Blast::logic() {
 	}
 	else {
 		exist = false;
+		delete this;
 	}
 }
 
@@ -93,4 +94,31 @@ void Capture_platform::logic() {
 		}
 	}
 }
+
+
+
+Fireball_trail::Fireball_trail(int x, int y) : Static_object() {
+	pos_x = x;
+	pos_y = y;
+	f_trail = new Animated_texture(fireball_trail_texture, 7, -25, -25);
+	f_trail->set_ticks_per_frame(5);
+}
+
+void Fireball_trail::render() {
+	if (f_trail->get_replay_count() > 0) {
+		exist = false;
+		delete this;
+	}
+	else {
+		f_trail->render(pos_x, pos_y);
+		f_trail->next_frame();
+	}
+}
+
+Fireball_trail::~Fireball_trail() {
+	delete f_trail;
+	f_trail = NULL;
+}
+
+
 

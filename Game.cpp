@@ -35,7 +35,7 @@ Game::~Game() {
 	}
 	if (static_objects.size() != 0) {
 		for (int i = static_objects.size() - 1; i >= 0; i--) {
-			static_objects.erase(objects.begin() + i);
+			static_objects.erase(static_objects.begin() + i);
 		}
 	}
 	delete player1, player2, platform;
@@ -83,6 +83,12 @@ void Game::logic() {
 			objects.erase(objects.begin() + i);
 		}
 	}
+	for (int i = static_objects.size() - 1; i >= 0; i--) {
+		if (!static_objects[i]->is_exist()) {
+			static_objects.erase(static_objects.begin() + i);
+		}
+	}
+
 
 	int follow_x, follow_y;
 	follow_x = (player1->get_x() + player2->get_x()) / 2;
