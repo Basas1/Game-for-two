@@ -70,7 +70,7 @@ bool Player2::kill() {
 		pos_x = 2600;
 		pos_y = 75;
 		player1->score += 1000;
-		unkill_cooldown = SDL_GetTicks();
+		unkill_cooldown = game_time.get_ticks();
 		return true;
 	}
 	return false;

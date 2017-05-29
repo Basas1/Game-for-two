@@ -62,7 +62,7 @@ bool Player::kill() {
 		pos_x = 1305;
 		pos_y = 75;
 		player2->score += 1000;
-		unkill_cooldown = SDL_GetTicks();
+		unkill_cooldown = game_time.get_ticks();
 		return true;
 	}
 	return false;
@@ -85,7 +85,7 @@ int Player::get_y() {
 }
 
 void Player::logic() {
-	printf("vel_x=%f; vel_y=%f\n", vel_x, vel_y);
+	//printf("vel_x=%f; vel_y=%f\n", vel_x, vel_y);
 	//printf("x=%f; y=%f\n", pos_x, pos_y);
 	reduce_cooldowns();
 	state_stack.top()->logic(*this);
@@ -104,8 +104,6 @@ void Player::logic() {
 	if (!on_plat) {
 		on_platform = false;
 	}
-
-	//printf("count=%d;\n", collision_list.size());
 };
 
 void Player::handle_events(SDL_Event& event) {
@@ -125,7 +123,7 @@ void Player::render() {
 
 
 void Player::reduce_cooldowns() {
-	int time = SDL_GetTicks();
+	int time = game_time.get_ticks();
 	if (time - fireball_cooldown >= 500) fireball_cooldown = 0;
 	if (time - hit_cooldown >= 1000) hit_cooldown = 0;
 	if (time - unkill_cooldown >= 1000) unkill_cooldown = 0;

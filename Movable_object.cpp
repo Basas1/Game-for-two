@@ -206,7 +206,7 @@ void Movable_object::move() {
 	if (vel_x > 0) {
 		for (pos_x; pos_x <= old_x + vel_x; pos_x++) {
 			if (check_map_collision_right()) {
-				printf("COLLISION_R\n");
+				//printf("COLLISION_R\n");
 				vel_x = 0;
 				break;
 			}
@@ -225,7 +225,7 @@ void Movable_object::move() {
 	else if (vel_x < 0) {
 		for (pos_x; pos_x >= old_x + vel_x; pos_x--) {
 			if (check_map_collision_left()) {
-				printf("COLLISION_L\n");
+				//printf("COLLISION_L\n");
 				vel_x = 0;
 				break;
 			}

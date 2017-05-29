@@ -31,6 +31,7 @@ extern std::vector<Game_object*> static_objects;
 
 //timer for fps capping
 extern Timer fps;
+extern Timer game_time;
 
 //Screen dimension constants
 const int SCREEN_WIDTH = 1920;

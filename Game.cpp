@@ -7,6 +7,7 @@
 
 
 Game::Game() {
+	game_time.start();
 	SDL_ShowCursor(SDL_DISABLE);
 	//Load the background
 	background = map;
@@ -38,7 +39,7 @@ Game::~Game() {
 		}
 	}
 	delete player1, player2, platform;
-
+	game_time.stop();
 }
 
 void Game::handle_events() {
@@ -49,6 +50,15 @@ void Game::handle_events() {
 			//Quit the program
 			set_next_state(STATE_EXIT);
 		}
+		if (event.type == SDL_KEYDOWN) {
+			switch (event.key.keysym.sym) {
+			case SDLK_p: {
+				game_time.toggle();
+				break;
+			}
+			}
+		}
+
 		for (int i = 0; i < objects.size(); i++) {
 			if (objects[i]->is_exist()) {
 				objects[i]->handle_events(event);
@@ -97,12 +107,10 @@ void Game::logic() {
 	}
 
 	camera->set_scale(sc1);
-
-	//printf("%f\n", camera->get_scale());
 	camera->follow(follow_x, follow_y);
 
-	//printf("P1 SCORE: %f;\tP2 SCORE: %f;\n", player1->score, player2->score);
-	//printf("P1 ON PLAT = %d;\tP2 ON PLAT = %d;\n", player1->on_platform, player2->on_platform);
+	printf("g_time=%d\n", game_time.get_ticks());
+
 }
 
 void Game::render() {
@@ -126,14 +134,12 @@ void Game::render() {
 			static_objects[i]->render();
 		}
 	}
-
 	//Render Player and other objects
 	for (int i = 0; i < objects.size(); i++) {
 		if (objects[i]->is_exist()) {
 			objects[i]->render();
 		}
 	}
-
 	//Render score
 	int p1_score, p2_score;
 	p1_score = (int)player1->score;

@@ -23,6 +23,7 @@ Texture* score2 = NULL;
 
 //timer for fps capping
 Timer fps;
+Timer game_time;
 
 std::vector<Game_object*> objects;
 std::vector<Game_object*> static_objects;

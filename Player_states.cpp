@@ -100,7 +100,7 @@ void Player_states::cast_fireball(Player& p) {
 			}
 		}
 		objects.insert(objects.end(), ball);
-		p.fireball_cooldown = SDL_GetTicks();
+		p.fireball_cooldown = game_time.get_ticks();
 	}
 }
 
@@ -454,7 +454,7 @@ void Hit1::logic(Player& p) {
 	if (p.hit_animation->get_replay_count() > 0) {
 		p.hit_animation->reset();
 		p.vel_x = 0;
-		p.hit_cooldown = SDL_GetTicks();
+		p.hit_cooldown = game_time.get_ticks();
 		p.vulnerable = true;
 		p.state_stack.pop();
 	}

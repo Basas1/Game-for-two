@@ -18,7 +18,7 @@ Teleport_ball::Teleport_ball(int x, int y, int side) : Movable_object() {
 	vel_x = 0;
 	vel_y = 0;
 	exist = true;
-	create_time = SDL_GetTicks();
+	create_time = game_time.get_ticks();
 	stage_two = false;
 
 	switch (side) {
@@ -134,7 +134,7 @@ void Teleport_ball::move() {
 
 void Teleport_ball::logic() {
 	if (!stage_two) {
-		if (SDL_GetTicks() - create_time >= 750) {
+		if (game_time.get_ticks() - create_time >= 750) {
 			teleport_ball_animation->set_ñolor(120, 20, 255);
 			stage_two = true;
 		}
