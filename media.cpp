@@ -16,12 +16,15 @@ SDL_Texture* player_stand_texture = NULL;
 SDL_Texture* player_run_texture = NULL;
 SDL_Texture* player_jump_texture = NULL;
 SDL_Texture* player_hit_texture = NULL;
+SDL_Texture* player_dive_texture = NULL;
 //Player2 textures
 SDL_Texture* player2_texture = NULL;
 SDL_Texture* player2_stand_texture = NULL;
 SDL_Texture* player2_run_texture = NULL;
 SDL_Texture* player2_jump_texture = NULL;
 SDL_Texture* player2_hit_texture = NULL;
+SDL_Texture* player2_dive_texture = NULL;
+
 
 SDL_Texture* fireball_texture = NULL;
 SDL_Texture* blast_texture = NULL;
@@ -97,6 +100,12 @@ bool load_media() {
 		printf("Failed to load player texture!\n");
 		success = false;
 	}
+	player_dive_texture = load_texture("Images/diveattack.gif");
+	if (player_dive_texture == NULL) {
+		printf("Failed to load player texture!\n");
+		success = false;
+	}
+
 
 	//PLAYER2 TEXTURES
 	player2_texture = load_texture("Images/stand2.gif");
@@ -114,7 +123,7 @@ bool load_media() {
 		printf("Failed to load player texture!\n");
 		success = false;
 	}
-	player2_jump_texture = load_texture("Images/jump.gif");
+	player2_jump_texture = load_texture("Images/jump2.gif");
 	if (player_jump_texture == NULL) {
 		printf("Failed to load player texture!\n");
 		success = false;
@@ -124,6 +133,12 @@ bool load_media() {
 		printf("Failed to load player texture!\n");
 		success = false;
 	}
+	player2_dive_texture = load_texture("Images/diveattack.gif");
+	if (player2_dive_texture == NULL) {
+		printf("Failed to load player texture!\n");
+		success = false;
+	}
+
 
 
 	//ENEMY1 TEXTURES

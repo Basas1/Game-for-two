@@ -10,8 +10,9 @@ public:
 		FIRE_STATE,
 		JUMP_STATE,
 		HIT1_STATE,
+		HIT2_STATE,
 	};
-	void change_state(Player& p, int state);
+	void change_state(Player& p, int state, int arg=0);
 	void cast_fireball(Player& p);
 	void cast_teleport_ball(Player& p);
 	void blast_teleport_ball(Player& p);
@@ -47,12 +48,20 @@ public:
 	void handle_events(Player& p, SDL_Event& event);
 	void logic(Player& p);
 	void render(Player& p);
-private:
 	char jump_count;
 };
 
 class Hit1 : public Player_states {
+public:
 	void logic(Player& p);
 	void render(Player& p);
 };
 
+class Hit2 : public Player_states {
+public:
+	Hit2(int jump);
+	void handle_events(Player& p, SDL_Event& event);
+	void logic(Player& p);
+	void render(Player& p);
+	bool can_cancel;
+};

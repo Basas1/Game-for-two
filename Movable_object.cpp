@@ -274,3 +274,4 @@ void Movable_object::move() {
 	collision_box = { (int)pos_x, (int)pos_y, width, height };
 }
 
+

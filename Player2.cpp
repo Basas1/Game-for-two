@@ -34,6 +34,7 @@ Player2::Player2(int x, int y, int control) : Player() {
 	//jump_animation->set_frame_order(order1, sizeof(order1) / sizeof(int));
 	jump_animation->set_ticks_per_frame(25);
 	hit_animation = new Animated_texture(player2_hit_texture, 4, -44, -28);
+	dive_animation = new Animated_texture(player2_dive_texture, 1, -75, -40);
 
 
 	//type = PLAYER;

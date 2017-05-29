@@ -38,6 +38,7 @@ public:
 
 	//Fireball cooldown
 	int fireball_cooldown;
+	int teleport_cooldown;
 	int hit_cooldown;
 	int unkill_cooldown;
 
@@ -48,7 +49,7 @@ public:
 	Animated_texture* run_animation;
 	Animated_texture* jump_animation;
 	Animated_texture* hit_animation;
-	Animated_texture* hit2_animation;
+	Animated_texture* dive_animation;
 
 	Teleport_ball* t_ball;
 	void teleport_to_ball();
