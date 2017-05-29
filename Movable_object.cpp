@@ -12,7 +12,7 @@ Movable_object::Movable_object() : Game_object() {
 	vel_x = 0;
 	vel_y = 0;
 
-	max_vel_x = 2;
+	max_vel_x = 3;
 	max_vel_y = 20;
 
 	acc_x = 0;
@@ -21,7 +21,7 @@ Movable_object::Movable_object() : Game_object() {
 	acceleration = 2;
 	gravity = 0.1;
 	friction = 0.5;
-	can_rise = 25;
+	can_rise = 45;
 }
 
 //Check for map collision in coordinate (x,y)
@@ -206,6 +206,7 @@ void Movable_object::move() {
 	if (vel_x > 0) {
 		for (pos_x; pos_x <= old_x + vel_x; pos_x++) {
 			if (check_map_collision_right()) {
+				printf("COLLISION_R\n");
 				vel_x = 0;
 				break;
 			}
@@ -224,6 +225,7 @@ void Movable_object::move() {
 	else if (vel_x < 0) {
 		for (pos_x; pos_x >= old_x + vel_x; pos_x--) {
 			if (check_map_collision_left()) {
+				printf("COLLISION_L\n");
 				vel_x = 0;
 				break;
 			}
@@ -236,9 +238,9 @@ void Movable_object::move() {
 					}
 				}
 			}
-
 		}
 	}
+
 	collision_box = { (int)pos_x, (int)pos_y, width, height };
 }
 

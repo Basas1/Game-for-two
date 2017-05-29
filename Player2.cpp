@@ -7,12 +7,9 @@
 
 
 Player2::Player2(int x, int y, int control) : Player() {
-	type = PLAYER;
-	width = 40;
-	height = 100;
 	pos_x = 2600;
-	pos_y = 135;
-	score = 0;
+	pos_y = 75;
+	flip_right = false;
 
 	controller = control;
 	switch (controller) {
@@ -27,36 +24,35 @@ Player2::Player2(int x, int y, int control) : Player() {
 		break;
 	}
 
-
-	jump_vel = 7;
-	flip_right = false;
-	fireball_cooldown = 0;
-	hit_cooldown = 0;
-	unkill_cooldown = 0;
-	time_on_platform = -1;
-	on_platform = false;
-
-
-
-
-
-	stand_animation = new Animated_texture(player2_stand_texture, 3, -44, -28);
-	int order1[] = { 0, 1, 2, 1 };
-	stand_animation->set_frame_order(order1, sizeof(order1) / sizeof(int));
+	stand_animation = new Animated_texture(player2_stand_texture, 8, -75, -40);
+	//int order1[] = { 0, 1, 2, 1 };
+	//stand_animation->set_frame_order(order1, sizeof(order1) / sizeof(int));
 	stand_animation->set_ticks_per_frame(25);
-	run_animation = new Animated_texture(player2_run_texture, 10, -44, -28);
-	jump_animation = new Animated_texture(player2_jump_texture, 3, -44, -28);
-	jump_animation->set_frame_order(order1, sizeof(order1) / sizeof(int));
+	run_animation = new Animated_texture(player2_run_texture, 13, -75, -40);
+	run_animation->set_ticks_per_frame(13);
+	jump_animation = new Animated_texture(player2_jump_texture, 1, -75, -40);
+	//jump_animation->set_frame_order(order1, sizeof(order1) / sizeof(int));
 	jump_animation->set_ticks_per_frame(25);
 	hit_animation = new Animated_texture(player2_hit_texture, 4, -44, -28);
 
 
-	collision_box = { (int)pos_x, (int)pos_y, width, height };
+	//type = PLAYER;
+	//width = 50;
+	//height = 160;
+	//score = 0;
+	//jump_vel = 7;
+	//fireball_cooldown = 0;
+	//hit_cooldown = 0;
+	//unkill_cooldown = 0;
+	//time_on_platform = -1;
+	//on_platform = false;
 
-	state = new Stand;
-	state_stack.push(state);
+	//collision_box = { (int)pos_x, (int)pos_y, width, height };
 
-	t_ball = NULL;
+	//state = new Stand;
+	//state_stack.push(state);
+
+	//t_ball = NULL;
 }
 
 
@@ -72,7 +68,7 @@ Player2::~Player2() {
 bool Player2::kill() {
 	if (vulnerable && unkill_cooldown == 0) {
 		pos_x = 2600;
-		pos_y = 135;
+		pos_y = 75;
 		player1->score += 1000;
 		unkill_cooldown = SDL_GetTicks();
 		return true;

@@ -100,7 +100,7 @@ void render_number(int x, int y, int number) {
 		}
 		for (int m = 0; m < 10; m++) {
 			if (digit_list[m] == -1) continue;
-			printf("d[m]=%d\n", digit_list[m]);
+			//printf("d[m]=%d\n", digit_list[m]);
 			digits->set_frame(digit_list[m]);
 			digits->render(render_x, render_y);
 			render_x += digits->get_width();

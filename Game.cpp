@@ -7,6 +7,7 @@
 
 
 Game::Game() {
+	SDL_ShowCursor(SDL_DISABLE);
 	//Load the background
 	background = map;
 	background2 = background_texture;

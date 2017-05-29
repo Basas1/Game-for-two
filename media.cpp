@@ -77,17 +77,17 @@ bool load_media() {
 		printf("Failed to load player texture!\n");
 		success = false;
 	}
-	player_stand_texture = load_texture("Images/stand.png");
+	player_stand_texture = load_texture("Images/stand.gif");
 	if (player_stand_texture == NULL) {
 		printf("Failed to load player texture!\n");
 		success = false;
 	}
-	player_run_texture = load_texture("Images/run.png");
+	player_run_texture = load_texture("Images/run.gif");
 	if (player_run_texture == NULL) {
 		printf("Failed to load player texture!\n");
 		success = false;
 	}
-	player_jump_texture = load_texture("Images/jump.png");
+	player_jump_texture = load_texture("Images/jump.gif");
 	if (player_jump_texture == NULL) {
 		printf("Failed to load player texture!\n");
 		success = false;
@@ -104,17 +104,17 @@ bool load_media() {
 		printf("Failed to load player texture!\n");
 		success = false;
 	}
-	player2_stand_texture = load_texture("Images/stand2.png");
+	player2_stand_texture = load_texture("Images/stand2.gif");
 	if (player_stand_texture == NULL) {
 		printf("Failed to load player texture!\n");
 		success = false;
 	}
-	player2_run_texture = load_texture("Images/run2.png");
+	player2_run_texture = load_texture("Images/run2.gif");
 	if (player_run_texture == NULL) {
 		printf("Failed to load player texture!\n");
 		success = false;
 	}
-	player2_jump_texture = load_texture("Images/jump2.png");
+	player2_jump_texture = load_texture("Images/jump.gif");
 	if (player_jump_texture == NULL) {
 		printf("Failed to load player texture!\n");
 		success = false;

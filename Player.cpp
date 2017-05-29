@@ -9,10 +9,12 @@
 Player::Player(int x, int y, int control) : Movable_object() {
 	type = PLAYER;
 	pos_x = 1305;
-	pos_y = 135;
+	pos_y = 75;
 	score = 0;
-	width = 40;
-	height = 100;
+	width = 50;
+	height = 160;
+	acceleration = 3;
+
 	jump_vel = 7;
 	flip_right = true;
 	fireball_cooldown = 0;
@@ -34,13 +36,14 @@ Player::Player(int x, int y, int control) : Movable_object() {
 		break;
 	}
 
-	stand_animation = new Animated_texture(player_stand_texture, 3, -44, -28);
-	int order1[] = { 0, 1, 2, 1 };
-	stand_animation->set_frame_order(order1, sizeof(order1) / sizeof(int));
+	stand_animation = new Animated_texture(player_stand_texture, 8, -75, -40);
+	//int order1[] = { 0, 1, 2, 1 };
+	//stand_animation->set_frame_order(order1, sizeof(order1) / sizeof(int));
 	stand_animation->set_ticks_per_frame(25);
-	run_animation = new Animated_texture(player_run_texture, 10, -44, -28);
-	jump_animation = new Animated_texture(player_jump_texture, 3, -44, -28);
-	jump_animation->set_frame_order(order1, sizeof(order1) / sizeof(int));
+	run_animation = new Animated_texture(player_run_texture, 13, -75, -40);
+	run_animation->set_ticks_per_frame(13);
+	jump_animation = new Animated_texture(player_jump_texture, 1, -75, -40);
+	//jump_animation->set_frame_order(order1, sizeof(order1) / sizeof(int));
 	jump_animation->set_ticks_per_frame(25);
 	hit_animation = new Animated_texture(player_hit_texture, 4, -44, -28);
 
@@ -57,7 +60,7 @@ Player::Player(int x, int y, int control) : Movable_object() {
 bool Player::kill() {
 	if (vulnerable && unkill_cooldown == 0) {
 		pos_x = 1305;
-		pos_y = 135;
+		pos_y = 75;
 		player2->score += 1000;
 		unkill_cooldown = SDL_GetTicks();
 		return true;
@@ -82,6 +85,7 @@ int Player::get_y() {
 }
 
 void Player::logic() {
+	printf("vel_x=%f; vel_y=%f\n", vel_x, vel_y);
 	//printf("x=%f; y=%f\n", pos_x, pos_y);
 	reduce_cooldowns();
 	state_stack.top()->logic(*this);
@@ -111,10 +115,10 @@ void Player::handle_events(SDL_Event& event) {
 void Player::render() {
 	state_stack.top()->render(*this);
 
-	//Hit box rectangle
+	////Hit box rectangle
 	//double scale = camera->get_scale();
 	//SDL_Rect renderQuad = { (pos_x - camera->get_x()) * camera->get_scale(), (pos_y - camera->get_y()) * camera->get_scale(), width * scale, height * scale };
-	//Outline of rectangle of texture
+	////Outline of rectangle of texture
 	//SDL_SetRenderDrawColor(main_renderer, 0, 255, 50, 100);
 	//SDL_RenderDrawRect(main_renderer, &renderQuad);
 }
