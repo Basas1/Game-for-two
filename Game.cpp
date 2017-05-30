@@ -14,8 +14,14 @@ Game::Game() {
 	background2 = background_texture;
 
 	//Create player object
-	player1 = new Player(0,0,0);
-	player2 = new Player2(0,0,1);
+	if (gamepad1 && gamepad2) {
+		player1 = new Player(0, 0, 1);
+		player2 = new Player2(0, 0, 2);
+	}
+	else {
+		player1 = new Player(0, 0, 0);
+		player2 = new Player2(0, 0, 1);
+	}
 
 	platform = new Capture_platform(1445, 900, 1675, 300);
 

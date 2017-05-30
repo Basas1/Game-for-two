@@ -466,7 +466,9 @@ void Jump::handle_events(Player& p, SDL_Event& event) {
 
 void Jump::render(Player& p) {
 	p.jump_animation->render(p.pos_x, p.pos_y, p.flip_right);
-	p.jump_animation->next_frame();
+	if (p.jump_animation->get_frame_number() != 2) {
+		p.jump_animation->next_frame();
+	}
 }
 
 

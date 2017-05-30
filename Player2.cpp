@@ -11,6 +11,8 @@ Player2::Player2(int x, int y, int control) : Player() {
 	pos_y = 75;
 	flip_right = false;
 
+
+
 	controller = control;
 	switch (controller) {
 	case 0: gamepad = NULL; break;
@@ -37,23 +39,24 @@ Player2::Player2(int x, int y, int control) : Player() {
 	dive_animation = new Animated_texture(player2_dive_texture, 1, -75, -40);
 
 
-	//type = PLAYER;
-	//width = 50;
-	//height = 160;
-	//score = 0;
-	//jump_vel = 7;
-	//fireball_cooldown = 0;
-	//hit_cooldown = 0;
-	//unkill_cooldown = 0;
-	//time_on_platform = -1;
-	//on_platform = false;
+	type = PLAYER;
+	width = 50;
+	height = 160;
+	score = 0;
+	jump_vel = 7;
+	fireball_cooldown = 0;
+	hit_cooldown = 0;
+	unkill_cooldown = 0;
+	time_on_platform = -1;
+	on_platform = false;
+	acceleration = 3;
 
-	//collision_box = { (int)pos_x, (int)pos_y, width, height };
+	collision_box = { (int)pos_x, (int)pos_y, width, height };
 
-	//state = new Stand;
-	//state_stack.push(state);
+	state = new Stand;
+	state_stack.push(state);
 
-	//t_ball = NULL;
+	t_ball = NULL;
 }
 
 

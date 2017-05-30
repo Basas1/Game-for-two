@@ -102,7 +102,7 @@ bool Movable_object::check_map_collision_left() {
 }
 
 bool Movable_object::check_map_collision_left_strict() {
-	for (int i = pos_y; i <= pos_y + height; i++) {
+	for (int i = pos_y; i < pos_y + height; i++) {
 		if (check_map_collision(pos_x - 1, i)) return true;
 	}
 	return false;
@@ -126,7 +126,7 @@ bool Movable_object::check_map_collision_right() {
 }
 
 bool Movable_object::check_map_collision_right_strict() {
-	for (int i = pos_y; i <= pos_y + height; i++) {
+	for (int i = pos_y; i < pos_y + height; i++) {
 		if (check_map_collision(pos_x + width + 1, i)) return true;
 	}
 	return false;
@@ -221,7 +221,9 @@ void Movable_object::move() {
 	if (vel_x > 0) {
 		for (pos_x; pos_x <= old_x + vel_x; pos_x++) {
 			if (vel_y == 0) {
+				//printf("sas1\n");
 				if (check_map_collision_right()) {
+					//printf("sas2\n");
 					vel_x = 0;
 					break;
 				}
@@ -229,6 +231,7 @@ void Movable_object::move() {
 					check_map_collision(pos_x + width / 2, pos_y + height - 1)) {
 					for (int i = pos_y + height - can_rise; i < pos_y + height; i++) {
 						if (check_map_collision(pos_x + width / 2, i)) {
+							//printf("sas3\n");
 							pos_y = i - height;
 							break;
 						}
@@ -236,13 +239,16 @@ void Movable_object::move() {
 				}
 			}
 			else {
+				//printf("kek1\n");
 				if (check_map_collision_right_strict()) {
+					//printf("kek2\n");
 					vel_x = 0;
 					break;
 				}
 			}
 		}
 	}
+
 	//Left movement
 	else if (vel_x < 0) {
 		for (pos_x; pos_x >= old_x + vel_x; pos_x--) {
