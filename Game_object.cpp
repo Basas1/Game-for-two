@@ -9,6 +9,7 @@ Game_object::Game_object() {
 	collidable = false;
 	type = OTHER;
 	parent = NULL;
+	skip = 0;
 	collision_box = { 0,0,0,0 };
 }
 

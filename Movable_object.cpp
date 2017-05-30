@@ -187,17 +187,17 @@ void Movable_object::move() {
 		else {
 			vel_y = 0;
 		}
-		//Expiremental solution for map edge cases
-		if ((check_map_collision(pos_x - 1, pos_y + height) || check_map_collision(pos_x - 1, pos_y + height - 1)) &&
-			!check_map_collision(pos_x + width / 2, pos_y + height) && !check_map_collision(pos_x + width, pos_y + height)) {
-			pos_y+= acceleration;
-			pos_x+= acceleration/2; 
-		}
-		if ((check_map_collision(pos_x + width + 1, pos_y + height) || check_map_collision(pos_x + width + 1, pos_y + height - 1)) &&
-			!check_map_collision(pos_x + width / 2, pos_y + height) && !check_map_collision(pos_x, pos_y + height)) {
-			pos_y += acceleration;
-			pos_x -= acceleration/2;
-		}
+		////Expiremental solution for map edge cases
+		//if ((check_map_collision(pos_x - 1, pos_y + height) || check_map_collision(pos_x - 1, pos_y + height - 1)) &&
+		//	!check_map_collision(pos_x + width / 2, pos_y + height) && !check_map_collision(pos_x + width, pos_y + height)) {
+		//	pos_y+= acceleration;
+		//	pos_x+= acceleration/2; 
+		//}
+		//if ((check_map_collision(pos_x + width + 1, pos_y + height) || check_map_collision(pos_x + width + 1, pos_y + height - 1)) &&
+		//	!check_map_collision(pos_x + width / 2, pos_y + height) && !check_map_collision(pos_x, pos_y + height)) {
+		//	pos_y += acceleration;
+		//	pos_x -= acceleration/2;
+		//}
 	}
 	else if (vel_y < 0) {
 		if (!check_map_collision_upper()) {
@@ -221,9 +221,7 @@ void Movable_object::move() {
 	if (vel_x > 0) {
 		for (pos_x; pos_x <= old_x + vel_x; pos_x++) {
 			if (vel_y == 0) {
-				//printf("sas1\n");
 				if (check_map_collision_right()) {
-					//printf("sas2\n");
 					vel_x = 0;
 					break;
 				}
@@ -231,7 +229,6 @@ void Movable_object::move() {
 					check_map_collision(pos_x + width / 2, pos_y + height - 1)) {
 					for (int i = pos_y + height - can_rise; i < pos_y + height; i++) {
 						if (check_map_collision(pos_x + width / 2, i)) {
-							//printf("sas3\n");
 							pos_y = i - height;
 							break;
 						}
@@ -239,9 +236,7 @@ void Movable_object::move() {
 				}
 			}
 			else {
-				//printf("kek1\n");
 				if (check_map_collision_right_strict()) {
-					//printf("kek2\n");
 					vel_x = 0;
 					break;
 				}

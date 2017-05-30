@@ -47,6 +47,8 @@ public:
 	bool on_platform;
 	int time_on_platform;
 
+	int skip;
+
 	//Object size
 	int width, height;
 

@@ -29,7 +29,7 @@ void Blast::logic() {
 	}
 	else {
 		exist = false;
-		delete this;
+		//delete this;
 	}
 }
 
@@ -107,8 +107,6 @@ Fireball_trail::Fireball_trail(int x, int y) : Static_object() {
 void Fireball_trail::render() {
 	if (f_trail->get_replay_count() > 0) {
 		exist = false;
-		//delete f_trail;
-		//f_trail = NULL;
 		//delete this;
 	}
 	else {

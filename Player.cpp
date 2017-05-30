@@ -43,9 +43,9 @@ Player::Player(int x, int y, int control) : Movable_object() {
 	stand_animation->set_ticks_per_frame(25);
 	run_animation = new Animated_texture(player_run_texture, 13, -75, -40);
 	run_animation->set_ticks_per_frame(13);
-	jump_animation = new Animated_texture(player_jump_texture, 1, -75, -40);
+	jump_animation = new Animated_texture(player_jump_texture, 4, -75, -40);
 	//jump_animation->set_frame_order(order1, sizeof(order1) / sizeof(int));
-	jump_animation->set_ticks_per_frame(25);
+	//jump_animation->set_ticks_per_frame(25);
 	hit_animation = new Animated_texture(player_hit_texture, 4, -44, -28);
 	dive_animation = new Animated_texture(player_dive_texture, 1, -75, -40);
 

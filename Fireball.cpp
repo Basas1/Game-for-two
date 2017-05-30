@@ -81,8 +81,6 @@ Fireball::Fireball(int x, int y, int side, Game_object* p) : Movable_object() {
 void Fireball::move() {
 	if (check_map_collision_all()) {
 		exist = false;
-		//delete fireball_animation;
-		//fireball_animation = NULL;
 		//delete this;
 	}
 	if (exist) Movable_object::move();
@@ -96,19 +94,23 @@ void Fireball::logic() {
 			if (collisions[i]->type == ENEMY || collisions[i]->type == PLAYER && collisions[i]!=parent) {
 				if (collisions[i]->kill()) {
 					exist = false;
-					//delete fireball_animation;
-					//fireball_animation = NULL;
 					//delete this;
 				}
 			}
 		}
 	}
 	if (exist) {
-		Fireball_trail* trail;
-		trail = new Fireball_trail(pos_x, pos_y);
-		objects.insert(objects.end(), trail);
-		//static_objects.insert(static_objects.end(), trail);
-
+		if (skip % 5 == 0) {
+			skip = 0;
+			Fireball_trail* trail;
+			trail = new Fireball_trail(pos_x, pos_y);
+			//objects.insert(objects.end(), trail);
+			static_objects.insert(static_objects.end(), trail);
+			skip++;
+		}
+		else {
+			skip++;
+		}
 	}
 	move();
 }

@@ -244,7 +244,7 @@ void Player_states::handle_events(Player& p, SDL_Event& event) {
 void On_ground::logic(Player& p) {
 	p.vel_x = p.acc_x;
 	p.move();
-	if (p.vel_y != 0 && !p.check_map_collision_under()) {
+	if (p.vel_y != 0) {
 		change_state(p, JUMP_STATE);
 	}
 }
@@ -365,6 +365,7 @@ void Jump::logic(Player& p) {
 	p.move();
 	if (p.check_map_collision_bottom()) {
 		//p.vel_x = p.acc_x;
+		p.jump_animation->reset();
 		p.state_stack.pop();
 	}
 }
@@ -466,7 +467,7 @@ void Jump::handle_events(Player& p, SDL_Event& event) {
 
 void Jump::render(Player& p) {
 	p.jump_animation->render(p.pos_x, p.pos_y, p.flip_right);
-	if (p.jump_animation->get_frame_number() != 2) {
+	if (p.jump_animation->get_frame_number() < 3) {
 		p.jump_animation->next_frame();
 	}
 }

@@ -12,7 +12,7 @@ Game::Game() {
 	//Load the background
 	background = map;
 	background2 = background_texture;
-
+ 
 	//Create player object
 	if (gamepad1 && gamepad2) {
 		player1 = new Player(0, 0, 1);

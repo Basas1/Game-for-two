@@ -106,6 +106,7 @@ Animated_texture::~Animated_texture() {
 
 void Animated_texture::reset() {
 	current_frame = 0;
+	current_clip = &sprite_clips[frame_order[current_frame]];
 	replay_counter = 0;
 	ticks_counter = ticks_per_frame;
 }
