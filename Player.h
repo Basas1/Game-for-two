@@ -47,7 +47,8 @@ public:
 	//Object's textures
 	Animated_texture* stand_animation;
 	Animated_texture* run_animation;
-	Animated_texture* jump_animation;
+	Animated_texture* jump_animation_rise;
+	Animated_texture* jump_animation_fall;
 	Animated_texture* hit_animation;
 	Animated_texture* dive_animation;
 

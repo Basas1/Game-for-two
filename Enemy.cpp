@@ -20,7 +20,7 @@ Enemy::Enemy() {
 	stand_animation->set_frame_order(order1, sizeof(order1) / sizeof(int));
 	stand_animation->set_ticks_per_frame(25);
 	run_animation = new Animated_texture(player_run_texture, 10, -44, -28);
-	jump_animation = new Animated_texture(player_jump_texture, 3, -44, -28);
+	jump_animation = new Animated_texture(player_jump_rise_texture, 3, -44, -28);
 	jump_animation->set_frame_order(order1, sizeof(order1) / sizeof(int));
 	jump_animation->set_ticks_per_frame(25);
 	hit_animation = new Animated_texture(player_hit_texture, 4, -44, -28);

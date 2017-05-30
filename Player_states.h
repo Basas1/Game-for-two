@@ -44,11 +44,12 @@ public:
 
 class Jump : public Player_states {
 public:
-	Jump();
+	Jump(Player& p);
 	void handle_events(Player& p, SDL_Event& event);
 	void logic(Player& p);
 	void render(Player& p);
 	char jump_count;
+	bool falling;
 };
 
 class Hit1 : public Player_states {

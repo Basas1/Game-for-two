@@ -11,14 +11,16 @@ extern SDL_Texture* platform;
 extern SDL_Texture* player_texture;
 extern SDL_Texture* player_stand_texture;
 extern SDL_Texture* player_run_texture;
-extern SDL_Texture* player_jump_texture;
+extern SDL_Texture* player_jump_rise_texture;
+extern SDL_Texture* player_jump_fall_texture;
 extern SDL_Texture* player_hit_texture;
 extern SDL_Texture* player_dive_texture;
 
 extern SDL_Texture* player2_texture;
 extern SDL_Texture* player2_stand_texture;
 extern SDL_Texture* player2_run_texture;
-extern SDL_Texture* player2_jump_texture;
+extern SDL_Texture* player2_jump_rise_texture;
+extern SDL_Texture* player2_jump_fall_texture;
 extern SDL_Texture* player2_hit_texture;
 extern SDL_Texture* player2_dive_texture;
 

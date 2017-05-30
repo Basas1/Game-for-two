@@ -21,7 +21,7 @@ void Player_states::change_state(Player& p, int state, int arg) {
 		break;
 	case JUMP_STATE:
 		Jump* jump_state;
-		jump_state = new Jump;
+		jump_state = new Jump(p);
 		p.state_stack.push(jump_state);
 		break;
 	case HIT1_STATE:
@@ -352,11 +352,26 @@ void Run::render(Player& p) {
 	p.run_animation->next_frame();
 }
 
-Jump::Jump() {
+Jump::Jump(Player& p) {
 	jump_count = 1;
+	if (p.vel_y <= 0) {
+		falling = false;
+	}
+	else {
+		falling = true;
+	}
 }
 
-void Jump::logic(Player& p) {	
+void Jump::logic(Player& p) {
+	if (p.vel_y <= 0 && falling) {
+		falling = false;
+		p.jump_animation_fall->reset();
+		//p.jump_animation_rise->reset();
+	}
+	else if (p.vel_y > 0 && !falling) {
+		falling = true;
+		p.jump_animation_rise->reset();
+	}
 	p.vel_x += p.acc_x;
 	//Speed limit
 	if (p.vel_x > p.max_vel_x) p.vel_x = p.max_vel_x;
@@ -365,7 +380,8 @@ void Jump::logic(Player& p) {
 	p.move();
 	if (p.check_map_collision_bottom()) {
 		//p.vel_x = p.acc_x;
-		p.jump_animation->reset();
+		p.jump_animation_rise->reset();
+		p.jump_animation_fall->reset();
 		p.state_stack.pop();
 	}
 }
@@ -466,9 +482,17 @@ void Jump::handle_events(Player& p, SDL_Event& event) {
 }
 
 void Jump::render(Player& p) {
-	p.jump_animation->render(p.pos_x, p.pos_y, p.flip_right);
-	if (p.jump_animation->get_frame_number() < 3) {
-		p.jump_animation->next_frame();
+	if (falling) {
+		p.jump_animation_fall->render(p.pos_x, p.pos_y, p.flip_right);
+		if (p.jump_animation_fall->get_frame_number() < 3) {
+			p.jump_animation_fall->next_frame();
+		}
+	}
+	else {
+		p.jump_animation_rise->render(p.pos_x, p.pos_y, p.flip_right);
+		if (p.jump_animation_rise->get_frame_number() < 3) {
+			p.jump_animation_rise->next_frame();
+		}
 	}
 }
 
@@ -578,7 +602,7 @@ void Hit2::handle_events(Player& p, SDL_Event& event) {
 
 					p.vel_y = -p.jump_vel;
 					Jump* jump_state;
-					jump_state = new Jump;
+					jump_state = new Jump(p);
 					jump_state->jump_count = 0;
 					p.state_stack.push(jump_state);
 				}
@@ -601,7 +625,7 @@ void Hit2::handle_events(Player& p, SDL_Event& event) {
 
 						p.vel_y = -p.jump_vel;
 						Jump* jump_state;
-						jump_state = new Jump;
+						jump_state = new Jump(p);
 						jump_state->jump_count = 0;
 						p.state_stack.push(jump_state);
 					}

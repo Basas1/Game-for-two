@@ -43,7 +43,8 @@ Player::Player(int x, int y, int control) : Movable_object() {
 	stand_animation->set_ticks_per_frame(25);
 	run_animation = new Animated_texture(player_run_texture, 13, -75, -40);
 	run_animation->set_ticks_per_frame(13);
-	jump_animation = new Animated_texture(player_jump_texture, 4, -75, -40);
+	jump_animation_rise = new Animated_texture(player_jump_rise_texture, 4, -75, -40);
+	jump_animation_fall = new Animated_texture(player_jump_fall_texture, 4, -75, -40);
 	//jump_animation->set_frame_order(order1, sizeof(order1) / sizeof(int));
 	//jump_animation->set_ticks_per_frame(25);
 	hit_animation = new Animated_texture(player_hit_texture, 4, -44, -28);
@@ -74,7 +75,8 @@ Player::~Player() {
 	delete texture;
 	delete stand_animation;
 	delete run_animation;
-	delete jump_animation;
+	delete jump_animation_rise;
+	delete jump_animation_fall;
 	delete hit_animation;
 }
 

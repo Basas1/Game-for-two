@@ -14,14 +14,16 @@ SDL_Texture* platform = NULL;
 SDL_Texture* player_texture = NULL;
 SDL_Texture* player_stand_texture = NULL;
 SDL_Texture* player_run_texture = NULL;
-SDL_Texture* player_jump_texture = NULL;
+SDL_Texture* player_jump_rise_texture = NULL;
+SDL_Texture* player_jump_fall_texture = NULL;
 SDL_Texture* player_hit_texture = NULL;
 SDL_Texture* player_dive_texture = NULL;
 //Player2 textures
 SDL_Texture* player2_texture = NULL;
 SDL_Texture* player2_stand_texture = NULL;
 SDL_Texture* player2_run_texture = NULL;
-SDL_Texture* player2_jump_texture = NULL;
+SDL_Texture* player2_jump_rise_texture = NULL;
+SDL_Texture* player2_jump_fall_texture = NULL;
 SDL_Texture* player2_hit_texture = NULL;
 SDL_Texture* player2_dive_texture = NULL;
 
@@ -91,8 +93,13 @@ bool load_media() {
 		printf("Failed to load player texture!\n");
 		success = false;
 	}
-	player_jump_texture = load_texture("Images/airborne_rise.gif");
-	if (player_jump_texture == NULL) {
+	player_jump_rise_texture = load_texture("Images/airborne_rise.gif");
+	if (player_jump_rise_texture == NULL) {
+		printf("Failed to load player texture!\n");
+		success = false;
+	}
+	player_jump_fall_texture = load_texture("Images/airborne_rise.gif");
+	if (player_jump_fall_texture == NULL) {
 		printf("Failed to load player texture!\n");
 		success = false;
 	}
@@ -124,8 +131,13 @@ bool load_media() {
 		printf("Failed to load player texture!\n");
 		success = false;
 	}
-	player2_jump_texture = load_texture("Images/airborne_rise.gif");
-	if (player2_jump_texture == NULL) {
+	player2_jump_rise_texture = load_texture("Images/airborne_rise.gif");
+	if (player2_jump_rise_texture == NULL) {
+		printf("Failed to load player texture!\n");
+		success = false;
+	}
+	player2_jump_fall_texture = load_texture("Images/airborne_rise.gif");
+	if (player2_jump_fall_texture == NULL) {
 		printf("Failed to load player texture!\n");
 		success = false;
 	}
