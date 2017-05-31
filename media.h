@@ -14,6 +14,10 @@ extern SDL_Texture* platform;
 extern SDL_Texture* menu_play_t;
 extern SDL_Texture* menu_or_t;
 extern SDL_Texture* menu_leave_t;
+extern SDL_Texture* pmenu_paused_t;
+extern SDL_Texture* pmenu_continue_t;
+extern SDL_Texture* pmenu_restart_t;
+extern SDL_Texture* pmenu_exit_t;
 
 
 //Players textures

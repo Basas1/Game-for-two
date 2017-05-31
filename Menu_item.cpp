@@ -10,6 +10,7 @@ Menu_item::Menu_item(int button_type, int x, int y, SDL_Texture* item_texture, b
 	choosen = false;
 
 	texture = new Texture(item_texture);
+	texture->set_absolute_coord();
 
 	width = texture->width;
 	height = texture->height;

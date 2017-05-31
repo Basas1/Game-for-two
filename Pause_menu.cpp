@@ -1,32 +1,35 @@
 #pragma once
-#include "Menu.h"
+#include "Pause_menu.h"
 #include "media.h"
 #include "init.h"
 #include "Game.h"
 
 
 
-Menu::Menu() {
-	state = STATE_MENU;
-	//Load the background
-	background = menu_background_texture;
+Pause_menu::Pause_menu() {
+	state = STATE_PAUSE;
 
 	for (int i = 0; i < 10; i++) {
 		items[i] = NULL;
 	}
-	int c=0;
-	Menu_item* play;
-	Menu_item* or;
-	Menu_item* leave;
-	play = new Menu_item(PLAY, 0, 0, menu_play_t);
-	play->toggle();
-	items[c++] = play;
-	or = new Menu_item(OR, 0, 0, menu_or_t, false);
-	items[c++] = or;
-	leave = new Menu_item(LEAVE, 0, 0, menu_leave_t);
-	items[c++] = leave;
 
-	int menu_height = 0;
+	game_is_paused = new Texture(pmenu_paused_t);
+	game_is_paused->set_absolute_coord();
+
+
+	int c = 0;
+	Menu_item* continue_game;
+	Menu_item* restart;
+	Menu_item* exit;
+	continue_game = new Menu_item(CONTINUE, 0, 0, pmenu_continue_t);
+	continue_game->toggle();
+	items[c++] = continue_game;
+	restart = new Menu_item(RESTART, 0, 0, pmenu_restart_t);
+	items[c++] = restart;
+	exit = new Menu_item(EXIT, 0, 0, pmenu_exit_t);
+	items[c++] = exit;
+
+	int menu_height = 50;
 	for (int i = 0; i < 10; i++) {
 		if (items[i] != NULL) {
 			menu_height += items[i]->height;
@@ -46,7 +49,7 @@ Menu::Menu() {
 
 }
 
-int Menu::check_if_choosed() {
+int Pause_menu::check_if_choosed() {
 	for (int i = 0; i < 10; i++) {
 		if (items[i] != NULL) {
 			if (items[i]->choosen) return i;
@@ -55,16 +58,14 @@ int Menu::check_if_choosed() {
 	return -1;
 }
 
-Menu::~Menu() {
+Pause_menu::~Pause_menu() {
 }
 
-void Menu::handle_events() {
+void Pause_menu::handle_events() {
 	//While there's events to handle
-	while (SDL_PollEvent(&event))
-	{
+	while (SDL_PollEvent(&event)) {
 		//If the user has Xed out the window
-		if (event.type == SDL_QUIT)
-		{
+		if (event.type == SDL_QUIT) {
 			//Quit the program
 			programm_states.pop();
 			current_state = new Exit_state();
@@ -72,17 +73,32 @@ void Menu::handle_events() {
 		}
 		else if (event.type == SDL_KEYDOWN) {
 			switch (event.key.keysym.sym) {
+			case SDLK_ESCAPE: {
+				game_time.toggle();
+				programm_states.pop();
+				break;
+			}
 			case SDLK_RETURN: {
 				for (int i = 0; i < 10; i++) {
 					if (items[i] != NULL) {
 						if (items[i]->choosen) {
-							if (items[i]->type == PLAY) {
+							if (items[i]->type == CONTINUE) {
+								game_time.toggle();
 								programm_states.pop();
+								break;
+							}
+							if (items[i]->type == RESTART) {							
+								while (programm_states.size() > 0) {
+									if (programm_states.top()->state == STATE_GAME) {
+										delete programm_states.top();
+									}
+									programm_states.pop();
+								}
 								current_state = new Game();
 								programm_states.push(current_state);
 								break;
 							}
-							if (items[i]->type == LEAVE) {
+							if (items[i]->type == EXIT) {
 								programm_states.pop();
 								current_state = new Exit_state();
 								programm_states.push(current_state);
@@ -91,7 +107,6 @@ void Menu::handle_events() {
 						}
 					}
 				}
-				break;
 			}
 			case SDLK_UP: {
 				int current;
@@ -99,7 +114,7 @@ void Menu::handle_events() {
 				if (current == -1) {
 					for (int i = 0; i < 10; i++) {
 						if (items[i] != NULL) {
-							if (items[i]->type == PLAY) items[i]->toggle();
+							if (items[i]->type == CONTINUE) items[i]->toggle();
 						}
 					}
 				}
@@ -126,7 +141,7 @@ void Menu::handle_events() {
 				if (current == -1) {
 					for (int i = 0; i < 10; i++) {
 						if (items[i] != NULL) {
-							if (items[i]->type == PLAY) items[i]->toggle();
+							if (items[i]->type == CONTINUE) items[i]->toggle();
 						}
 					}
 				}
@@ -149,16 +164,12 @@ void Menu::handle_events() {
 	}
 }
 
-void Menu::logic() {
+void Pause_menu::logic() {
 }
 
-void Menu::render() {
-	//Clear screen
-	SDL_SetRenderDrawColor(main_renderer, 0, 0, 0, 0xFF);
-	SDL_RenderClear(main_renderer);
+void Pause_menu::render() {
 
-	//Render background
-	SDL_RenderCopy(main_renderer, background, NULL, NULL);
+	game_is_paused->render(SCREEN_WIDTH / 2 - game_is_paused->width / 2, 50);
 
 	for (int i = 0; i < 10; i++) {
 		if (items[i] != NULL) {

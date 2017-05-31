@@ -72,12 +72,12 @@ bool Player::kill() {
 }
 
 Player::~Player() {
-	delete texture;
-	delete stand_animation;
-	delete run_animation;
-	delete jump_animation_rise;
-	delete jump_animation_fall;
-	delete hit_animation;
+	//delete texture;
+	//delete stand_animation;
+	//delete run_animation;
+	//delete jump_animation_rise;
+	//delete jump_animation_fall;
+	//delete hit_animation;
 }
 
 int Player::get_x() {

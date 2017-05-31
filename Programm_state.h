@@ -7,6 +7,7 @@ public:
 		STATE_MENU,
 		STATE_GAME,
 		STATE_EXIT,
+		STATE_PAUSE,
 	};
 	int state;
 

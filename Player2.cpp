@@ -60,16 +60,6 @@ Player2::Player2(int x, int y, int control) : Player() {
 }
 
 
-Player2::~Player2() {
-	delete texture;
-	delete stand_animation;
-	delete run_animation;
-	delete jump_animation_rise;
-	delete jump_animation_fall;
-	delete hit_animation;
-}
-
-
 bool Player2::kill() {
 	if (vulnerable && unkill_cooldown == 0) {
 		pos_x = 2600;
