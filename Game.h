@@ -14,6 +14,7 @@ public:
 	void handle_events();
 	void logic();
 	void render();
+	void toggle();
 
 private:
 	SDL_Texture* background;

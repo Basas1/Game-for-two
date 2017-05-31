@@ -19,20 +19,18 @@ int main(int argc, char* args[]) {
 	}
 	else {
 		//While application is running
-		while (state_id != STATE_EXIT) {
+		while (programm_states.top()->state != STATE_EXIT) {
 			fps.start();
 
 			//Do state event handling
-			current_state->handle_events();
+			programm_states.top()->handle_events();
+
 
 			//Do state logic
-			current_state->logic();
-
-			//Change state if needed
-			change_state();
+			programm_states.top()->logic();
 
 			//Do state rendering
-			current_state->render();
+			programm_states.top()->render();
 
 			//Update screen
 			//screen_surface = SDL_GetWindowSurface(main_window);

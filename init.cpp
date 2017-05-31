@@ -28,6 +28,8 @@ Timer game_time;
 std::vector<Game_object*> objects;
 std::vector<Game_object*> static_objects;
 
+std::stack<Programm_state*> programm_states;
+
 int state_id = STATE_NULL;
 int next_state = STATE_NULL;
 Programm_state* current_state = NULL;
@@ -119,8 +121,14 @@ bool init() {
 	camera = new Camera;
 
 	//Set start programm state
-	state_id = STATE_MENU;
-	current_state = new Game();
+	//state_id = STATE_MENU;
+	current_state = new Exit_state();
+	programm_states.push(current_state);
+	//current_state = new Game();
+	//programm_states.push(current_state);
+	current_state = new Menu();
+	programm_states.push(current_state);
+
 
 	return success;
 }

@@ -8,6 +8,7 @@
 #include "media.h"
 #include "camera.h"
 #include <vector>
+#include <stack>
 #include "Game_object.h"
 #include "Static_object.h"
 #include "Player.h"
@@ -28,6 +29,8 @@ extern SDL_Joystick* joystick2;
 //Vector of all objects in game
 extern std::vector<Game_object*> objects;
 extern std::vector<Game_object*> static_objects;
+
+extern std::stack<Programm_state*> programm_states;
 
 //timer for fps capping
 extern Timer fps;

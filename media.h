@@ -4,10 +4,19 @@
 
 //Current displayed texture
 extern SDL_Texture* background_texture;
+extern SDL_Texture* menu_background_texture;
 
 //Globally used textures
 extern SDL_Texture* map;
 extern SDL_Texture* platform;
+
+//Menu textures
+extern SDL_Texture* menu_play_t;
+extern SDL_Texture* menu_or_t;
+extern SDL_Texture* menu_leave_t;
+
+
+//Players textures
 extern SDL_Texture* player_texture;
 extern SDL_Texture* player_stand_texture;
 extern SDL_Texture* player_run_texture;
@@ -25,7 +34,6 @@ extern SDL_Texture* player2_hit_texture;
 extern SDL_Texture* player2_dive_texture;
 
 extern SDL_Texture* arrow_texture;
-
 
 extern SDL_Texture* fireball_texture;
 extern SDL_Texture* fireball_trail_texture;

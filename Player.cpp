@@ -132,12 +132,12 @@ void Player::render() {
 
 	}
 
-	//Hit box rectangle
-	double scale = camera->get_scale();
-	SDL_Rect renderQuad = { (pos_x - camera->get_x()) * camera->get_scale(), (pos_y - camera->get_y()) * camera->get_scale(), width * scale, height * scale };
-	//Outline of rectangle of texture
-	SDL_SetRenderDrawColor(main_renderer, 0, 255, 50, 100);
-	SDL_RenderDrawRect(main_renderer, &renderQuad);
+	////Hit box rectangle
+	//double scale = camera->get_scale();
+	//SDL_Rect renderQuad = { (pos_x - camera->get_x()) * camera->get_scale(), (pos_y - camera->get_y()) * camera->get_scale(), width * scale, height * scale };
+	////Outline of rectangle of texture
+	//SDL_SetRenderDrawColor(main_renderer, 0, 255, 50, 100);
+	//SDL_RenderDrawRect(main_renderer, &renderQuad);
 }
 
 

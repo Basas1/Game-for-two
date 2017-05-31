@@ -6,10 +6,17 @@
 
 //Background texture
 SDL_Texture* background_texture = NULL;
+SDL_Texture* menu_background_texture = NULL;
 
 //Globally used textures
 SDL_Texture* map = NULL;
 SDL_Texture* platform = NULL;
+
+//Menu textures
+SDL_Texture* menu_play_t = NULL;
+SDL_Texture* menu_or_t = NULL;
+SDL_Texture* menu_leave_t = NULL;
+
 //Player textures
 SDL_Texture* player_texture = NULL;
 SDL_Texture* player_stand_texture = NULL;
@@ -60,11 +67,16 @@ bool load_media() {
 
 	//Load background texture
 	background_texture = load_texture("Images/kek.jpg");
-	//background_texture = load_texture("Images/space.jpg");
 	if (background_texture == NULL) {
 		printf("Failed to load bg texture!\n");
 		success = false;
 	}
+	menu_background_texture = load_texture("Images/space.jpg");
+	if (menu_background_texture == NULL) {
+		printf("Failed to load bg texture!\n");
+		success = false;
+	}
+
 	//Loading other textures
 	map = load_texture("Images/map_box_transparent.png");
 	//map = load_texture("Images/map_box.bmp");
@@ -159,6 +171,22 @@ bool load_media() {
 		success = false;
 	}
 
+	//Menu textures
+	menu_play_t = load_texture("Images/play.png");
+	if (menu_play_t == NULL) {
+		printf("Failed to load menu texture!\n");
+		success = false;
+	}
+	menu_or_t = load_texture("Images/or.png");
+	if (menu_or_t == NULL) {
+		printf("Failed to load menu texture!\n");
+		success = false;
+	}
+	menu_leave_t = load_texture("Images/leave.png");
+	if (menu_leave_t == NULL) {
+		printf("Failed to load menu texture!\n");
+		success = false;
+	}
 
 	//ENEMY1 TEXTURES
 	//enemy_stand_texture = load_texture("Images/stand12f12.png");
@@ -166,7 +194,7 @@ bool load_media() {
 	//	printf("Failed to load player texture!\n");
 	//	success = false;
 	//}
-	enemy_run_texture = load_texture("Images/run.jpg");
+	//enemy_run_texture = load_texture("Images/run.jpg");
 	//if (enemy_run_texture == NULL) {
 	//	printf("Failed to load player texture!\n");
 	//	success = false;

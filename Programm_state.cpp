@@ -3,6 +3,10 @@
 #include "Menu.h"
 #include "Game.h"
 
+Exit_state::Exit_state() {
+	state = STATE_EXIT;
+}
+
 
 void set_next_state(int new_state)
 {

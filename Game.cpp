@@ -7,6 +7,7 @@
 
 
 Game::Game() {
+	state = STATE_GAME;
 	game_time.start();
 	SDL_ShowCursor(SDL_DISABLE);
 	//Load the background
@@ -54,7 +55,7 @@ void Game::handle_events() {
 	while (SDL_PollEvent(&event) != 0) {
 		if (event.type == SDL_QUIT) {
 			//Quit the program
-			set_next_state(STATE_EXIT);
+			programm_states.pop();
 		}
 		if (event.type == SDL_KEYDOWN) {
 			switch (event.key.keysym.sym) {
@@ -165,3 +166,8 @@ void Game::render() {
 	render_number(SCREEN_WIDTH - 95, 20, p2_score);
 
 }
+
+void Game::toggle() {
+	game_time.toggle();
+}
+

@@ -41,15 +41,15 @@ public:
 	int get_width();
 	int get_height();
 
+	//Image dimensions
+	int width, height;
+
 protected:
 	//Actual SDL texture
 	SDL_Texture* original_texture;
 
 	//Flip flag
 	SDL_RendererFlip flip;
-
-	//Image dimensions
-	int width, height;
 
 	//Set offsets for texture from actual player position
 	int x_off, y_off;

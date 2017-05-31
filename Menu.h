@@ -1,6 +1,8 @@
+#pragma once
 #include "Programm_state.h"
 #include <SDL.h>
-#pragma once
+#include "Texture.h"
+
 class Menu : public Programm_state {
 public:
 	Menu();
@@ -11,5 +13,11 @@ public:
 
 private:
 	SDL_Texture* background;
+	Texture* play;
+	Texture* or;
+	Texture* leave;
+
+	Texture* textures[10];
+
 };
 
