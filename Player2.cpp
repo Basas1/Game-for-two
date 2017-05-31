@@ -36,6 +36,7 @@ Player2::Player2(int x, int y, int control) : Player() {
 	jump_animation_fall = new Animated_texture(player_jump_fall_texture, 4, -75, -40);
 	hit_animation = new Animated_texture(player2_hit_texture, 4, -44, -28);
 	dive_animation = new Animated_texture(player2_dive_texture, 1, -75, -40);
+	arrow = new Animated_texture(arrow_texture, 1);
 
 
 	type = PLAYER;

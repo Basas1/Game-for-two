@@ -27,6 +27,7 @@ SDL_Texture* player2_jump_fall_texture = NULL;
 SDL_Texture* player2_hit_texture = NULL;
 SDL_Texture* player2_dive_texture = NULL;
 
+SDL_Texture* arrow_texture = NULL;
 
 SDL_Texture* fireball_texture = NULL;
 SDL_Texture* fireball_trail_texture = NULL;
@@ -152,6 +153,11 @@ bool load_media() {
 		success = false;
 	}
 
+	arrow_texture = load_texture("Images/arrow.png");
+	if (arrow_texture == NULL) {
+		printf("Failed to load arrow texture!\n");
+		success = false;
+	}
 
 
 	//ENEMY1 TEXTURES

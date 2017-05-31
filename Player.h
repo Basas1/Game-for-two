@@ -52,6 +52,8 @@ public:
 	Animated_texture* hit_animation;
 	Animated_texture* dive_animation;
 
+	Animated_texture* arrow;
+
 	Teleport_ball* t_ball;
 	void teleport_to_ball();
 

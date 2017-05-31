@@ -4,6 +4,9 @@
 #include "init.h"
 #include "Fireball.h"
 #include "Player_states.h"
+#include <math.h>
+
+#define PI 3.14159265
 
 
 Player::Player(int x, int y, int control) : Movable_object() {
@@ -38,17 +41,14 @@ Player::Player(int x, int y, int control) : Movable_object() {
 	}
 
 	stand_animation = new Animated_texture(player_stand_texture, 8, -75, -40);
-	//int order1[] = { 0, 1, 2, 1 };
-	//stand_animation->set_frame_order(order1, sizeof(order1) / sizeof(int));
 	stand_animation->set_ticks_per_frame(25);
 	run_animation = new Animated_texture(player_run_texture, 13, -75, -40);
 	run_animation->set_ticks_per_frame(13);
 	jump_animation_rise = new Animated_texture(player_jump_rise_texture, 4, -75, -40);
 	jump_animation_fall = new Animated_texture(player_jump_fall_texture, 4, -75, -40);
-	//jump_animation->set_frame_order(order1, sizeof(order1) / sizeof(int));
-	//jump_animation->set_ticks_per_frame(25);
 	hit_animation = new Animated_texture(player_hit_texture, 4, -44, -28);
 	dive_animation = new Animated_texture(player_dive_texture, 1, -75, -40);
+	arrow = new Animated_texture(arrow_texture, 1);
 
 	
 	collision_box = { (int)pos_x, (int)pos_y, width, height };
@@ -116,13 +116,28 @@ void Player::handle_events(SDL_Event& event) {
 
 void Player::render() {
 	state_stack.top()->render(*this);
+	
+	//Arrow rendering
+	if (t_ball != NULL) {
+		double dist_y, dist_x;
+		double param, result;
+		dist_y = t_ball->pos_y - (pos_y + height / 3);
+		dist_x = t_ball->pos_x - (pos_x + width / 2);
+		param = dist_y / dist_x;
+		result = atan(param) * 180 / PI;
+		if (dist_x < 0) {
+			result += 180;
+		}
+		arrow->render(pos_x + width / 2 - 200, pos_y + height / 2 - 200, true, result);
 
-	////Hit box rectangle
-	//double scale = camera->get_scale();
-	//SDL_Rect renderQuad = { (pos_x - camera->get_x()) * camera->get_scale(), (pos_y - camera->get_y()) * camera->get_scale(), width * scale, height * scale };
-	////Outline of rectangle of texture
-	//SDL_SetRenderDrawColor(main_renderer, 0, 255, 50, 100);
-	//SDL_RenderDrawRect(main_renderer, &renderQuad);
+	}
+
+	//Hit box rectangle
+	double scale = camera->get_scale();
+	SDL_Rect renderQuad = { (pos_x - camera->get_x()) * camera->get_scale(), (pos_y - camera->get_y()) * camera->get_scale(), width * scale, height * scale };
+	//Outline of rectangle of texture
+	SDL_SetRenderDrawColor(main_renderer, 0, 255, 50, 100);
+	SDL_RenderDrawRect(main_renderer, &renderQuad);
 }
 
 

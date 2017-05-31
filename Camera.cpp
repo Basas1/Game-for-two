@@ -6,15 +6,12 @@ Camera::Camera() {
 	scale = 1;
 	camera = { 0, 0, SCREEN_WIDTH, SCREEN_HEIGHT };
 	if ((double)SCREEN_WIDTH / (double)map_surface->w < (double)SCREEN_HEIGHT / (double)map_surface->h) {
-		printf("1;\n");
 		min_scale = (double)SCREEN_WIDTH / (double)map_surface->w;
 	}
 	else {
-		printf("2;\n");
 		min_scale = (double)SCREEN_HEIGHT / (double)map_surface->h;
 	}
 	max_scale = 1;
-	printf("min=%f; max=%f;\n", min_scale, max_scale);
 }
 
 int Camera::get_x() {

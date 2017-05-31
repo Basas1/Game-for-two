@@ -24,6 +24,8 @@ extern SDL_Texture* player2_jump_fall_texture;
 extern SDL_Texture* player2_hit_texture;
 extern SDL_Texture* player2_dive_texture;
 
+extern SDL_Texture* arrow_texture;
+
 
 extern SDL_Texture* fireball_texture;
 extern SDL_Texture* fireball_trail_texture;
