@@ -99,7 +99,6 @@ void Game::logic() {
 	int follow_x, follow_y;
 	follow_x = (player1->get_x() + player2->get_x()) / 2;
 	follow_y = (player1->get_y() + player2->get_y()) / 2;
-
 	double sc1,sc2;
 	double p1_x, p2_x, p1_y, p2_y;
 	p1_x = (double)player1->get_x();

@@ -259,6 +259,19 @@ void Movable_object::move() {
 			}
 		}
 	}
+	else if (vel_x == 0) {
+		//Expiremental solution for map edge cases
+		if ((check_map_collision(pos_x - 1, pos_y + height) || check_map_collision(pos_x - 1, pos_y + height - 1)) &&
+			!check_map_collision(pos_x + width / 2, pos_y + height) && !check_map_collision(pos_x + width, pos_y + height)) {
+			pos_y += acceleration;
+			pos_x += acceleration;
+		}
+		if ((check_map_collision(pos_x + width + 1, pos_y + height) || check_map_collision(pos_x + width + 1, pos_y + height - 1)) &&
+			!check_map_collision(pos_x + width / 2, pos_y + height) && !check_map_collision(pos_x, pos_y + height)) {
+			pos_y += acceleration;
+			pos_x -= acceleration;
+		}
+	}
 
 	collision_box = { (int)pos_x, (int)pos_y, width, height };
 }
