@@ -12,18 +12,48 @@ Menu::Menu() {
 	background = menu_background_texture;
 
 	for (int i = 0; i < 10; i++) {
-		textures[i] = NULL;
+		items[i] = NULL;
 	}
 	int c=0;
-	play = new Texture(menu_play_t);
-	textures[c++] = play;
-	or = new Texture(menu_or_t);
-	textures[c++] = or;
-	leave = new Texture(menu_leave_t);
-	textures[c++] = leave;
+	Menu_item* play;
+	Menu_item* or;
+	Menu_item* leave;
+	play = new Menu_item(PLAY, 0, 0, menu_play_t);
+	play->toggle();
+	items[c++] = play;
+	or = new Menu_item(OR, 0, 0, menu_or_t, false);
+	items[c++] = or;
+	leave = new Menu_item(LEAVE, 0, 0, menu_leave_t);
+	items[c++] = leave;
+
+	int menu_height = 0;
+	for (int i = 0; i < 10; i++) {
+		if (items[i] != NULL) {
+			menu_height += items[i]->height;
+		}
+	}
+
+	int c_x = SCREEN_WIDTH / 2;
+	int start_y = (int)((SCREEN_HEIGHT - menu_height) / 2);
+
+	for (int i = 0; i < 10; i++) {
+		if (items[i] != NULL) {
+			items[i]->set_x(c_x - items[i]->width / 2);
+			items[i]->set_y(start_y);
+			start_y += items[i]->height;
+		}
+	}
 
 }
 
+int Menu::check_if_choosed() {
+	for (int i = 0; i < 10; i++) {
+		if (items[i] != NULL) {
+			if (items[i]->choosen) return i;
+		}
+	}
+	return -1;
+}
 
 Menu::~Menu() {
 }
@@ -38,12 +68,79 @@ void Menu::handle_events() {
 			//Quit the program
 			programm_states.pop();
 		}
-		//If the user pressed enter
-		else if ((event.type == SDL_KEYDOWN) && (event.key.keysym.sym == SDLK_RETURN))
-		{
-			programm_states.pop();
-			current_state = new Game();
-			programm_states.push(current_state);
+		else if (event.type == SDL_KEYDOWN) {
+			switch (event.key.keysym.sym) {
+			case SDLK_RETURN: {
+				for (int i = 0; i < 10; i++) {
+					if (items[i] != NULL) {
+						if (items[i]->choosen) {
+							if (items[i]->type == PLAY) {
+								programm_states.pop();
+								current_state = new Game();
+								programm_states.push(current_state);
+								break;
+							}
+							if (items[i]->type == LEAVE) {
+								programm_states.pop();
+								break;
+							}
+						}
+					}
+				}
+				break;
+			}
+			case SDLK_UP: {
+				int current;
+				current = check_if_choosed();
+				if (current == -1) {
+					for (int i = 0; i < 10; i++) {
+						if (items[i] != NULL) {
+							if (items[i]->type == PLAY) items[i]->toggle();
+						}
+					}
+				}
+				else {
+					bool changed = false;
+					if (current != 0) {
+						for (int j = current - 1; j >= 0; j--) {
+							if (items[j] != NULL) {
+								if (items[j]->choosable) {
+									items[current]->toggle();
+									items[j]->toggle();
+									break;
+								}
+							}
+						}
+					}
+				}
+
+				break;
+			}
+			case SDLK_DOWN: {
+				int current;
+				current = check_if_choosed();
+				if (current == -1) {
+					for (int i = 0; i < 10; i++) {
+						if (items[i] != NULL) {
+							if (items[i]->type == PLAY) items[i]->toggle();
+						}
+					}
+				}
+				else {
+					bool changed = false;
+					for (int j = current + 1; j < 10; j++) {
+						if (items[j] != NULL) {
+							if (items[j]->choosable) {
+								items[current]->toggle();
+								items[j]->toggle();
+								break;
+							}
+						}
+					}
+				}
+				break;
+			}
+			}
 		}
 	}
 }
@@ -59,20 +156,9 @@ void Menu::render() {
 	//Render background
 	SDL_RenderCopy(main_renderer, background, NULL, NULL);
 
-	int menu_height=0;
 	for (int i = 0; i < 10; i++) {
-		if (textures[i] != NULL) {
-			menu_height += textures[i]->height;
-		}
-	}
-
-	int c_x = SCREEN_WIDTH / 2;
-	int start_y = (int)((SCREEN_HEIGHT - menu_height) / 2);
-
-	for (int i = 0; i < 10; i++) {
-		if (textures[i] != NULL) {
-			textures[i]->render(c_x - textures[i]->width / 2, start_y);
-			start_y += textures[i]->height;
+		if (items[i] != NULL) {
+			items[i]->render();
 		}
 	}
 

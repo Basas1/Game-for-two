@@ -34,7 +34,7 @@ Player2::Player2(int x, int y, int control) : Player() {
 	run_animation->set_ticks_per_frame(13);
 	jump_animation_rise = new Animated_texture(player_jump_rise_texture, 4, -75, -40);
 	jump_animation_fall = new Animated_texture(player_jump_fall_texture, 4, -75, -40);
-	hit_animation = new Animated_texture(player2_hit_texture, 4, -44, -28);
+	hit_animation = new Animated_texture(player_hit_texture, 5, -75, -40);
 	dive_animation = new Animated_texture(player2_dive_texture, 1, -75, -40);
 	arrow = new Animated_texture(arrow_texture, 1);
 
