@@ -17,6 +17,8 @@ public:
 	void follow(int vision_focus_x, int vision_focus_y);
 	void set_scale(double target_scale);
 
+	double min_scale;
+	double max_scale;
 private:
 	//square of the camera
 	SDL_Rect camera;

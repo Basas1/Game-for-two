@@ -44,8 +44,6 @@ SDL_Window* main_window = NULL;
 SDL_Renderer* main_renderer = NULL;
 
 bool init() {
-
-	camera = new Camera;
 	//Initialization flag
 	bool success = true;
 	//SDL_SetHint(SDL_HINT_JOYSTICK_ALLOW_BACKGROUND_EVENTS, "1");
@@ -117,6 +115,8 @@ bool init() {
 	score1->set_absolute_coord();
 	score2 = new Texture(player2_score_texture);
 	score2->set_absolute_coord();
+
+	camera = new Camera;
 
 	//Set start programm state
 	state_id = STATE_MENU;

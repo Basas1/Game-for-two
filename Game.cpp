@@ -110,11 +110,11 @@ void Game::logic() {
 	double dist = sqrt(dist_x*dist_x + dist_y*dist_y);
 
 	sc1 = 1 / (dist / (SCREEN_HEIGHT / 5 * 5 - SCREEN_HEIGHT / 3 * 1));
-	if (sc1 <= 0.5) {
-		sc1 = 0.5;
+	if (sc1 <= camera->min_scale) {
+		sc1 = camera->min_scale;
 	}
-	else if (sc1 >= 1) {
-		sc1 = 1;
+	else if (sc1 >= camera->max_scale) {
+		sc1 = camera->max_scale;
 	}
 
 	camera->set_scale(sc1);
