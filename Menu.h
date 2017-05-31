@@ -17,6 +17,9 @@ public:
 	void logic();
 	void render();
 	int check_if_choosed();
+	void up();
+	void down();
+	void enter();
 
 private:
 	SDL_Texture* background;

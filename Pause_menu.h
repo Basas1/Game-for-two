@@ -17,6 +17,10 @@ public:
 	void logic();
 	void render();
 	int check_if_choosed();
+	void up();
+	void down();
+	void enter();
+	void escape();
 
 private:
 	Menu_item* items[10];

@@ -50,6 +50,17 @@ Game::~Game() {
 	game_time.stop();
 }
 
+void Game::pause_game() {
+	game_time.toggle();
+	SDL_SetRenderDrawColor(main_renderer, 0, 0, 0, 150);
+	SDL_Rect k = { 0, 0, SCREEN_WIDTH, SCREEN_HEIGHT };
+	SDL_RenderFillRect(main_renderer, &k);
+	current_state = new Pause_menu;
+	programm_states.push(current_state);
+}
+
+
+
 void Game::handle_events() {
 	//Handle events
 
@@ -57,16 +68,23 @@ void Game::handle_events() {
 		if (event.type == SDL_QUIT) {
 			//Quit the program
 			programm_states.pop();
+			current_state = new Exit_state();
+			programm_states.push(current_state);
 		}
+
+		if (event.type == SDL_CONTROLLERBUTTONDOWN) {
+			switch (event.cbutton.button) {
+			case 6: {
+				pause_game();
+				break;
+			}
+			}
+		}
+
 		if (event.type == SDL_KEYDOWN) {
 			switch (event.key.keysym.sym) {
 			case SDLK_ESCAPE: {
-				game_time.toggle();
-				SDL_SetRenderDrawColor(main_renderer, 0, 0, 0, 150);
-				SDL_Rect k = { 0, 0, SCREEN_WIDTH, SCREEN_HEIGHT };
-				SDL_RenderFillRect(main_renderer, &k);
-				current_state = new Pause_menu;
-				programm_states.push(current_state);
+				pause_game();
 				break;
 			}
 			}

@@ -15,6 +15,7 @@ public:
 	void logic();
 	void render();
 	void toggle();
+	void pause_game();
 
 private:
 	SDL_Texture* background;

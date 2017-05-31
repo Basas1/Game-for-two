@@ -61,6 +61,94 @@ int Pause_menu::check_if_choosed() {
 Pause_menu::~Pause_menu() {
 }
 
+void Pause_menu::up() {
+	int current;
+	current = check_if_choosed();
+	if (current == -1) {
+		for (int i = 0; i < 10; i++) {
+			if (items[i] != NULL) {
+				if (items[i]->type == CONTINUE) items[i]->toggle();
+			}
+		}
+	}
+	else {
+		bool changed = false;
+		if (current != 0) {
+			for (int j = current - 1; j >= 0; j--) {
+				if (items[j] != NULL) {
+					if (items[j]->choosable) {
+						items[current]->toggle();
+						items[j]->toggle();
+						break;
+					}
+				}
+			}
+		}
+	}
+}
+
+void Pause_menu::down() {
+	int current;
+	current = check_if_choosed();
+	if (current == -1) {
+		for (int i = 0; i < 10; i++) {
+			if (items[i] != NULL) {
+				if (items[i]->type == CONTINUE) items[i]->toggle();
+			}
+		}
+	}
+	else {
+		bool changed = false;
+		for (int j = current + 1; j < 10; j++) {
+			if (items[j] != NULL) {
+				if (items[j]->choosable) {
+					items[current]->toggle();
+					items[j]->toggle();
+					break;
+				}
+			}
+		}
+	}
+}
+
+void Pause_menu::enter() {
+	for (int i = 0; i < 10; i++) {
+		if (items[i] != NULL) {
+			if (items[i]->choosen) {
+				if (items[i]->type == CONTINUE) {
+					game_time.toggle();
+					programm_states.pop();
+					break;
+				}
+				if (items[i]->type == RESTART) {
+					while (programm_states.size() > 0) {
+						if (programm_states.top()->state == STATE_GAME) {
+							delete programm_states.top();
+						}
+						programm_states.pop();
+					}
+					current_state = new Game();
+					programm_states.push(current_state);
+					break;
+				}
+				if (items[i]->type == EXIT) {
+					programm_states.pop();
+					current_state = new Exit_state();
+					programm_states.push(current_state);
+					break;
+				}
+			}
+		}
+	}
+}
+
+void Pause_menu::escape() {
+	game_time.toggle();
+	programm_states.pop();
+}
+
+
+
 void Pause_menu::handle_events() {
 	//While there's events to handle
 	while (SDL_PollEvent(&event)) {
@@ -74,89 +162,39 @@ void Pause_menu::handle_events() {
 		else if (event.type == SDL_KEYDOWN) {
 			switch (event.key.keysym.sym) {
 			case SDLK_ESCAPE: {
-				game_time.toggle();
-				programm_states.pop();
+				escape();
 				break;
 			}
 			case SDLK_RETURN: {
-				for (int i = 0; i < 10; i++) {
-					if (items[i] != NULL) {
-						if (items[i]->choosen) {
-							if (items[i]->type == CONTINUE) {
-								game_time.toggle();
-								programm_states.pop();
-								break;
-							}
-							if (items[i]->type == RESTART) {							
-								while (programm_states.size() > 0) {
-									if (programm_states.top()->state == STATE_GAME) {
-										delete programm_states.top();
-									}
-									programm_states.pop();
-								}
-								current_state = new Game();
-								programm_states.push(current_state);
-								break;
-							}
-							if (items[i]->type == EXIT) {
-								programm_states.pop();
-								current_state = new Exit_state();
-								programm_states.push(current_state);
-								break;
-							}
-						}
-					}
-				}
+				enter();
+				break;
 			}
 			case SDLK_UP: {
-				int current;
-				current = check_if_choosed();
-				if (current == -1) {
-					for (int i = 0; i < 10; i++) {
-						if (items[i] != NULL) {
-							if (items[i]->type == CONTINUE) items[i]->toggle();
-						}
-					}
-				}
-				else {
-					bool changed = false;
-					if (current != 0) {
-						for (int j = current - 1; j >= 0; j--) {
-							if (items[j] != NULL) {
-								if (items[j]->choosable) {
-									items[current]->toggle();
-									items[j]->toggle();
-									break;
-								}
-							}
-						}
-					}
-				}
-
+				up();
 				break;
 			}
 			case SDLK_DOWN: {
-				int current;
-				current = check_if_choosed();
-				if (current == -1) {
-					for (int i = 0; i < 10; i++) {
-						if (items[i] != NULL) {
-							if (items[i]->type == CONTINUE) items[i]->toggle();
-						}
-					}
-				}
-				else {
-					bool changed = false;
-					for (int j = current + 1; j < 10; j++) {
-						if (items[j] != NULL) {
-							if (items[j]->choosable) {
-								items[current]->toggle();
-								items[j]->toggle();
-								break;
-							}
-						}
-					}
-				}
+				down();
+				break;
+			}
+			}
+		}
+		else if (event.type == SDL_CONTROLLERBUTTONDOWN) {
+			switch (event.cbutton.button) {
+			case 6: {
+				escape();
+				break;
+			}
+			case 0: {
+				enter();
+				break;
+			}
+			case 11: {
+				up();
+				break;
+			}
+			case 12: {
+				down();
 				break;
 			}
 			}
