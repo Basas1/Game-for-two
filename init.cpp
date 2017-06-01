@@ -125,7 +125,7 @@ bool init() {
 	//programm_states.push(current_state);
 	current_state = new Menu();
 	programm_states.push(current_state);
-
+	SDL_ShowCursor(SDL_DISABLE);
 
 	return success;
 }

@@ -10,7 +10,6 @@
 Game::Game() {
 	state = STATE_GAME;
 	game_time.start();
-	SDL_ShowCursor(SDL_DISABLE);
 	//Load the background
 	background = map;
 	background2 = background_texture;

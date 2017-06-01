@@ -119,7 +119,7 @@ bool load_media() {
 		printf("Failed to load player texture!\n");
 		success = false;
 	}
-	player_jump_fall_texture = load_texture("Images/airborne_rise.gif");
+	player_jump_fall_texture = load_texture("Images/airborne_fall.gif");
 	if (player_jump_fall_texture == NULL) {
 		printf("Failed to load player texture!\n");
 		success = false;
