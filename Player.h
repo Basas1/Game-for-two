@@ -51,6 +51,7 @@ public:
 	Animated_texture* jump_animation_fall;
 	Animated_texture* hit_animation;
 	Animated_texture* dive_animation;
+	Animated_texture* dive_end_animation;
 
 	Animated_texture* arrow;
 

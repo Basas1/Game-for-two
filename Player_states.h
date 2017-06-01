@@ -65,4 +65,5 @@ public:
 	void logic(Player& p);
 	void render(Player& p);
 	bool can_cancel;
+	bool landing;
 };

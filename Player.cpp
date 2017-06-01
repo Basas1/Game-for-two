@@ -48,6 +48,7 @@ Player::Player(int x, int y, int control) : Movable_object() {
 	jump_animation_fall = new Animated_texture(player_jump_fall_texture, 4, -75, -40);
 	hit_animation = new Animated_texture(player_hit_texture, 5, -75, -40);
 	dive_animation = new Animated_texture(player_dive_texture, 1, -75, -40);
+	dive_end_animation = new Animated_texture(blast_texture, 4, -100, -40);
 	arrow = new Animated_texture(arrow_texture, 1);
 	arrow->set_ñolor(50, 255, 50);
 
