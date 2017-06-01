@@ -43,6 +43,8 @@ SDL_Texture* arrow_texture = NULL;
 
 SDL_Texture* fireball_texture = NULL;
 SDL_Texture* fireball_trail_texture = NULL;
+SDL_Texture* t_ball_opening_texture = NULL;
+SDL_Texture* t_ball_opened_texture = NULL;
 SDL_Texture* blast_texture = NULL;
 //Enemy1 textures
 SDL_Texture* enemy_stand_texture = NULL;
@@ -71,7 +73,8 @@ bool load_media() {
 	bool success = true;
 
 	//Load background texture
-	background_texture = load_texture("Images/kek.jpg");
+	//background_texture = load_texture("Images/kek.jpg");
+	background_texture = load_texture("Images/sas.jpg");
 	if (background_texture == NULL) {
 		printf("Failed to load bg texture!\n");
 		success = false;
@@ -170,7 +173,7 @@ bool load_media() {
 		success = false;
 	}
 
-	arrow_texture = load_texture("Images/arrow.png");
+	arrow_texture = load_texture("Images/arrow.gif");
 	if (arrow_texture == NULL) {
 		printf("Failed to load arrow texture!\n");
 		success = false;
@@ -221,12 +224,13 @@ bool load_media() {
 	player2_score_texture = load_texture("Images/player2score.png");
 	digits_texture = load_texture("Images/digits.png");
 
+	//Fireball textures
 	fireball_texture = load_texture("Images/fireball.gif");
 	if (fireball_texture == NULL) {
 		printf("Failed to load fireball texture!\n");
 		success = false;
 	}
-	fireball_trail_texture = load_texture("Images/fireball_trail.png");
+	fireball_trail_texture = load_texture("Images/fireball_trail.gif");
 	if (fireball_trail_texture == NULL) {
 		printf("Failed to load fireball texture!\n");
 		success = false;
@@ -236,6 +240,19 @@ bool load_media() {
 		printf("Failed to load blast texture!\n");
 		success = false;
 	}
+	t_ball_opening_texture = load_texture("Images/tp_opening.gif");
+	if (t_ball_opening_texture == NULL) {
+		printf("Failed to load teleport texture!\n");
+		success = false;
+	}
+	t_ball_opened_texture = load_texture("Images/tp_spinning.gif");
+	if (t_ball_opened_texture == NULL) {
+		printf("Failed to load teleport texture!\n");
+		success = false;
+	}
+
+
+
 
 	//Open fonts
 	font1 = TTF_OpenFont("Images/arial.ttf", 28);

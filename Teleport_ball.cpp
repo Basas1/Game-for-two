@@ -63,9 +63,10 @@ Teleport_ball::Teleport_ball(int x, int y, int side) : Movable_object() {
 	//vel_x = 0;
 	//vel_y = 0;
 
-	teleport_ball_animation = new Animated_texture(fireball_texture, 3, -32, -32);
-	teleport_ball_animation->set_clips();
-	teleport_ball_animation->set_ñolor(50, 50, 255);
+	teleport_ball_opening = new Animated_texture(t_ball_opening_texture, 6, -32, -32);
+	int order1[] = { 0, 0, 0, 0, 1, 2, 3, 4, 5 };
+	teleport_ball_opening ->set_frame_order(order1, sizeof(order1) / sizeof(int));
+	teleport_ball_opened = new Animated_texture(t_ball_opened_texture, 3, -32, -32);
 	b_width = 64;
 	b_height = 64;
 	blast_rad = 128;
@@ -137,8 +138,9 @@ void Teleport_ball::move() {
 
 void Teleport_ball::logic() {
 	if (!stage_two) {
-		if (game_time.get_ticks() - create_time >= 750) {
-			teleport_ball_animation->set_ñolor(120, 20, 255);
+		if (teleport_ball_opening->get_replay_count() > 0) {
+			teleport_ball_opening->reset();
+			teleport_ball_opened->reset();
 			stage_two = true;
 		}
 	}
@@ -146,8 +148,14 @@ void Teleport_ball::logic() {
 }
 
 void Teleport_ball::render() {
-	teleport_ball_animation->render(pos_x, pos_y);
-	teleport_ball_animation->next_frame();
+	if (stage_two) {
+		teleport_ball_opened->render(pos_x, pos_y);
+		teleport_ball_opened->next_frame();
+	}
+	else {
+		teleport_ball_opening->render(pos_x, pos_y);
+		teleport_ball_opening->next_frame();
+	}
 
 	//double scale = camera->get_scale();
 	//SDL_Rect renderQuad = { (pos_x - camera->get_x()) * camera->get_scale(), (pos_y - camera->get_y()) * camera->get_scale(), width * scale, height * scale };
@@ -158,8 +166,10 @@ void Teleport_ball::render() {
 
 
 Teleport_ball::~Teleport_ball() {
-	delete teleport_ball_animation;
-	teleport_ball_animation = NULL;
+	delete teleport_ball_opening;
+	delete teleport_ball_opened;
+	teleport_ball_opening = NULL;
+	teleport_ball_opened = NULL;
 }
 
 

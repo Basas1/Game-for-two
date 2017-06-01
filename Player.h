@@ -34,7 +34,7 @@ public:
 	Player_states* state;
 
 	//Jump speed
-	int jump_vel;
+	double jump_vel;
 
 	//Fireball cooldown
 	int fireball_cooldown;

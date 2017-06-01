@@ -41,6 +41,8 @@ extern SDL_Texture* arrow_texture;
 
 extern SDL_Texture* fireball_texture;
 extern SDL_Texture* fireball_trail_texture;
+extern SDL_Texture* t_ball_opening_texture;
+extern SDL_Texture* t_ball_opened_texture;
 extern SDL_Texture* blast_texture;
 
 extern SDL_Texture* enemy_stand_texture;

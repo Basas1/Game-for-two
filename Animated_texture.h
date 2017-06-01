@@ -25,7 +25,7 @@ public:
 	void render(int x, int y, bool flip_right = true, double angle = 0.0, SDL_Point* center = NULL);
 
 
-protected:
+//protected:
 	int clip_col, clip_line;
 	int frame_order[100];
 	SDL_Rect* sprite_clips;

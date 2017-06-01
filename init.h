@@ -43,6 +43,7 @@ const int SCREEN_HEIGHT = 900;
 
 //Fps constants
 const int SCREEN_FPS = 200;
+//const int SCREEN_FPS = 50;
 const int SCREEN_TICKS_PER_FRAME = 1000 / SCREEN_FPS;
 
 //Window position

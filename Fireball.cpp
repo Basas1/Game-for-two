@@ -1,7 +1,6 @@
 #pragma once
 #include "Fireball.h"
 #include "media.h"
-#include "Static_object.h"
 
 
 
@@ -17,6 +16,7 @@ Fireball::Fireball(int x, int y, int side, Game_object* p) : Movable_object() {
 	vel_x = 0;
 	vel_y = 0;
 	exist = true;
+	last_trail = NULL;
 
 	switch (side) {
 	case RIGHT: {
@@ -93,24 +93,42 @@ void Fireball::logic() {
 		for (int i = 0; i < collisions.size(); i++) {
 			if (collisions[i]->type == ENEMY || collisions[i]->type == PLAYER && collisions[i]!=parent) {
 				if (collisions[i]->kill()) {
-					exist = false;
+					exist = false; 
 					//delete this;
 				}
 			}
 		}
 	}
 	if (exist) {
-		if (skip % 5 == 0) {
-			skip = 0;
+		if (last_trail == NULL) {
 			Fireball_trail* trail;
 			trail = new Fireball_trail(pos_x, pos_y);
+			last_trail = trail;
 			//objects.insert(objects.end(), trail);
 			static_objects.insert(static_objects.end(), trail);
-			skip++;
 		}
 		else {
-			skip++;
+			//if (last_trail->f_trail->get_frame_number() != last_trail->f_trail->total_frames - 1) {
+			if (last_trail->f_trail->get_frame_number() != 0) {
+				Fireball_trail* trail;
+				trail = new Fireball_trail(pos_x, pos_y);
+				last_trail = trail;
+				//objects.insert(objects.end(), trail);
+				static_objects.insert(static_objects.end(), trail);
+			}
 		}
+
+		//if (skip % 1 == 0) {
+		//	skip = 0;
+		//	Fireball_trail* trail;
+		//	trail = new Fireball_trail(pos_x, pos_y);
+		//	objects.insert(objects.end(), trail);
+		//	//static_objects.insert(static_objects.end(), trail);
+		//	skip++;
+		//}
+		//else {
+		//	skip++;
+		//}
 	}
 	move();
 }

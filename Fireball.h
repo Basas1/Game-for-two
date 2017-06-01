@@ -1,6 +1,8 @@
 #pragma once
 #include "Movable_object.h"
 #include "Animated_texture.h"
+#include "Static_object.h"
+
 
 class Fireball : public Movable_object {
 public:
@@ -18,6 +20,8 @@ public:
 	void reverse();
 
 	Animated_texture* fireball_animation;
+
+	Fireball_trail* last_trail;
 
 };
 

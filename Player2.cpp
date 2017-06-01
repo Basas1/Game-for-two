@@ -37,13 +37,14 @@ Player2::Player2(int x, int y, int control) : Player() {
 	hit_animation = new Animated_texture(player_hit_texture, 5, -75, -40);
 	dive_animation = new Animated_texture(player2_dive_texture, 1, -75, -40);
 	arrow = new Animated_texture(arrow_texture, 1);
+	arrow->set_ñolor(255, 50, 50);
 
 
 	type = PLAYER;
 	width = 50;
 	height = 160;
 	score = 0;
-	jump_vel = 7;
+	//jump_vel = 7;
 	fireball_cooldown = 0;
 	hit_cooldown = 0;
 	unkill_cooldown = 0;

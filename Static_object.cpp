@@ -100,8 +100,8 @@ void Capture_platform::logic() {
 Fireball_trail::Fireball_trail(int x, int y) : Static_object() {
 	pos_x = x;
 	pos_y = y;
-	f_trail = new Animated_texture(fireball_trail_texture, 7, -25, -25);
-	f_trail->set_ticks_per_frame(5);
+	f_trail = new Animated_texture(fireball_trail_texture, 9, -35, -35);
+	f_trail->set_ticks_per_frame(2);
 }
 
 void Fireball_trail::render() {

@@ -18,7 +18,7 @@ Player::Player(int x, int y, int control) : Movable_object() {
 	height = 160;
 	acceleration = 3;
 
-	jump_vel = 7;
+	jump_vel = 7.5;
 	flip_right = true;
 	fireball_cooldown = 0;
 	teleport_cooldown = 0;
@@ -49,6 +49,8 @@ Player::Player(int x, int y, int control) : Movable_object() {
 	hit_animation = new Animated_texture(player_hit_texture, 5, -75, -40);
 	dive_animation = new Animated_texture(player_dive_texture, 1, -75, -40);
 	arrow = new Animated_texture(arrow_texture, 1);
+	arrow->set_ñolor(50, 255, 50);
+
 
 	
 	collision_box = { (int)pos_x, (int)pos_y, width, height };
@@ -128,7 +130,7 @@ void Player::render() {
 		if (dist_x < 0) {
 			result += 180;
 		}
-		arrow->render(pos_x + width / 2 - 200, pos_y + height / 2 - 200, true, result);
+		arrow->render(pos_x + width / 2 - 125, pos_y + height / 2 - 125, true, result);
 
 	}
 
@@ -143,7 +145,7 @@ void Player::render() {
 
 void Player::reduce_cooldowns() {
 	int time = game_time.get_ticks();
-	if (time - fireball_cooldown >= 500) fireball_cooldown = 0;
+	if (time - fireball_cooldown >= 750) fireball_cooldown = 0;
 	if (time - teleport_cooldown >= 500) teleport_cooldown = 0;
 	if (time - hit_cooldown >= 1000) hit_cooldown = 0;
 	if (time - unkill_cooldown >= 1000) unkill_cooldown = 0;
