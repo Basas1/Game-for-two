@@ -352,6 +352,10 @@ void On_ground::handle_events(Player& p, SDL_Event& event) {
 					cast_fireball(p);
 					break;
 				}
+				case 9: {
+					cast_fireball(p);
+					break;
+				}
 				case 10: {
 					if (p.hit_cooldown == 0) {
 						change_state(p, HIT1_STATE);
@@ -528,6 +532,10 @@ void Jump::handle_events(Player& p, SDL_Event& event) {
 					break;
 				}
 				case 3: {
+					cast_fireball(p);
+					break;
+				}
+				case 9: {
 					cast_fireball(p);
 					break;
 				}
