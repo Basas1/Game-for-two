@@ -298,7 +298,13 @@ void On_ground::handle_events(Player& p, SDL_Event& event) {
 		//If a key was pressed
 		if (event.type == SDL_KEYDOWN && event.key.repeat == 0) {
 			switch (event.key.keysym.sym) {
-			case SDLK_SPACE: p.vel_y = -p.jump_vel; break;
+			case SDLK_SPACE: {
+				Jump_effect* j_effect;
+				j_effect = new Jump_effect((int)p.pos_x, (int)p.pos_y, p.jump_effect_animation1);
+				objects.insert(objects.end(), j_effect);
+				p.vel_y = -p.jump_vel; 
+				break;
+			}
 			}
 		}
 		if (event.type == SDL_KEYDOWN) {
@@ -335,7 +341,13 @@ void On_ground::handle_events(Player& p, SDL_Event& event) {
 		if (event.type == SDL_CONTROLLERBUTTONDOWN) {
 			if (event.cbutton.which == p.gamepad_id) {
 				switch (event.cbutton.button) {
-				case 0: p.vel_y = -p.jump_vel; break;
+				case 0: {
+					Jump_effect* j_effect;
+					j_effect = new Jump_effect((int)p.pos_x, (int)p.pos_y, p.jump_effect_animation1);
+					objects.insert(objects.end(), j_effect);
+					p.vel_y = -p.jump_vel;
+					break;
+				}
 				case 3: {
 					cast_fireball(p);
 					break;
@@ -459,6 +471,9 @@ void Jump::handle_events(Player& p, SDL_Event& event) {
 			switch (event.key.keysym.sym) {
 			case SDLK_SPACE: {
 				if (jump_count > 0) {
+					Jump_effect* j_effect;
+					j_effect = new Jump_effect((int)p.pos_x, (int)p.pos_y, p.jump_effect_animation2);
+					objects.insert(objects.end(), j_effect);
 					p.vel_y = -p.jump_vel;
 					jump_count--;
 				}
@@ -504,6 +519,9 @@ void Jump::handle_events(Player& p, SDL_Event& event) {
 				switch (event.jbutton.button) {
 				case 0: {
 					if (jump_count > 0) {
+						Jump_effect* j_effect;
+						j_effect = new Jump_effect((int)p.pos_x, (int)p.pos_y, p.jump_effect_animation2);
+						objects.insert(objects.end(), j_effect);
 						p.vel_y = -p.jump_vel;
 						jump_count--;
 					}
@@ -710,6 +728,10 @@ void Hit2::handle_events(Player& p, SDL_Event& event) {
 						jump_state = new Jump(p);
 						jump_state->jump_count = 0;
 						p.state_stack.push(jump_state);
+
+						Jump_effect* j_effect;
+						j_effect = new Jump_effect((int)p.pos_x, (int)p.pos_y, p.jump_effect_animation2);
+						objects.insert(objects.end(), j_effect);
 					}
 					break;
 				}
@@ -733,6 +755,10 @@ void Hit2::handle_events(Player& p, SDL_Event& event) {
 							jump_state = new Jump(p);
 							jump_state->jump_count = 0;
 							p.state_stack.push(jump_state);
+
+							Jump_effect* j_effect;
+							j_effect = new Jump_effect((int)p.pos_x, (int)p.pos_y, p.jump_effect_animation2);
+							objects.insert(objects.end(), j_effect);
 						}
 						break;
 					}

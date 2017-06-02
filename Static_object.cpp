@@ -120,5 +120,22 @@ Fireball_trail::~Fireball_trail() {
 	f_trail = NULL;
 }
 
+Jump_effect::Jump_effect(int x, int y, Animated_texture* animation) {
+	pos_x = x;
+	pos_y = y;
+	effect_animation = animation;
+}
+
+void Jump_effect::render() {
+	if (effect_animation->get_replay_count() > 0) {
+		effect_animation->reset();
+		exist = false;
+	}
+	else {
+		effect_animation->render(pos_x, pos_y);
+		effect_animation->next_frame();
+	}
+}
+
 
 

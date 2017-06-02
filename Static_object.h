@@ -41,4 +41,12 @@ public:
 	Animated_texture* f_trail;
 };
 
+class Jump_effect : public Static_object {
+public:
+	Jump_effect(int x, int y, Animated_texture* animation);
+	~Jump_effect() {};
+	void render();
+	Animated_texture* effect_animation;
+};
+
 

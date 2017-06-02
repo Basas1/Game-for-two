@@ -65,7 +65,7 @@ bool Player2::kill() {
 	if (vulnerable && unkill_cooldown == 0) {
 		pos_x = 2600;
 		pos_y = 75;
-		player1->score += 1000;
+		player1->score += 2500;
 		unkill_cooldown = game_time.get_ticks();
 		return true;
 	}

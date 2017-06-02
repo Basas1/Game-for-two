@@ -49,6 +49,8 @@ public:
 	Animated_texture* run_animation;
 	Animated_texture* jump_animation_rise;
 	Animated_texture* jump_animation_fall;
+	Animated_texture* jump_effect_animation1;
+	Animated_texture* jump_effect_animation2;
 	Animated_texture* hit_animation;
 	Animated_texture* fireball_cast_animation1;
 	Animated_texture* fireball_cast_animation2;

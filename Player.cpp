@@ -46,6 +46,10 @@ Player::Player(int x, int y, int control) : Movable_object() {
 	run_animation->set_ticks_per_frame(13);
 	jump_animation_rise = new Animated_texture(player_jump_rise_texture, 4, -75, -40);
 	jump_animation_fall = new Animated_texture(player_jump_fall_texture, 4, -75, -40);
+	jump_effect_animation1 = new Animated_texture(player_jump_effect_texture1, 5, -75, 120);
+	jump_effect_animation1->set_ticks_per_frame(10);
+	jump_effect_animation2 = new Animated_texture(player_jump_effect_texture2, 4, -75, 120);
+	jump_effect_animation2->set_ticks_per_frame(10);
 	hit_animation = new Animated_texture(player_hit_texture, 5, -75, -40);
 	dive_animation = new Animated_texture(player_dive_texture, 1, -75, -40);
 	dive_end_animation = new Animated_texture(blast_texture, 4, -100, -40);
@@ -70,7 +74,7 @@ bool Player::kill() {
 	if (vulnerable && unkill_cooldown == 0) {
 		pos_x = 1305;
 		pos_y = 75;
-		player2->score += 1000;
+		player2->score += 2500;
 		unkill_cooldown = game_time.get_ticks();
 		return true;
 	}
