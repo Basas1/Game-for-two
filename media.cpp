@@ -29,6 +29,8 @@ SDL_Texture* player_run_texture = NULL;
 SDL_Texture* player_jump_rise_texture = NULL;
 SDL_Texture* player_jump_fall_texture = NULL;
 SDL_Texture* player_hit_texture = NULL;
+SDL_Texture* player_cast_fireball_texture1 = NULL;
+SDL_Texture* player_cast_fireball_texture2 = NULL;
 SDL_Texture* player_dive_texture = NULL;
 //Player2 textures
 SDL_Texture* player2_texture = NULL;
@@ -124,6 +126,18 @@ bool load_media() {
 		printf("Failed to load player texture!\n");
 		success = false;
 	}
+	player_cast_fireball_texture1 = load_texture("Images/shot_horizontal.gif");
+	if (player_cast_fireball_texture1 == NULL) {
+		printf("Failed to load player texture!\n");
+		success = false;
+	}
+	player_cast_fireball_texture2 = load_texture("Images/shot_horizontal2.gif");
+	if (player_cast_fireball_texture2 == NULL) {
+		printf("Failed to load player texture!\n");
+		success = false;
+	}
+
+
 	player_hit_texture = load_texture("Images/stab.gif");
 	if (player_hit_texture == NULL) {
 		printf("Failed to load player texture!\n");

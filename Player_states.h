@@ -14,23 +14,26 @@ public:
 	};
 	void change_state(Player& p, int state, int arg=0);
 	void cast_fireball(Player& p);
+	void create_fireball(Player& p, int side);
 	void cast_teleport_ball(Player& p);
 	void blast_teleport_ball(Player& p);
 	virtual ~Player_states() {};
 	virtual void handle_events(Player& p, SDL_Event& event);
 	virtual void logic(Player& p) {};
 	virtual void render(Player& p) {};
+	int type;
 };
 
 class On_ground : public Player_states {
 public:
-	On_ground() {};
+	On_ground() { type = -1; };
 	void handle_events(Player& p, SDL_Event& event);
 	void logic(Player& p);
 };
 
 class Stand : public On_ground {
 public:
+	Stand() { type = STAND_STATE; };
 	void logic(Player& p);
 	void render(Player& p);
 
@@ -38,6 +41,7 @@ public:
 
 class Run : public On_ground {
 public:
+	Run() { type = RUN_STATE; };
 	void logic(Player& p);
 	void render(Player& p);
 };
@@ -54,6 +58,7 @@ public:
 
 class Hit1 : public Player_states {
 public:
+	Hit1() { type = HIT1_STATE; };
 	void logic(Player& p);
 	void render(Player& p);
 };

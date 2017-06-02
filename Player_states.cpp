@@ -41,35 +41,65 @@ void Player_states::change_state(Player& p, int state, int arg) {
 	}
 }
 
+void Player_states::create_fireball(Player& p, int side) {
+	p.fireball_casting = true;
+	Fireball *ball = NULL;
+
+	if (side == UP || side == DOWN) {
+		ball = new Fireball(p.pos_x + p.width / 2, p.pos_y + p.height / 2, side, &p);
+	}
+	else {
+		if (p.flip_right) {
+			if (p.state_stack.top()->type == STAND_STATE || p.state_stack.top()->type == JUMP_STATE) {
+				ball = new Fireball(p.pos_x + p.width + 1, p.pos_y + p.height / 2, side, &p);
+			}
+			else {
+				ball = new Fireball(p.pos_x + p.width + 1, p.pos_y + p.height / 3, side, &p);
+			}
+		}
+		else {
+			if (p.state_stack.top()->type == STAND_STATE || p.state_stack.top()->type == JUMP_STATE) {
+				ball = new Fireball(p.pos_x - 1, p.pos_y + p.height / 2, side, &p);
+			}
+			else {
+				ball = new Fireball(p.pos_x - 1, p.pos_y + p.height / 3, side, &p);
+			}
+		}
+	}
+	objects.insert(objects.end(), ball);
+	p.fireball_cooldown = game_time.get_ticks();
+}
+
+
 void Player_states::cast_fireball(Player& p) {
 	if (p.fireball_cooldown <= 0) {
-		Fireball *ball = NULL;
+		p.fireball_casting = true;
 		if (p.controller == NULL) {
 			const Uint8* currentKeyStates = SDL_GetKeyboardState(NULL);
 			if (currentKeyStates[SDL_SCANCODE_UP] && !currentKeyStates[SDL_SCANCODE_RIGHT] && !currentKeyStates[SDL_SCANCODE_LEFT] && !currentKeyStates[SDL_SCANCODE_DOWN]) {
-				ball = new Fireball(p.pos_x + p.width / 2, p.pos_y - 1, UP, &p);
+				create_fireball(p, UP);
 			}
 			else if (!currentKeyStates[SDL_SCANCODE_UP] && !currentKeyStates[SDL_SCANCODE_RIGHT] && !currentKeyStates[SDL_SCANCODE_LEFT] && currentKeyStates[SDL_SCANCODE_DOWN]) {
-				ball = new Fireball(p.pos_x + p.width / 2, p.pos_y + p.height + 1, DOWN, &p);
+				create_fireball(p, DOWN);
 			}
 			else if (currentKeyStates[SDL_SCANCODE_UP] && currentKeyStates[SDL_SCANCODE_RIGHT] && !currentKeyStates[SDL_SCANCODE_LEFT] && !currentKeyStates[SDL_SCANCODE_DOWN]) {
-				ball = new Fireball(p.pos_x + p.width + 1, p.pos_y - 1, UP_RIGHT, &p);
+				create_fireball(p, UP_RIGHT);
 			}
 			else if (currentKeyStates[SDL_SCANCODE_UP] && !currentKeyStates[SDL_SCANCODE_RIGHT] && currentKeyStates[SDL_SCANCODE_LEFT] && !currentKeyStates[SDL_SCANCODE_DOWN]) {
-				ball = new Fireball(p.pos_x - 1, p.pos_y - 1, UP_LEFT, &p);
+				create_fireball(p, UP_LEFT);
 			}
 			else if (!currentKeyStates[SDL_SCANCODE_UP] && currentKeyStates[SDL_SCANCODE_RIGHT] && !currentKeyStates[SDL_SCANCODE_LEFT] && currentKeyStates[SDL_SCANCODE_DOWN]) {
-				ball = new Fireball(p.pos_x + p.width + 1, p.pos_y + p.height + 1, DOWN_RIGHT, &p);
+				create_fireball(p, DOWN_RIGHT);
 			}
 			else if (!currentKeyStates[SDL_SCANCODE_UP] && !currentKeyStates[SDL_SCANCODE_RIGHT] && currentKeyStates[SDL_SCANCODE_LEFT] && currentKeyStates[SDL_SCANCODE_DOWN]) {
-				ball = new Fireball(p.pos_x - 1, p.pos_y + p.height + 1, DOWN_LEFT, &p);
+				create_fireball(p, DOWN_LEFT);
 			}
 			else {
 				if (p.flip_right) {
-					ball = new Fireball(p.pos_x + p.width + 1, p.pos_y + p.height / 3, RIGHT, &p);
+					create_fireball(p, RIGHT);
 				}
 				else {
-					ball = new Fireball(p.pos_x - 1, p.pos_y + p.height / 3, LEFT, &p);
+					create_fireball(p, LEFT);
 				}
 			}
 		}
@@ -79,34 +109,33 @@ void Player_states::cast_fireball(Player& p) {
 			ox = SDL_GameControllerGetAxis(p.gamepad, SDL_CONTROLLER_AXIS_LEFTX);
 			oy = SDL_GameControllerGetAxis(p.gamepad, SDL_CONTROLLER_AXIS_LEFTY);
 			if (oy < -dz && ox < dz && ox > -dz) {
-				ball = new Fireball(p.pos_x + p.width / 2, p.pos_y - 1, UP, &p);
+				create_fireball(p, UP);
 			}
 			else if (oy > dz && ox < dz && ox > -dz) {
-				ball = new Fireball(p.pos_x + p.width / 2, p.pos_y + p.height + 1, DOWN, &p);
+				create_fireball(p, DOWN);
 			}
-			else if (oy < -dz * 5 / 4 && ox > dz / 2) {
-				ball = new Fireball(p.pos_x + p.width + 1, p.pos_y - 1, UP_RIGHT, &p);
+			else if (oy < -dz && ox > dz / 2) {
+				create_fireball(p, UP_RIGHT);
 			}
-			else if (oy < -dz * 5 / 4 && ox < -dz / 2) {
-				ball = new Fireball(p.pos_x - 1, p.pos_y - 1, UP_LEFT, &p);
+			else if (oy < -dz && ox < -dz / 2) {
+				create_fireball(p, UP_LEFT);
 			}
-			else if (oy > dz * 5 / 4 && ox > dz / 2) {
-				ball = new Fireball(p.pos_x + p.width + 1, p.pos_y + p.height + 1, DOWN_RIGHT, &p);
+			else if (oy > dz && ox > dz / 2) {
+				create_fireball(p, DOWN_RIGHT);
 			}
-			else if (oy > dz * 5 / 4 && ox < -dz / 2) {
-				ball = new Fireball(p.pos_x - 1, p.pos_y + p.height + 1, DOWN_LEFT, &p);
+			else if (oy > dz && ox < -dz / 2) {
+				create_fireball(p, DOWN_LEFT);
 			}
+
 			else {
 				if (p.flip_right) {
-					ball = new Fireball(p.pos_x + p.width + 1, p.pos_y + p.height / 3, RIGHT, &p);
+					create_fireball(p, RIGHT);
 				}
 				else {
-					ball = new Fireball(p.pos_x - 1, p.pos_y + p.height / 3, LEFT, &p);
+					create_fireball(p, LEFT);
 				}
 			}
 		}
-		objects.insert(objects.end(), ball);
-		p.fireball_cooldown = game_time.get_ticks();
 	}
 }
 
@@ -153,16 +182,16 @@ void Player_states::cast_teleport_ball(Player& p) {
 				else if (oy > dz && ox < dz && ox > -dz) {
 					p.t_ball = new Teleport_ball(p.pos_x + p.width / 2, p.pos_y + p.height / 2, DOWN);
 				}
-				else if (oy < -dz * 5 / 4 && ox > dz / 2) {
+				else if (oy < -dz && ox > dz / 2) {
 					p.t_ball = new Teleport_ball(p.pos_x + p.width / 2, p.pos_y + p.height / 2, UP_RIGHT);
 				}
-				else if (oy < -dz * 5 / 4 && ox < -dz / 2) {
+				else if (oy < -dz && ox < -dz / 2) {
 					p.t_ball = new Teleport_ball(p.pos_x + p.width / 2, p.pos_y + p.height / 2, UP_LEFT);
 				}
-				else if (oy > dz * 5 / 4 && ox > dz / 2) {
+				else if (oy > dz && ox > dz / 2) {
 					p.t_ball = new Teleport_ball(p.pos_x + p.width / 2, p.pos_y + p.height / 2, DOWN_RIGHT);
 				}
-				else if (oy > dz * 5 / 4 && ox < -dz / 2) {
+				else if (oy > dz && ox < -dz / 2) {
 					p.t_ball = new Teleport_ball(p.pos_x + p.width / 2, p.pos_y + p.height / 2, DOWN_LEFT);
 				}
 				else {
@@ -337,6 +366,16 @@ void Stand::logic(Player& p) {
 void Stand::render(Player& p) {
 	p.stand_animation->render(p.pos_x, p.pos_y, p.flip_right);
 	p.stand_animation->next_frame();
+
+	if (p.fireball_casting) {
+		p.fireball_cast_animation2->render(p.pos_x, p.pos_y, p.flip_right);
+		p.fireball_cast_animation2->next_frame();
+		if (p.fireball_cast_animation2->get_replay_count() > 0) {
+			p.fireball_casting = false;
+			p.fireball_cast_animation1->reset();
+			p.fireball_cast_animation2->reset();
+		}
+	}
 }
 
 void Run::logic(Player& p) {
@@ -350,9 +389,21 @@ void Run::logic(Player& p) {
 void Run::render(Player& p) {
 	p.run_animation->render(p.pos_x, p.pos_y, p.flip_right);
 	p.run_animation->next_frame();
+
+	if (p.fireball_casting) {
+		p.fireball_cast_animation1->render(p.pos_x, p.pos_y, p.flip_right);
+		p.fireball_cast_animation1->next_frame();
+		if (p.fireball_cast_animation1->get_replay_count() > 0) {
+			p.fireball_casting = false;
+			p.fireball_cast_animation1->reset();
+			p.fireball_cast_animation2->reset();
+		}
+	}
+
 }
 
 Jump::Jump(Player& p) {
+	type = JUMP_STATE;
 	jump_count = 1;
 	if (p.vel_y <= 0) {
 		falling = false;
@@ -494,6 +545,23 @@ void Jump::render(Player& p) {
 			p.jump_animation_rise->next_frame();
 		}
 	}
+
+	if (p.fireball_casting) {
+		int cast_x = p.pos_x;
+		if (p.flip_right) {
+			cast_x -= p.width / 3;
+		}
+		else {
+			cast_x += p.width / 3;
+		}
+		p.fireball_cast_animation2->render(cast_x, p.pos_y, p.flip_right);
+		p.fireball_cast_animation2->next_frame();
+		if (p.fireball_cast_animation2->get_replay_count() > 0) {
+			p.fireball_casting = false;
+			p.fireball_cast_animation1->reset();
+			p.fireball_cast_animation2->reset();
+		}
+	}
 }
 
 
@@ -546,6 +614,7 @@ void Hit1::render(Player& p) {
 }
 
 Hit2::Hit2(int jump) {
+	type = HIT2_STATE;
 	landing = false;
 	if (jump == 0) {
 		can_cancel = false;

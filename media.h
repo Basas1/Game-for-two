@@ -1,7 +1,6 @@
 #pragma once
 #include "init.h"
 
-
 //Current displayed texture
 extern SDL_Texture* background_texture;
 extern SDL_Texture* menu_background_texture;
@@ -27,6 +26,8 @@ extern SDL_Texture* player_run_texture;
 extern SDL_Texture* player_jump_rise_texture;
 extern SDL_Texture* player_jump_fall_texture;
 extern SDL_Texture* player_hit_texture;
+extern SDL_Texture* player_cast_fireball_texture1;
+extern SDL_Texture* player_cast_fireball_texture2;
 extern SDL_Texture* player_dive_texture;
 
 extern SDL_Texture* player2_texture;

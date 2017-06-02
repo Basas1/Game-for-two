@@ -49,6 +49,9 @@ Player::Player(int x, int y, int control) : Movable_object() {
 	hit_animation = new Animated_texture(player_hit_texture, 5, -75, -40);
 	dive_animation = new Animated_texture(player_dive_texture, 1, -75, -40);
 	dive_end_animation = new Animated_texture(blast_texture, 4, -100, -40);
+	fireball_cast_animation1 = new Animated_texture(player_cast_fireball_texture1, 3, -60, 30);
+	fireball_cast_animation2 = new Animated_texture(player_cast_fireball_texture2, 9, -26, 30);
+	fireball_cast_animation2->set_ticks_per_frame(2);
 	arrow = new Animated_texture(arrow_texture, 1);
 	arrow->set_ñolor(50, 255, 50);
 
@@ -134,6 +137,15 @@ void Player::render() {
 		arrow->render(pos_x + width / 2 - 125, pos_y + height / 2 - 125, true, result);
 
 	}
+
+	//if (fireball_casting) {
+	//	fireball_cast_animation2->render(pos_x, pos_y, flip_right);
+	//	fireball_cast_animation2->next_frame();
+	//	if (fireball_cast_animation2->get_replay_count() > 0) {
+	//		fireball_casting = false;
+	//		fireball_cast_animation2->reset();
+	//	}
+	//}
 
 	////Hit box rectangle
 	//double scale = camera->get_scale();
