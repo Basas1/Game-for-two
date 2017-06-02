@@ -183,12 +183,12 @@ bool load_media() {
 		printf("Failed to load player texture!\n");
 		success = false;
 	}
-	player2_jump_rise_texture = load_texture("Images/airborne_rise.gif");
+	player2_jump_rise_texture = load_texture("Images/airborne_rise2.gif");
 	if (player2_jump_rise_texture == NULL) {
 		printf("Failed to load player texture!\n");
 		success = false;
 	}
-	player2_jump_fall_texture = load_texture("Images/airborne_rise.gif");
+	player2_jump_fall_texture = load_texture("Images/airborne_fall2.gif");
 	if (player2_jump_fall_texture == NULL) {
 		printf("Failed to load player texture!\n");
 		success = false;

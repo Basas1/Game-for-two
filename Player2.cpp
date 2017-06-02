@@ -26,18 +26,27 @@ Player2::Player2(int x, int y, int control) : Player() {
 		break;
 	}
 
+	//stand_animation = new Animated_texture(player2_stand_texture, 8, -75, -40);
+	////int order1[] = { 0, 1, 2, 1 };
+	////stand_animation->set_frame_order(order1, sizeof(order1) / sizeof(int));
+	//stand_animation->set_ticks_per_frame(25);
+	//run_animation = new Animated_texture(player2_run_texture, 13, -75, -40);
+	//run_animation->set_ticks_per_frame(13);
+	//jump_animation_rise = new Animated_texture(player_jump_rise_texture, 4, -75, -40);
+	//jump_animation_fall = new Animated_texture(player_jump_fall_texture, 4, -75, -40);
+	//hit_animation = new Animated_texture(player_hit_texture, 5, -75, -40);
+	//dive_animation = new Animated_texture(player2_dive_texture, 1, -75, -40);
+
 	stand_animation = new Animated_texture(player2_stand_texture, 8, -75, -40);
-	//int order1[] = { 0, 1, 2, 1 };
-	//stand_animation->set_frame_order(order1, sizeof(order1) / sizeof(int));
 	stand_animation->set_ticks_per_frame(25);
 	run_animation = new Animated_texture(player2_run_texture, 13, -75, -40);
 	run_animation->set_ticks_per_frame(13);
-	jump_animation_rise = new Animated_texture(player_jump_rise_texture, 4, -75, -40);
-	jump_animation_fall = new Animated_texture(player_jump_fall_texture, 4, -75, -40);
-	hit_animation = new Animated_texture(player_hit_texture, 5, -75, -40);
-	dive_animation = new Animated_texture(player2_dive_texture, 1, -75, -40);
+	jump_animation_rise = new Animated_texture(player2_jump_rise_texture, 4, -75, -40);
+	jump_animation_fall = new Animated_texture(player2_jump_fall_texture, 4, -75, -40);
+	hit_animation = new Animated_texture(player2_hit_texture, 5, -75, -40);
 	arrow = new Animated_texture(arrow_texture, 1);
 	arrow->set_ñolor(255, 50, 50);
+
 
 
 	type = PLAYER;
