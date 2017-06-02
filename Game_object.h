@@ -54,7 +54,6 @@ public:
 
 	Game_object* parent;
 
-protected:
 	//Flag of object existance
 	bool exist;
 };

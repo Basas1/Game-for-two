@@ -20,6 +20,11 @@ SDL_Texture* pmenu_paused_t = NULL;
 SDL_Texture* pmenu_continue_t = NULL;
 SDL_Texture* pmenu_restart_t = NULL;
 SDL_Texture* pmenu_exit_t = NULL;
+SDL_Texture* emenu_congratulations_t = NULL;
+SDL_Texture* emenu_p1w_t = NULL;
+SDL_Texture* emenu_p2w_t = NULL;
+SDL_Texture* emenu_play_again_t = NULL;
+SDL_Texture* emenu_quit_t = NULL;
 
 
 //Player textures
@@ -206,6 +211,7 @@ bool load_media() {
 	}
 
 	//Menu textures
+	//Start menu
 	menu_play_t = load_texture("Images/play.png");
 	if (menu_play_t == NULL) {
 		printf("Failed to load menu texture!\n");
@@ -221,6 +227,7 @@ bool load_media() {
 		printf("Failed to load menu texture!\n");
 		success = false;
 	}
+	//Pause menu
 	pmenu_paused_t = load_texture("Images/gamepaused.png");
 	if (pmenu_paused_t == NULL) {
 		printf("Failed to load menu texture!\n");
@@ -241,9 +248,32 @@ bool load_media() {
 		printf("Failed to load menu texture!\n");
 		success = false;
 	}
-
-
-
+	//Win menu
+	emenu_congratulations_t = load_texture("Images/congratulations.png");
+	if (emenu_congratulations_t == NULL) {
+		printf("Failed to load menu texture!\n");
+		success = false;
+	}
+	emenu_p1w_t = load_texture("Images/player1won.png");
+	if (emenu_p1w_t == NULL) {
+		printf("Failed to load menu texture!\n");
+		success = false;
+	}
+	emenu_p2w_t = load_texture("Images/player2won.png");
+	if (emenu_p2w_t == NULL) {
+		printf("Failed to load menu texture!\n");
+		success = false;
+	}
+	emenu_play_again_t = load_texture("Images/play_again.png");
+	if (emenu_play_again_t == NULL) {
+		printf("Failed to load menu texture!\n");
+		success = false;
+	}
+	emenu_quit_t = load_texture("Images/quit.png");
+	if (emenu_quit_t == NULL) {
+		printf("Failed to load menu texture!\n");
+		success = false;
+	}
 
 	//Score textures
 	player1_score_texture = load_texture("Images/player1score.png");

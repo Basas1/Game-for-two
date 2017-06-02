@@ -5,6 +5,7 @@
 #include "math.h"
 #include "tools.h"
 #include "Pause_menu.h"
+#include "Winning_menu.h"
 
 
 Game::Game() {
@@ -144,8 +145,22 @@ void Game::logic() {
 	camera->set_scale(sc1);
 	camera->follow(follow_x, follow_y);
 
-	//printf("g_time=%d\n", game_time.get_ticks());
+	if (player1->score >= 100000 || player2->score >= 100000) {
+		int winner;
+		if (player1->score > player2->score) {
+			winner = 1;
+		}
+		else {
+			winner = 2;
+		}
 
+		game_time.toggle();
+		SDL_SetRenderDrawColor(main_renderer, 0, 0, 0, 150);
+		SDL_Rect k = { 0, 0, SCREEN_WIDTH, SCREEN_HEIGHT };
+		SDL_RenderFillRect(main_renderer, &k);
+		current_state = new Winning_menu(winner);
+		programm_states.push(current_state);
+	}
 }
 
 void Game::render() {
