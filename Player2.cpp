@@ -75,6 +75,13 @@ Player2::Player2(int x, int y, int control) : Player() {
 
 bool Player2::kill() {
 	if (vulnerable && unkill_cooldown == 0) {
+		if (t_ball != NULL) {
+			if (t_ball->exist) {
+				t_ball->kill();
+				t_ball->blast();
+				t_ball = NULL;
+			}
+		}
 		pos_x = 2600;
 		pos_y = 75;
 		player1->score += 2500;

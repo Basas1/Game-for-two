@@ -216,8 +216,8 @@ void Player_states::cast_teleport_ball(Player& p) {
 
 void Player_states::blast_teleport_ball(Player& p) {
 	if (p.t_ball != NULL && p.t_ball->stage_two) {
-		p.t_ball->blast();
 		p.t_ball->kill();
+		p.t_ball->blast();
 		p.t_ball = NULL;
 	}
 }

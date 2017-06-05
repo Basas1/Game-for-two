@@ -10,6 +10,7 @@
 
 
 Player::Player(int x, int y, int control) : Movable_object() {
+	skip = 0;
 	type = PLAYER;
 	pos_x = 1305;
 	pos_y = 75;
@@ -72,6 +73,13 @@ Player::Player(int x, int y, int control) : Movable_object() {
 
 bool Player::kill() {
 	if (vulnerable && unkill_cooldown == 0) {
+		if (t_ball != NULL) {
+			if (t_ball->exist) {
+				t_ball->kill();
+				t_ball->blast();
+				t_ball = NULL;
+			}
+		}
 		pos_x = 1305;
 		pos_y = 75;
 		player2->score += 2500;
@@ -118,6 +126,7 @@ void Player::logic() {
 	if (!on_plat) {
 		on_platform = false;
 	}
+
 };
 
 void Player::handle_events(SDL_Event& event) {
@@ -125,6 +134,29 @@ void Player::handle_events(SDL_Event& event) {
 };
 
 void Player::render() {
+	//if (!vulnerable) {
+	//	printf("ALLO!\n");
+	//	if (skip % 3 == 0) {
+	//		stand_animation->set_ñolor(0,0,0);
+	//		skip++;
+	//	}
+	//	else if (skip % 6 == 0) {
+	//		skip = 0;
+	//		stand_animation->set_ñolor(255, 255, 255);
+	//		skip++;
+	//	}
+	//	else {
+	//		skip++;
+	//	}
+	//}
+	//else {
+	//	printf("JRI DVA!\n");
+	//	stand_animation->set_ñolor(255, 255, 255);
+	//}
+
+
+
+
 	state_stack.top()->render(*this);
 	
 	//Arrow rendering
@@ -141,15 +173,6 @@ void Player::render() {
 		arrow->render(pos_x + width / 2 - 125, pos_y + height / 2 - 125, true, result);
 
 	}
-
-	//if (fireball_casting) {
-	//	fireball_cast_animation2->render(pos_x, pos_y, flip_right);
-	//	fireball_cast_animation2->next_frame();
-	//	if (fireball_cast_animation2->get_replay_count() > 0) {
-	//		fireball_casting = false;
-	//		fireball_cast_animation2->reset();
-	//	}
-	//}
 
 	////Hit box rectangle
 	//double scale = camera->get_scale();

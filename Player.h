@@ -54,12 +54,13 @@ public:
 	Animated_texture* hit_animation;
 	Animated_texture* fireball_cast_animation1;
 	Animated_texture* fireball_cast_animation2;
-	bool fireball_casting;
 	Animated_texture* dive_animation;
 	Animated_texture* dive_end_animation;
-
-
 	Animated_texture* arrow;
+
+	int skip;
+
+	bool fireball_casting;
 
 	Teleport_ball* t_ball;
 	void teleport_to_ball();
