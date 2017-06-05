@@ -259,7 +259,7 @@ void Player_states::handle_events(Player& p, SDL_Event& event) {
 					cast_teleport_ball(p);
 					break;
 				}
-				case 2: {
+				case 10: {
 					blast_teleport_ball(p);
 					break;
 				}
@@ -352,11 +352,7 @@ void On_ground::handle_events(Player& p, SDL_Event& event) {
 					cast_fireball(p);
 					break;
 				}
-				case 9: {
-					cast_fireball(p);
-					break;
-				}
-				case 10: {
+				case 2: {
 					if (p.hit_cooldown == 0) {
 						change_state(p, HIT1_STATE);
 					}
@@ -433,20 +429,29 @@ void Jump::logic(Player& p) {
 	if (p.vel_y <= 0 && falling) {
 		falling = false;
 		p.jump_animation_fall->reset();
-		//p.jump_animation_rise->reset();
+		p.jump_animation_rise->reset();
 	}
 	else if (p.vel_y > 0 && !falling) {
 		falling = true;
 		p.jump_animation_rise->reset();
+		p.jump_animation_fall->reset();
 	}
-	p.vel_x += p.acc_x;
-	//Speed limit
-	if (p.vel_x > p.max_vel_x) p.vel_x = p.max_vel_x;
-	if (p.vel_x < -p.max_vel_x) p.vel_x = -p.max_vel_x;
-
+	 
+	if (p.acc_x == 0) {
+		if (p.vel_x > -0.1 && p.vel_x < 0.1) p.vel_x = 0; else {
+			p.vel_x -= (p.vel_x / fabs(p.vel_x) ) * 0.05;
+		}
+	}
+	else {
+		if (fabs(p.vel_x) <= fabs(p.max_vel_x)) {
+			p.vel_x += (p.acc_x / fabs(p.acc_x)) * 0.25;
+			if (p.vel_x > p.max_vel_x) p.vel_x = p.max_vel_x;
+			if (p.vel_x < -p.max_vel_x) p.vel_x = -p.max_vel_x;
+		}
+	}
 	p.move();
+
 	if (p.check_map_collision_bottom()) {
-		//p.vel_x = p.acc_x;
 		p.jump_animation_rise->reset();
 		p.jump_animation_fall->reset();
 		p.state_stack.pop();
@@ -463,10 +468,12 @@ void Jump::handle_events(Player& p, SDL_Event& event) {
 		if (currentKeyStates[SDL_SCANCODE_DOWN]) {
 		}
 		if (currentKeyStates[SDL_SCANCODE_LEFT]) {
-			a_x -= p.acceleration / 20;
+			//a_x -= p.acceleration / 20;
+			a_x -= p.acceleration;
 		}
 		if (currentKeyStates[SDL_SCANCODE_RIGHT]) {
-			a_x += p.acceleration / 20;
+			//a_x += p.acceleration / 20;
+			a_x += p.acceleration;
 		}
 		p.acc_x = a_x;
 
@@ -535,11 +542,7 @@ void Jump::handle_events(Player& p, SDL_Event& event) {
 					cast_fireball(p);
 					break;
 				}
-				case 9: {
-					cast_fireball(p);
-					break;
-				}
-				case 10: {
+				case 2: {
 					if (p.hit_cooldown == 0) {
 						if (oy > dz) {
 							change_state(p, HIT2_STATE, jump_count);

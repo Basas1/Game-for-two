@@ -73,7 +73,7 @@ void Game::handle_events() {
 		}
 
 		if (event.type == SDL_CONTROLLERBUTTONDOWN) {
-			//printf("b=%d\n", event.cbutton.button);
+			printf("b=%d\n", event.cbutton.button);
  			switch (event.cbutton.button) {
 			case 6: {
 				pause_game();

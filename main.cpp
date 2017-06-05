@@ -16,6 +16,7 @@ int main(int argc, char* args[]) {
 	//Start up SDL and create window
 	if (!init()) {
 		printf("Failed to initialize!\n");
+		system("pause");
 	}
 	else {
 		//While application is running
