@@ -154,7 +154,7 @@ void Game::logic() {
 		else {
 			winner = 2;
 		}
-
+		render();
 		game_time.toggle();
 		SDL_SetRenderDrawColor(main_renderer, 0, 0, 0, 150);
 		SDL_Rect k = { 0, 0, SCREEN_WIDTH, SCREEN_HEIGHT };
