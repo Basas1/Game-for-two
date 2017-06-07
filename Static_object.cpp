@@ -143,5 +143,14 @@ void Jump_effect::render() {
 	}
 }
 
+Help::Help(Game_object* p) {
+	type = HELP;
+	parent = p;
+	help_t = new Animated_texture(help_texture, 1, -225, -40);
+}
+
+void Help::render() {
+	help_t->render(parent->pos_x, parent->pos_y);
+}
 
 

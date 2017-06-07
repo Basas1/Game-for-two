@@ -13,6 +13,7 @@ Fireball::Fireball(int x, int y, int side, Game_object* p) : Movable_object() {
 	pos_x = x;
 	pos_y = y;
 	gravity = 0;
+	can_rise = 0;
 	vel_x = 0;
 	vel_y = 0;
 	exist = true;
@@ -88,11 +89,11 @@ Fireball::Fireball(int x, int y, int side, Game_object* p) : Movable_object() {
 }
 
 void Fireball::move() {
-	if (check_map_collision_all()) {
-		exist = false;
-		//delete this;
+	if (exist) {
+		if (Movable_object::move()) {
+			exist = false;
+		}
 	}
-	if (exist) Movable_object::move();
 }
 
 void Fireball::logic() {

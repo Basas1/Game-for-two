@@ -15,7 +15,7 @@ public:
 	void handle_events(SDL_Event& event) {};
 
 	//Move method
-	void move();
+	bool move();
 
 	////Checks for collision with other game objects
 	//std::vector<Game_object*> get_collisions(SDL_Rect* check_box=NULL);
