@@ -135,15 +135,15 @@ void Game::logic() {
 	double dist_y = fabs(p1_y - p2_y);
 	double dist = sqrt(dist_x*dist_x + dist_y*dist_y);
 
-	sc1 = 1 / (dist / (SCREEN_HEIGHT / 5 * 5 - SCREEN_HEIGHT / 3 * 1));
-	if (sc1 <= camera->min_scale) {
-		sc1 = camera->min_scale;
-	}
-	else if (sc1 >= camera->max_scale) {
-		sc1 = camera->max_scale;
-	}
+	//sc1 = 1 / (dist / (SCREEN_HEIGHT / 5 * 5 - SCREEN_HEIGHT / 3 * 1));
+	//if (sc1 <= camera->min_scale) {
+	//	sc1 = camera->min_scale;
+	//}
+	//else if (sc1 >= camera->max_scale) {
+	//	sc1 = camera->max_scale;
+	//}
 
-	camera->set_scale(sc1);
+	camera->set_scale_by_distance(dist_x, dist_y);
 	camera->follow(follow_x, follow_y);
 
 	if (player1->score >= 100000 || player2->score >= 100000) {

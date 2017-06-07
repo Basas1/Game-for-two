@@ -16,14 +16,15 @@ public:
 
 	void follow(int vision_focus_x, int vision_focus_y);
 	void set_scale(double target_scale);
+	void set_scale_by_distance(double x_dist, double y_dist);
 
 	double min_scale;
 	double max_scale;
-private:
+
 	//square of the camera
 	SDL_Rect camera;
 
-	//scale of rendered field. 100 is default
+	//scale of rendered field
 	double scale;
 
 	//speed of camera movement
