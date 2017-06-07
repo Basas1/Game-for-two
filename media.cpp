@@ -320,7 +320,7 @@ bool load_media() {
 	player2_score_texture = load_texture("Images/player2score.png");
 	digits_texture = load_texture("Images/digits.png");
 
-	help_texture = load_texture("Images/help.png");
+	help_texture = load_texture("Images/help.gif");
 	if (help_texture == NULL) {
 		printf("Failed to load help texture!\n");
 		success = false;
