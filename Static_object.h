@@ -35,7 +35,7 @@ public:
 
 class Fireball_trail : public Static_object {
 public:
-	Fireball_trail(int x, int y);
+	Fireball_trail(int x, int y, Game_object* p);
 	~Fireball_trail();
 	void render();
 	Animated_texture* f_trail;

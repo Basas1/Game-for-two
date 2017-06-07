@@ -97,10 +97,16 @@ void Capture_platform::logic() {
 
 
 
-Fireball_trail::Fireball_trail(int x, int y) : Static_object() {
+Fireball_trail::Fireball_trail(int x, int y, Game_object* p) : Static_object() {
+	parent = p;
 	pos_x = x;
 	pos_y = y;
-	f_trail = new Animated_texture(fireball_trail_texture, 9, -35, -35);
+	if (parent == player1) {
+		f_trail = new Animated_texture(player_fireball_trail_texture, 9, -35, -35);
+	}
+	else {
+		f_trail = new Animated_texture(player2_fireball_trail_texture, 9, -35, -35);
+	}
 	f_trail->set_ticks_per_frame(2);
 }
 

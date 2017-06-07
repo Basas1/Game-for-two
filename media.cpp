@@ -39,6 +39,10 @@ SDL_Texture* player_hit_texture = NULL;
 SDL_Texture* player_cast_fireball_texture1 = NULL;
 SDL_Texture* player_cast_fireball_texture2 = NULL;
 SDL_Texture* player_dive_texture = NULL;
+SDL_Texture* player_mark_texture = NULL;
+SDL_Texture* player_fireball_texture = NULL;
+SDL_Texture* player_fireball_trail_texture = NULL;
+
 //Player2 textures
 SDL_Texture* player2_texture = NULL;
 SDL_Texture* player2_stand_texture = NULL;
@@ -49,11 +53,11 @@ SDL_Texture* player2_cast_fireball_texture1 = NULL;
 SDL_Texture* player2_cast_fireball_texture2 = NULL;
 SDL_Texture* player2_hit_texture = NULL;
 SDL_Texture* player2_dive_texture = NULL;
+SDL_Texture* player2_mark_texture = NULL;
+SDL_Texture* player2_fireball_texture = NULL;
+SDL_Texture* player2_fireball_trail_texture = NULL;
 
 SDL_Texture* arrow_texture = NULL;
-
-SDL_Texture* fireball_texture = NULL;
-SDL_Texture* fireball_trail_texture = NULL;
 SDL_Texture* t_ball_opening_texture = NULL;
 SDL_Texture* t_ball_opened_texture = NULL;
 SDL_Texture* blast_texture = NULL;
@@ -155,8 +159,6 @@ bool load_media() {
 		printf("Failed to load player texture!\n");
 		success = false;
 	}
-
-
 	player_hit_texture = load_texture("Images/stab.gif");
 	if (player_hit_texture == NULL) {
 		printf("Failed to load player texture!\n");
@@ -167,7 +169,21 @@ bool load_media() {
 		printf("Failed to load player texture!\n");
 		success = false;
 	}
-
+	player_mark_texture = load_texture("Images/player1_mark.png");
+	if (player_mark_texture == NULL) {
+		printf("Failed to load player texture!\n");
+		success = false;
+	}
+	player_fireball_texture = load_texture("Images/fireball.gif");
+	if (player_fireball_texture == NULL) {
+		printf("Failed to load fireball texture!\n");
+		success = false;
+	}
+	player_fireball_trail_texture = load_texture("Images/fireball_trail.gif");
+	if (player_fireball_trail_texture == NULL) {
+		printf("Failed to load fireball texture!\n");
+		success = false;
+	}
 
 	//PLAYER2 TEXTURES
 	player2_texture = load_texture("Images/stand2.gif");
@@ -215,12 +231,23 @@ bool load_media() {
 		printf("Failed to load player texture!\n");
 		success = false;
 	}
-
-	arrow_texture = load_texture("Images/arrow.gif");
-	if (arrow_texture == NULL) {
-		printf("Failed to load arrow texture!\n");
+	player2_mark_texture = load_texture("Images/player2_mark.png");
+	if (player2_mark_texture == NULL) {
+		printf("Failed to load player texture!\n");
 		success = false;
 	}
+	player2_fireball_texture = load_texture("Images/fireball2.gif");
+	if (player_fireball_texture == NULL) {
+		printf("Failed to load fireball texture!\n");
+		success = false;
+	}
+	player2_fireball_trail_texture = load_texture("Images/fireball_trail2.gif");
+	if (player_fireball_trail_texture == NULL) {
+		printf("Failed to load fireball texture!\n");
+		success = false;
+	}
+
+
 
 	//Menu textures
 	//Start menu
@@ -292,15 +319,9 @@ bool load_media() {
 	player2_score_texture = load_texture("Images/player2score.png");
 	digits_texture = load_texture("Images/digits.png");
 
-	//Fireball textures
-	fireball_texture = load_texture("Images/fireball.gif");
-	if (fireball_texture == NULL) {
-		printf("Failed to load fireball texture!\n");
-		success = false;
-	}
-	fireball_trail_texture = load_texture("Images/fireball_trail.gif");
-	if (fireball_trail_texture == NULL) {
-		printf("Failed to load fireball texture!\n");
+	arrow_texture = load_texture("Images/arrow.gif");
+	if (arrow_texture == NULL) {
+		printf("Failed to load arrow texture!\n");
 		success = false;
 	}
 	blast_texture = load_texture("Images/blast.png");

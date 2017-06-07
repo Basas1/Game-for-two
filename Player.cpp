@@ -18,7 +18,6 @@ Player::Player(int x, int y, int control) : Movable_object() {
 	width = 50;
 	height = 160;
 	acceleration = 3;
-
 	jump_vel = 7.5;
 	flip_right = true;
 	fireball_cooldown = 0;
@@ -27,6 +26,9 @@ Player::Player(int x, int y, int control) : Movable_object() {
 	unkill_cooldown = 0;
 	time_on_platform = -1;
 	on_platform = false;
+	color_r = 50;
+	color_g = 50;
+	color_b = 255;
 
 	controller = control;
 	switch (controller) {
@@ -41,27 +43,45 @@ Player::Player(int x, int y, int control) : Movable_object() {
 		break;
 	}
 
+	for (int i = 0; i < 20; i++) {
+		player_textures[i] = NULL;
+	}
+	int t_num = 0;
+
 	stand_animation = new Animated_texture(player_stand_texture, 8, -75, -40);
 	stand_animation->set_ticks_per_frame(25);
+	player_textures[t_num++] = &stand_animation;
 	run_animation = new Animated_texture(player_run_texture, 13, -75, -40);
 	run_animation->set_ticks_per_frame(13);
+	player_textures[t_num++] = &run_animation;
 	jump_animation_rise = new Animated_texture(player_jump_rise_texture, 4, -75, -40);
+	player_textures[t_num++] = &jump_animation_rise;
 	jump_animation_fall = new Animated_texture(player_jump_fall_texture, 4, -75, -40);
+	player_textures[t_num++] = &jump_animation_fall;
 	jump_effect_animation1 = new Animated_texture(player_jump_effect_texture1, 5, -75, 120);
 	jump_effect_animation1->set_ticks_per_frame(10);
+	player_textures[t_num++] = &jump_effect_animation1;
 	jump_effect_animation2 = new Animated_texture(player_jump_effect_texture2, 4, -75, 120);
 	jump_effect_animation2->set_ticks_per_frame(10);
+	player_textures[t_num++] = &jump_effect_animation2;
 	hit_animation = new Animated_texture(player_hit_texture, 5, -75, -40);
+	player_textures[t_num++] = &hit_animation;
 	dive_animation = new Animated_texture(player_dive_texture, 1, -75, -40);
+	player_textures[t_num++] = &dive_animation;
 	dive_end_animation = new Animated_texture(blast_texture, 4, -100, -40);
+	player_textures[t_num++] = &dive_end_animation;
 	fireball_cast_animation1 = new Animated_texture(player_cast_fireball_texture1, 3, -60, 30);
+	player_textures[t_num++] = &fireball_cast_animation1;
 	fireball_cast_animation2 = new Animated_texture(player_cast_fireball_texture2, 9, -26, 30);
 	fireball_cast_animation2->set_ticks_per_frame(2);
+	player_textures[t_num++] = &fireball_cast_animation2;
+	texture_color_toggled = false;
+
 	arrow = new Animated_texture(arrow_texture, 1);
-	arrow->set_ñolor(50, 255, 50);
+	arrow->set_ñolor(color_r, color_g, color_b);
 
+	mark = new Animated_texture(player_mark_texture, 1);
 
-	
 	collision_box = { (int)pos_x, (int)pos_y, width, height };
 	vulnerable = true;
 
@@ -134,28 +154,20 @@ void Player::handle_events(SDL_Event& event) {
 };
 
 void Player::render() {
-	//if (!vulnerable) {
-	//	printf("ALLO!\n");
-	//	if (skip % 3 == 0) {
-	//		stand_animation->set_ñolor(0,0,0);
-	//		skip++;
-	//	}
-	//	else if (skip % 6 == 0) {
-	//		skip = 0;
-	//		stand_animation->set_ñolor(255, 255, 255);
-	//		skip++;
-	//	}
-	//	else {
-	//		skip++;
-	//	}
-	//}
-	//else {
-	//	printf("JRI DVA!\n");
-	//	stand_animation->set_ñolor(255, 255, 255);
-	//}
 
-
-
+	if (unkill_cooldown != 0) {
+		if (skip % 25 == 0) {
+			skip = 0;
+			toggle_texture_color();
+			skip++;
+		}
+		else {
+			skip++;
+		}
+	}
+	else if (texture_color_toggled) {
+		toggle_texture_color();
+	}
 
 	state_stack.top()->render(*this);
 	
@@ -174,6 +186,8 @@ void Player::render() {
 
 	}
 
+	mark->render(pos_x, pos_y - mark->height * 3 / 2 );
+
 	////Hit box rectangle
 	//double scale = camera->get_scale();
 	//SDL_Rect renderQuad = { (pos_x - camera->get_x()) * camera->get_scale(), (pos_y - camera->get_y()) * camera->get_scale(), width * scale, height * scale };
@@ -188,7 +202,9 @@ void Player::reduce_cooldowns() {
 	if (time - fireball_cooldown >= 750) fireball_cooldown = 0;
 	if (time - teleport_cooldown >= 500) teleport_cooldown = 0;
 	if (time - hit_cooldown >= 1000) hit_cooldown = 0;
-	if (time - unkill_cooldown >= 1000) unkill_cooldown = 0;
+	if (time - unkill_cooldown >= 2000) {
+		unkill_cooldown = 0;
+	}
 }
 
 void Player::teleport_to_ball() {
@@ -217,6 +233,29 @@ void Player::teleport_to_ball() {
 
 	pos_x = nx - width / 2;
 	pos_y = ny - height / 2;
+}
+
+void Player::toggle_texture_color() {
+	if (!texture_color_toggled) {
+		for (int i = 0; i < 20; i++) {
+			if (player_textures[i] != NULL) {
+				Animated_texture* temp;
+				temp = *player_textures[i];
+				temp->set_ñolor(color_r, color_g, color_b);
+			}
+		}
+		texture_color_toggled = true;
+	}
+	else {
+		for (int i = 0; i < 20; i++) {
+			if (player_textures[i] != NULL) {
+				Animated_texture* temp;
+				temp = *player_textures[i];
+				temp->set_ñolor(255, 255, 255);
+			}
+		}
+		texture_color_toggled = false;
+	}
 }
 
 

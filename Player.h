@@ -57,6 +57,14 @@ public:
 	Animated_texture* dive_animation;
 	Animated_texture* dive_end_animation;
 	Animated_texture* arrow;
+	Animated_texture* mark;
+
+	Animated_texture** player_textures[20];
+	bool texture_color_toggled;
+	void toggle_texture_color();
+	Uint8 color_r;
+	Uint8 color_g;
+	Uint8 color_b;
 
 	int skip;
 

@@ -20,6 +20,8 @@ public:
 	void reverse();
 
 	Animated_texture* fireball_animation;
+	Animated_texture* p1_fireball_animation;
+	Animated_texture* p2_fireball_animation;
 
 	Fireball_trail* last_trail;
 

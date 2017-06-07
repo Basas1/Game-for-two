@@ -6,36 +6,13 @@
 
 
 
-Player2::Player2(int x, int y, int control) : Player() {
+Player2::Player2(int x, int y, int control) : Player(x, y, control) {
 	pos_x = 2600;
 	pos_y = 75;
 	flip_right = false;
-
-
-
-	controller = control;
-	switch (controller) {
-	case 0: gamepad = NULL; break;
-	case 1:
-		gamepad = gamepad1;
-		gamepad_id = SDL_JoystickInstanceID(joystick1);
-		break;
-	case 2:
-		gamepad = gamepad2;
-		gamepad_id = SDL_JoystickInstanceID(joystick2);
-		break;
-	}
-
-	//stand_animation = new Animated_texture(player2_stand_texture, 8, -75, -40);
-	////int order1[] = { 0, 1, 2, 1 };
-	////stand_animation->set_frame_order(order1, sizeof(order1) / sizeof(int));
-	//stand_animation->set_ticks_per_frame(25);
-	//run_animation = new Animated_texture(player2_run_texture, 13, -75, -40);
-	//run_animation->set_ticks_per_frame(13);
-	//jump_animation_rise = new Animated_texture(player_jump_rise_texture, 4, -75, -40);
-	//jump_animation_fall = new Animated_texture(player_jump_fall_texture, 4, -75, -40);
-	//hit_animation = new Animated_texture(player_hit_texture, 5, -75, -40);
-	//dive_animation = new Animated_texture(player2_dive_texture, 1, -75, -40);
+	color_r = 255;
+	color_g = 50;
+	color_b = 50;
 
 	stand_animation = new Animated_texture(player2_stand_texture, 8, -75, -40);
 	stand_animation->set_ticks_per_frame(25);
@@ -44,32 +21,32 @@ Player2::Player2(int x, int y, int control) : Player() {
 	jump_animation_rise = new Animated_texture(player2_jump_rise_texture, 4, -75, -40);
 	jump_animation_fall = new Animated_texture(player2_jump_fall_texture, 4, -75, -40);
 	hit_animation = new Animated_texture(player2_hit_texture, 5, -75, -40);
+	dive_animation = new Animated_texture(player2_dive_texture, 1, -75, -40);
+	dive_end_animation = new Animated_texture(blast_texture, 4, -100, -40);
 	fireball_cast_animation1 = new Animated_texture(player2_cast_fireball_texture1, 3, -60, 30);
 	fireball_cast_animation2 = new Animated_texture(player2_cast_fireball_texture2, 9, -26, 30);
 	fireball_cast_animation2->set_ticks_per_frame(2);
-	arrow = new Animated_texture(arrow_texture, 1);
-	arrow->set_ñolor(255, 50, 50);
-
-
-
-	type = PLAYER;
-	width = 50;
-	height = 160;
-	score = 0;
-	//jump_vel = 7;
-	fireball_cooldown = 0;
-	hit_cooldown = 0;
-	unkill_cooldown = 0;
-	time_on_platform = -1;
-	on_platform = false;
-	acceleration = 3;
+	//arrow = new Animated_texture(arrow_texture, 1);
+	arrow->set_ñolor(color_r, color_g, color_b);
+	mark = new Animated_texture(player2_mark_texture, 1);
 
 	collision_box = { (int)pos_x, (int)pos_y, width, height };
 
-	state = new Stand;
-	state_stack.push(state);
 
-	t_ball = NULL;
+	//type = PLAYER;
+	//width = 50;
+	//height = 160;
+	//score = 0;
+	////jump_vel = 7;
+	//fireball_cooldown = 0;
+	//hit_cooldown = 0;
+	//unkill_cooldown = 0;
+	//time_on_platform = -1;
+	//on_platform = false;
+	//acceleration = 3;
+	//state = new Stand;
+	//state_stack.push(state);
+	//t_ball = NULL;
 }
 
 

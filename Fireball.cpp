@@ -72,8 +72,17 @@ Fireball::Fireball(int x, int y, int side, Game_object* p) : Movable_object() {
 	}
 
 
-	fireball_animation = new Animated_texture(fireball_texture, 3, -25, -25);
-	fireball_animation->set_clips();
+	p1_fireball_animation = new Animated_texture(player_fireball_texture, 3, -25, -25);
+	p1_fireball_animation->set_clips();
+	p2_fireball_animation = new Animated_texture(player2_fireball_texture, 3, -25, -25);
+	p2_fireball_animation->set_clips();
+
+	if (parent == player1) {
+		fireball_animation = p1_fireball_animation;
+	}
+	else {
+		fireball_animation = p2_fireball_animation;
+	}
 
 	collision_box = { (int)pos_x, (int)pos_y, width, height };
 }
@@ -102,7 +111,7 @@ void Fireball::logic() {
 	if (exist) {
 		if (last_trail == NULL) {
 			Fireball_trail* trail;
-			trail = new Fireball_trail(pos_x, pos_y);
+			trail = new Fireball_trail(pos_x, pos_y, parent);
 			last_trail = trail;
 			//objects.insert(objects.end(), trail);
 			static_objects.insert(static_objects.end(), trail);
@@ -111,29 +120,23 @@ void Fireball::logic() {
 			//if (last_trail->f_trail->get_frame_number() != last_trail->f_trail->total_frames - 1) {
 			if (last_trail->f_trail->get_frame_number() != 0) {
 				Fireball_trail* trail;
-				trail = new Fireball_trail(pos_x, pos_y);
+				trail = new Fireball_trail(pos_x, pos_y, parent);
 				last_trail = trail;
 				//objects.insert(objects.end(), trail);
 				static_objects.insert(static_objects.end(), trail);
 			}
 		}
-
-		//if (skip % 1 == 0) {
-		//	skip = 0;
-		//	Fireball_trail* trail;
-		//	trail = new Fireball_trail(pos_x, pos_y);
-		//	objects.insert(objects.end(), trail);
-		//	//static_objects.insert(static_objects.end(), trail);
-		//	skip++;
-		//}
-		//else {
-		//	skip++;
-		//}
 	}
 	move();
 }
 
 void Fireball::render() {
+	if (parent == player1) {
+		fireball_animation = p1_fireball_animation;
+	}
+	else {
+		fireball_animation = p2_fireball_animation;
+	}
 	fireball_animation->render(pos_x, pos_y);
 	fireball_animation->next_frame();
 
