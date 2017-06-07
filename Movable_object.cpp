@@ -160,7 +160,8 @@ bool Movable_object::can_go_left() {
 
 
 //Move object according to it's velocity
-void Movable_object::move() {
+bool Movable_object::move() {
+	bool collide = false;
 	//Turn object to the side of movement
 	if (acc_x > 0) {
 		flip_right = true;
@@ -178,6 +179,7 @@ void Movable_object::move() {
 			for (int i = 0; i < floor(vel_y); i++) {
 				if (check_map_collision_bottom()) {
 					vel_y = 0;
+					collide = true;
 					break;
 				}
 				pos_y++;
@@ -185,6 +187,7 @@ void Movable_object::move() {
 		}
 		else {
 			vel_y = 0;
+			collide = true;
 		}
 	}
 	else if (vel_y < 0) {
@@ -194,6 +197,7 @@ void Movable_object::move() {
 			for (int i = 0; i > ceil(vel_y); i--) {
 				if (check_map_collision_upper()) {
 					vel_y = 0;
+					collide = true;
 					break;
 				}
 				pos_y--;
@@ -201,6 +205,7 @@ void Movable_object::move() {
 		}
 		else {
 			vel_y = 0;
+			collide = true;
 		}
 	}
 
@@ -211,6 +216,7 @@ void Movable_object::move() {
 			if (vel_y == 0) {
 				if (check_map_collision_right()) {
 					vel_x = 0;
+					collide = true;
 					break;
 				}
 				if (!check_map_collision(pos_x + width + 1, pos_y + height - can_rise) &&
@@ -226,6 +232,7 @@ void Movable_object::move() {
 			else {
 				if (check_map_collision_right_strict()) {
 					vel_x = 0;
+					collide = true;
 					break;
 				}
 			}
@@ -238,6 +245,7 @@ void Movable_object::move() {
 			if (vel_y == 0) {
 				if (check_map_collision_left()) {
 					vel_x = 0;
+					collide = true;
 					break;
 				}
 				if (!check_map_collision(pos_x - 1, pos_y + height - can_rise) &&
@@ -253,6 +261,7 @@ void Movable_object::move() {
 			else {
 				if (check_map_collision_left_strict()) {
 					vel_x = 0;
+					collide = true;
 					break;
 				}
 
@@ -265,15 +274,19 @@ void Movable_object::move() {
 			!check_map_collision(pos_x + width / 2, pos_y + height) && !check_map_collision(pos_x + width, pos_y + height)) {
 			pos_y += acceleration;
 			pos_x += acceleration;
+			collide = true;
 		}
 		if ((check_map_collision(pos_x + width + 1, pos_y + height) || check_map_collision(pos_x + width + 1, pos_y + height - 1)) &&
 			!check_map_collision(pos_x + width / 2, pos_y + height) && !check_map_collision(pos_x, pos_y + height)) {
 			pos_y += acceleration;
 			pos_x -= acceleration;
+			collide = true;
 		}
 	}
 
 	collision_box = { (int)pos_x, (int)pos_y, width, height };
+
+	return collide;
 }
 
 
