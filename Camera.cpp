@@ -31,16 +31,40 @@ SDL_Rect* Camera::get_rect() {
 }
 
 void Camera::follow(int vision_focus_x, int vision_focus_y) {
+	int x, y;
+	if (camera.x < vision_focus_x) vel_x = 10;
+	if (camera.x > vision_focus_x) vel_x = -10;
+	if (camera.y < vision_focus_x) vel_y = 10;
+	if (camera.y > vision_focus_x) vel_y = -10;
+	if (vel_x < 10) vel_x = 0;
+	if (vel_y < 10) vel_y = 0;
+	x = camera.x + vel_x;
+	y = camera.y + vel_y;
 	move_to(vision_focus_x, vision_focus_y);
+}
+
+void Camera::set_scale_by_distance(double x_dist, double y_dist) {
+	double x_scale, y_scale;
+
+	x_scale = (SCREEN_WIDTH / 8 * 5) / x_dist;
+	y_scale = (SCREEN_HEIGHT / 8 * 5) / y_dist;
+	
+	if (x_scale < min_scale) x_scale = min_scale;
+	else if (x_scale > max_scale) x_scale = max_scale;
+	if (y_scale < min_scale) y_scale = min_scale;
+	else if (y_scale > max_scale) y_scale = max_scale;
+	printf("%f  %f\n", x_scale, y_scale);
+	x_scale < y_scale ? set_scale(x_scale) : set_scale(y_scale);
+
 }
 
 void Camera::set_scale(double target_scale) {
 	scale = target_scale;
 }
 
-void Camera::move_to(int vision_focus_x, int vision_focus_y) {
-	camera.x = vision_focus_x - ((SCREEN_WIDTH / 2) / scale);
-	camera.y = vision_focus_y - ((SCREEN_HEIGHT / 2) / scale);
+void Camera::move_to(int x, int y) {
+	camera.x = x - ((SCREEN_WIDTH / 2) / scale);
+	camera.y = y - ((SCREEN_HEIGHT / 2) / scale);
 
 	if (camera.x < 0) {
 		camera.x = 0;
