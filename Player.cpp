@@ -32,7 +32,10 @@ Player::Player(int x, int y, int control) : Movable_object() {
 
 	controller = control;
 	switch (controller) {
-	case 0: gamepad = NULL; break;
+	case 0: 
+		gamepad = NULL;
+		gamepad_id = -1;
+		break;
 	case 1: 
 		gamepad = gamepad1;
 		gamepad_id = SDL_JoystickInstanceID(joystick1);
@@ -151,6 +154,34 @@ void Player::logic() {
 
 void Player::handle_events(SDL_Event& event) {
 	state_stack.top()->handle_events(*this, event);
+
+	//If a key was pressed
+	if (event.type == SDL_CONTROLLERBUTTONDOWN) {
+		if (event.cbutton.which == gamepad_id) {
+			switch (event.jbutton.button) {
+			case 8: {
+				bool already_exist = false;
+				for (int i = 0; i < static_objects.size(); i++) {
+					if (static_objects[i]->is_exist()) {
+						if (static_objects[i]->type == HELP) {
+							if (static_objects[i]->parent == this) {
+								already_exist = true;
+								static_objects[i]->exist = false;
+								break;
+							}
+						}
+					}
+				}
+				if (!already_exist) {
+					Help* help;
+					help = new Help(this);
+					static_objects.insert(static_objects.end(), help);
+				}
+				break;
+			}
+			}
+		}
+	}
 };
 
 void Player::render() {

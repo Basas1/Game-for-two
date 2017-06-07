@@ -57,6 +57,7 @@ extern SDL_Texture* player2_fireball_trail_texture;
 
 
 extern SDL_Texture* arrow_texture;
+extern SDL_Texture* help_texture;
 
 extern SDL_Texture* t_ball_opening_texture;
 extern SDL_Texture* t_ball_opened_texture;

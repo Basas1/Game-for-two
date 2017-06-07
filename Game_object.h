@@ -11,6 +11,7 @@ public:
 		TELEPORT,
 		OTHER,
 		PLATFORM,
+		HELP,
 	};
 	int type;
 

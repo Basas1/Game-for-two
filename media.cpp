@@ -58,6 +58,7 @@ SDL_Texture* player2_fireball_texture = NULL;
 SDL_Texture* player2_fireball_trail_texture = NULL;
 
 SDL_Texture* arrow_texture = NULL;
+SDL_Texture* help_texture = NULL;
 SDL_Texture* t_ball_opening_texture = NULL;
 SDL_Texture* t_ball_opened_texture = NULL;
 SDL_Texture* blast_texture = NULL;
@@ -319,6 +320,11 @@ bool load_media() {
 	player2_score_texture = load_texture("Images/player2score.png");
 	digits_texture = load_texture("Images/digits.png");
 
+	help_texture = load_texture("Images/help.png");
+	if (help_texture == NULL) {
+		printf("Failed to load help texture!\n");
+		success = false;
+	}
 	arrow_texture = load_texture("Images/arrow.gif");
 	if (arrow_texture == NULL) {
 		printf("Failed to load arrow texture!\n");

@@ -49,4 +49,10 @@ public:
 	Animated_texture* effect_animation;
 };
 
+class Help : public Static_object {
+public:
+	Help(Game_object* p);
+	Animated_texture* help_t;
+	void render();
+};
 
