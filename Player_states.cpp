@@ -4,6 +4,7 @@
 #include "init.h"
 #include "Enemy.h"
 #include <vector>
+#include <tuple>
 #include "Platform.h"
 #include "Teleport_ball.h"
 
@@ -204,14 +205,45 @@ void Player_states::cast_teleport_ball(Player& p) {
 				}
 			}
 			objects.insert(objects.end(), p.t_ball);
-			p.teleport_cooldown = game_time.get_ticks();
+			//p.teleport_cooldown = game_time.get_ticks();
 		}
 	}
 	else {
-		p.teleport_to_ball();
+		//teleport_to_ball(p);
+		Teleportation* tp_state;
+		tp_state = new Teleportation(p);
+		p.state_stack.push(tp_state);
 		p.t_ball->kill();
 		p.t_ball = NULL;
 	}
+}
+
+std::tuple<double, double> Player_states::teleport_to_ball(Player& p) {
+	double nx = p.t_ball->pos_x, ny = p.t_ball->pos_y;
+	for (int i = 0; i <= p.width / 2; i++) {
+		if (p.check_map_collision(nx + i, ny)) {
+			nx = nx - p.width / 2 + i;
+			break;
+		}
+		if (p.check_map_collision(nx - i, ny)) {
+			nx = nx + p.width / 2 - i;
+			break;
+		}
+	}
+	for (int i = 0; i <= p.height / 2; i++) {
+		if (p.check_map_collision(nx, ny + i)) {
+			ny = ny - p.height / 2 + i;
+			break;
+		}
+		if (p.check_map_collision(nx, ny - i)) {
+			ny = ny + p.height / 2 - i;
+			break;
+		}
+	}
+	double end_x, end_y;
+	end_x = nx - p.width / 2;
+	end_y = ny - p.height / 2;
+	return std::make_tuple(end_x, end_y);
 }
 
 void Player_states::blast_teleport_ball(Player& p) {
@@ -780,5 +812,61 @@ void Hit2::handle_events(Player& p, SDL_Event& event) {
 	}
 }
 
+Teleportation::Teleportation(Player& p) {
+	p.vulnerable = false;
+	start_x = p.pos_x;
+	start_y = p.pos_y;
+	std::tie(dest_x, dest_y) = teleport_to_ball(p);
+	double dist_x = dest_x - start_x;
+	double dist_y = dest_y - start_y;
+	double dist = sqrt(dist_x*dist_x + dist_y*dist_y);
+	//x to y distance ratio
+	double x_part = fabs(dist_x) / (fabs(dist_x) + fabs(dist_y));
+	
+	if (fabs(dist_x) > 0) {
+		if (fabs(dist) < 990) v_x = 18; else v_x = dist / 55;
+	}
+	if (fabs(dist_y) > 0) {
+		if (fabs(dist) < 990) v_y = 18; else v_y = dist / 55;
+	}
+
+	if (fabs(dist_x) == 0) v_x = 0; else {
+		v_x *= (dist_x / fabs(dist_x)) * x_part;
+	}
+	if (fabs(dist_y) == 0) v_y = 0; else {
+		v_y *= (dist_y / fabs(dist_y)) * (1.0 - x_part);
+	}
+	printf("dist=%f;\ndist_x=%f; dist_y=%f;\n",dist, dist_x, dist_y);
+	printf("vel_x=%f; vel_y=%f;\n", v_x, v_y);
+	p.vel_x = v_x;
+	p.vel_y = v_y;
+	dist_x < 0 ? p.flip_right = false : p.flip_right = true;
+}
+
+void Teleportation::logic(Player& p) {
+	double compare_x, compare_y;
+	v_x == 0 ? compare_x = -1 : compare_x = fabs(v_x);
+	v_y == 0 ? compare_y = -1 : compare_y = fabs(v_y);
+
+	if (fabs(p.pos_x - dest_x) > compare_x && fabs(p.pos_y - dest_y) > compare_y && !(v_x == 0 && v_y == 0)) {
+		p.pos_x += p.vel_x;
+		p.pos_y += p.vel_y;
+	}
+	else {
+		p.pos_x = dest_x;
+		p.pos_y = dest_y;
+		p.vulnerable = true;
+		if (fabs(p.vel_x) > p.acceleration) p.vel_x = p.acceleration * (p.vel_x / fabs(p.vel_x));
+		if (fabs(p.vel_y) > p.acceleration) p.vel_y = p.acceleration * (p.vel_y / fabs(p.vel_y));
+		p.hit_animation->reset();
+		p.teleport_cooldown = game_time.get_ticks();
+		p.state_stack.pop();
+	}
+}
+
+void Teleportation::render(Player& p) {
+	p.hit_animation->render(p.pos_x, p.pos_y, p.flip_right);
+	p.hit_animation->next_frame();
+}
 
 

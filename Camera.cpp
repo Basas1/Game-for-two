@@ -53,7 +53,6 @@ void Camera::set_scale_by_distance(double x_dist, double y_dist) {
 	else if (x_scale > max_scale) x_scale = max_scale;
 	if (y_scale < min_scale) y_scale = min_scale;
 	else if (y_scale > max_scale) y_scale = max_scale;
-	printf("%f  %f\n", x_scale, y_scale);
 	x_scale < y_scale ? set_scale(x_scale) : set_scale(y_scale);
 
 }

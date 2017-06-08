@@ -71,7 +71,7 @@ public:
 	bool fireball_casting;
 
 	Teleport_ball* t_ball;
-	void teleport_to_ball();
+	//void teleport_to_ball();
 
 	std::stack<Player_states*> state_stack;
 

@@ -9,23 +9,19 @@
 Enemy::Enemy() {
 	//collidable = true;
 	type = ENEMY;
-	width = 40;
-	height = 100;
+	width = 50;
+	height = 160;
 	pos_x = 2700;
 	pos_y = 1100;
 	flip_right = false;
 
-	stand_animation = new Animated_texture(player_stand_texture, 3, -44, -28);
-	int order1[] = { 0, 1, 2, 1 };
-	stand_animation->set_frame_order(order1, sizeof(order1) / sizeof(int));
+	stand_animation = new Animated_texture(player_stand_texture, 8, -75, -40);
 	stand_animation->set_ticks_per_frame(25);
-	run_animation = new Animated_texture(player_run_texture, 10, -44, -28);
-	jump_animation = new Animated_texture(player_jump_rise_texture, 3, -44, -28);
-	jump_animation->set_frame_order(order1, sizeof(order1) / sizeof(int));
-	jump_animation->set_ticks_per_frame(25);
-	hit_animation = new Animated_texture(player_hit_texture, 4, -44, -28);
-	int order2[] = { 0, 1, 2, 3, 1 };
-	hit_animation->set_frame_order(order2, sizeof(order2) / sizeof(int));
+	run_animation = new Animated_texture(player_run_texture, 13, -75, -40);
+	run_animation->set_ticks_per_frame(13);
+	jump_animation = new Animated_texture(player_jump_rise_texture, 4, -75, -40);
+	jump_animation = new Animated_texture(player_jump_fall_texture, 4, -75, -40);
+	hit_animation = new Animated_texture(player_hit_texture, 5, -75, -40);
 
 	collision_box = { (int)pos_x, (int)pos_y, width, height };
 

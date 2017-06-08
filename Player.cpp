@@ -231,39 +231,11 @@ void Player::render() {
 void Player::reduce_cooldowns() {
 	int time = game_time.get_ticks();
 	if (time - fireball_cooldown >= 750) fireball_cooldown = 0;
-	if (time - teleport_cooldown >= 500) teleport_cooldown = 0;
+	if (time - teleport_cooldown >= 000) teleport_cooldown = 0;
 	if (time - hit_cooldown >= 1000) hit_cooldown = 0;
 	if (time - unkill_cooldown >= 2000) {
 		unkill_cooldown = 0;
 	}
-}
-
-void Player::teleport_to_ball() {
-	double nx = t_ball->pos_x, ny = t_ball->pos_y;
-
-	for (int i = 0; i <= width / 2; i++) {
-		if (check_map_collision(nx + i, ny)) {
-			nx = nx - width / 2 + i;
-			break;
-		}
-		if (check_map_collision(nx - i, ny)) {
-			nx = nx + width / 2 - i;
-			break;
-		}
-	}
-	for (int i = 0; i <= height / 2; i++) {
-		if (check_map_collision(nx, ny + i)) {
-			ny = ny - height / 2 + i;
-			break;
-		}
-		if (check_map_collision(nx, ny - i)) {
-			ny = ny + height / 2 - i;
-			break;
-		}
-	}
-
-	pos_x = nx - width / 2;
-	pos_y = ny - height / 2;
 }
 
 void Player::toggle_texture_color() {
