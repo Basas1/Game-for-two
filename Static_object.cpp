@@ -153,4 +153,33 @@ void Help::render() {
 	help_t->render(parent->pos_x, parent->pos_y);
 }
 
+Teleport_trail::Teleport_trail(int x, int y, double dest_x, double dest_y, Game_object* p) : Static_object() {
+	parent = p;
+	pos_x = x;
+	pos_y = y;
+	angle = 0.0;
+	tp_trail = new Animated_texture(tp_trail_texture, 1);
+	if (parent == player1) {
+		tp_trail->set_color(50,50,255);
+	}
+	else {
+		tp_trail->set_color(255, 50, 50);
+	}
+	tp_trail->set_alpha(80);
+}
+
+void Teleport_trail::render() {
+	tp_trail->render(pos_x + width / 2 - 125, pos_y + height / 2 - 125, true, angle);
+	tp_trail->next_frame();
+	if (tp_trail->get_replay_count() > 2) {
+		exist = false;
+	}
+}
+
+Teleport_trail::~Teleport_trail() {
+	delete tp_trail;
+	tp_trail = NULL;
+}
+
+
 

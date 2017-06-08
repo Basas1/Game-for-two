@@ -814,6 +814,9 @@ void Hit2::handle_events(Player& p, SDL_Event& event) {
 
 Teleportation::Teleportation(Player& p) {
 	p.vulnerable = false;
+	horizontal = false;
+	p.jump_animation_rise->set_alpha(180);
+	p.hit_animation->set_alpha(180);
 	start_x = p.pos_x;
 	start_y = p.pos_y;
 	std::tie(dest_x, dest_y) = teleport_to_ball(p);
@@ -836,11 +839,13 @@ Teleportation::Teleportation(Player& p) {
 	if (fabs(dist_y) == 0) v_y = 0; else {
 		v_y *= (dist_y / fabs(dist_y)) * (1.0 - x_part);
 	}
-	printf("dist=%f;\ndist_x=%f; dist_y=%f;\n",dist, dist_x, dist_y);
-	printf("vel_x=%f; vel_y=%f;\n", v_x, v_y);
+	//printf("dist=%f;\ndist_x=%f; dist_y=%f;\n",dist, dist_x, dist_y);
+	//printf("vel_x=%f; vel_y=%f;\n", v_x, v_y);
+	if (fabs(v_y) < 10) horizontal = true;
 	p.vel_x = v_x;
 	p.vel_y = v_y;
-	dist_x < 0 ? p.flip_right = false : p.flip_right = true;
+	if (dist_x < 0) p.flip_right = false;
+	if (dist_x > 0) p.flip_right = true;
 }
 
 void Teleportation::logic(Player& p) {
@@ -851,6 +856,13 @@ void Teleportation::logic(Player& p) {
 	if (fabs(p.pos_x - dest_x) > compare_x && fabs(p.pos_y - dest_y) > compare_y && !(v_x == 0 && v_y == 0)) {
 		p.pos_x += p.vel_x;
 		p.pos_y += p.vel_y;
+
+		Teleport_trail* trail;
+		trail = new Teleport_trail(p.pos_x, p.pos_y, dest_x, dest_y, &p);
+		//objects.insert(objects.end(), trail);
+		static_objects.insert(static_objects.end(), trail);
+
+
 	}
 	else {
 		p.pos_x = dest_x;
@@ -858,15 +870,24 @@ void Teleportation::logic(Player& p) {
 		p.vulnerable = true;
 		if (fabs(p.vel_x) > p.acceleration) p.vel_x = p.acceleration * (p.vel_x / fabs(p.vel_x));
 		if (fabs(p.vel_y) > p.acceleration) p.vel_y = p.acceleration * (p.vel_y / fabs(p.vel_y));
+		p.jump_animation_rise->reset();
 		p.hit_animation->reset();
+		p.jump_animation_rise->set_alpha(255);
+		p.hit_animation->set_alpha(255);
 		p.teleport_cooldown = game_time.get_ticks();
 		p.state_stack.pop();
 	}
 }
 
 void Teleportation::render(Player& p) {
-	p.hit_animation->render(p.pos_x, p.pos_y, p.flip_right);
-	p.hit_animation->next_frame();
+	if (!horizontal) {
+		p.jump_animation_rise->render(p.pos_x, p.pos_y, p.flip_right);
+		p.jump_animation_rise->next_frame();
+	}
+	else {
+		p.hit_animation->render(p.pos_x, p.pos_y, p.flip_right);
+		p.hit_animation->next_frame();
+	}
 }
 
 

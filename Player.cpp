@@ -12,8 +12,8 @@
 Player::Player(int x, int y, int control) : Movable_object() {
 	skip = 0;
 	type = PLAYER;
-	pos_x = 1305;
-	pos_y = 75;
+	pos_x = 630;
+	pos_y = 606;
 	score = 0;
 	width = 50;
 	height = 160;
@@ -103,8 +103,11 @@ bool Player::kill() {
 				t_ball = NULL;
 			}
 		}
-		pos_x = 1305;
-		pos_y = 75;
+		pos_x = 630;
+		pos_y = 606;
+		vel_x = 0;
+		vel_y = 0;
+		flip_right = true;
 		player2->score += 2500;
 		unkill_cooldown = game_time.get_ticks();
 		return true;

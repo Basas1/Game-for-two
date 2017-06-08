@@ -41,6 +41,15 @@ public:
 	Animated_texture* f_trail;
 };
 
+class Teleport_trail : public Static_object {
+public:
+	Teleport_trail(int x, int y, double dest_x, double dest_y, Game_object* p);
+	~Teleport_trail();
+	void render();
+	Animated_texture* tp_trail;
+	double angle;
+};
+
 class Jump_effect : public Static_object {
 public:
 	Jump_effect(int x, int y, Animated_texture* animation);

@@ -85,4 +85,5 @@ public:
 	double start_x, start_y;
 	double dest_x, dest_y;
 	double v_x, v_y;
+	bool horizontal;
 };

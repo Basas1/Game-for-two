@@ -7,8 +7,8 @@
 
 
 Player2::Player2(int x, int y, int control) : Player(x, y, control) {
-	pos_x = 2600;
-	pos_y = 75;
+	pos_x = 3158;
+	pos_y = 606;
 	flip_right = false;
 	color_r = 255;
 	color_g = 50;
@@ -59,8 +59,11 @@ bool Player2::kill() {
 				t_ball = NULL;
 			}
 		}
-		pos_x = 2600;
-		pos_y = 75;
+		pos_x = 3158;
+		pos_y = 606;
+		vel_x = 0;
+		vel_y = 0;
+		flip_right = false;
 		player1->score += 2500;
 		unkill_cooldown = game_time.get_ticks();
 		return true;
