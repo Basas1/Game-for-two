@@ -81,7 +81,7 @@ Player::Player(int x, int y, int control) : Movable_object() {
 	texture_color_toggled = false;
 
 	arrow = new Animated_texture(arrow_texture, 1);
-	arrow->set_ñolor(color_r, color_g, color_b);
+	arrow->set_color(color_r, color_g, color_b);
 
 	mark = new Animated_texture(player_mark_texture, 1);
 
@@ -231,7 +231,7 @@ void Player::render() {
 void Player::reduce_cooldowns() {
 	int time = game_time.get_ticks();
 	if (time - fireball_cooldown >= 750) fireball_cooldown = 0;
-	if (time - teleport_cooldown >= 000) teleport_cooldown = 0;
+	if (time - teleport_cooldown >= 1000) teleport_cooldown = 0;
 	if (time - hit_cooldown >= 1000) hit_cooldown = 0;
 	if (time - unkill_cooldown >= 2000) {
 		unkill_cooldown = 0;
@@ -244,7 +244,7 @@ void Player::toggle_texture_color() {
 			if (player_textures[i] != NULL) {
 				Animated_texture* temp;
 				temp = *player_textures[i];
-				temp->set_ñolor(color_r, color_g, color_b);
+				temp->set_alpha(125);
 			}
 		}
 		texture_color_toggled = true;
@@ -254,7 +254,7 @@ void Player::toggle_texture_color() {
 			if (player_textures[i] != NULL) {
 				Animated_texture* temp;
 				temp = *player_textures[i];
-				temp->set_ñolor(255, 255, 255);
+				temp->set_alpha(255);
 			}
 		}
 		texture_color_toggled = false;

@@ -17,7 +17,10 @@ public:
 	void change_texture(SDL_Texture* change_to);
 
 	//Set color modulation
-	void set_ñolor(Uint8 red, Uint8 green, Uint8 blue);
+	void set_color(Uint8 red, Uint8 green, Uint8 blue);
+
+	//Set alpha mod
+	void set_alpha(Uint8 alpha);
 
 	//Change texture width
 	void set_width(int w);

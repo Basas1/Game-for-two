@@ -27,7 +27,7 @@ Player2::Player2(int x, int y, int control) : Player(x, y, control) {
 	fireball_cast_animation2 = new Animated_texture(player2_cast_fireball_texture2, 9, -26, 30);
 	fireball_cast_animation2->set_ticks_per_frame(2);
 	//arrow = new Animated_texture(arrow_texture, 1);
-	arrow->set_ñolor(color_r, color_g, color_b);
+	arrow->set_color(color_r, color_g, color_b);
 	mark = new Animated_texture(player2_mark_texture, 1);
 
 	collision_box = { (int)pos_x, (int)pos_y, width, height };

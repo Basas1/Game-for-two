@@ -55,9 +55,13 @@ void Texture::change_texture(SDL_Texture* change_to) {
 	original_texture = copy_texture;
 }
 
-void Texture::set_ñolor(Uint8 red, Uint8 green, Uint8 blue) {
+void Texture::set_color(Uint8 red, Uint8 green, Uint8 blue) {
 	//Modulate texture rgb
 	SDL_SetTextureColorMod(original_texture, red, green, blue);
+}
+
+void Texture::set_alpha(Uint8 alpha) {
+	SDL_SetTextureAlphaMod(original_texture, alpha);
 }
 
 void Texture::set_flip(SDL_RendererFlip change) {

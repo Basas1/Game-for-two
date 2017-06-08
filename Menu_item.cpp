@@ -23,11 +23,11 @@ void Menu_item::toggle() {
 	if (choosable) {
 		if (!choosen) {
 			choosen = true;
-			texture->set_ñolor(128, 255, 255);
+			texture->set_color(128, 255, 255);
 		}
 		else {
 			choosen = false;
-			texture->set_ñolor(255, 255, 255);
+			texture->set_color(255, 255, 255);
 		}
 	}
 }
