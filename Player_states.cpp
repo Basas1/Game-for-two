@@ -859,12 +859,17 @@ void Teleportation::logic(Player& p) {
 	v_y == 0 ? compare_y = -1 : compare_y = fabs(v_y);
 
 	if (fabs(p.pos_x - dest_x) > compare_x && fabs(p.pos_y - dest_y) > compare_y && !(v_x == 0 && v_y == 0)) {
+		Teleport_trail* trail;
+		trail = new Teleport_trail(p.pos_x - 6 * v_x + v_x/2, p.pos_y - 6 * v_y + v_y / 2, dest_x, dest_y, &p);
+		static_objects.insert(static_objects.end(), trail);
+
+
 		p.pos_x += p.vel_x;
 		p.pos_y += p.vel_y;
 
-		Teleport_trail* trail;
-		trail = new Teleport_trail(p.pos_x, p.pos_y, dest_x, dest_y, &p);
-		//static_objects.insert(static_objects.end(), trail);
+		//Teleport_trail* trail;
+		trail = new Teleport_trail(p.pos_x - 6*v_x, p.pos_y - 6*v_y, dest_x, dest_y, &p);
+		static_objects.insert(static_objects.end(), trail);
 
 
 	}

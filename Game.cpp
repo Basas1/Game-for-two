@@ -185,20 +185,12 @@ void Game::render() {
 			static_objects[i]->render();
 		}
 	}
-	////Render Player and other objects
+	//Render Player and other objects
 	for (int i = 0; i < objects.size(); i++) {
 		if (objects[i]->is_exist()) {
 			objects[i]->render();
 		}
 	}
-	//for (int i = objects.size() - 1; i > 1; i--) {
-	//	if (objects[i]->is_exist()) {
-	//		objects[i]->render();
-	//	}
-	//}
-	//player1->render();
-	//player2->render();
-
 
 	//Render score
 	int p1_score, p2_score;

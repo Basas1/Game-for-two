@@ -26,27 +26,12 @@ Player2::Player2(int x, int y, int control) : Player(x, y, control) {
 	fireball_cast_animation1 = new Animated_texture(player2_cast_fireball_texture1, 3, -60, 30);
 	fireball_cast_animation2 = new Animated_texture(player2_cast_fireball_texture2, 9, -26, 30);
 	fireball_cast_animation2->set_ticks_per_frame(2);
-	//arrow = new Animated_texture(arrow_texture, 1);
 	arrow->set_color(color_r, color_g, color_b);
+	tp_trail->set_color(color_r, color_g, color_b);
+	tp_line->set_color(color_r, color_g, color_b);
 	mark = new Animated_texture(player2_mark_texture, 1);
 
 	collision_box = { (int)pos_x, (int)pos_y, width, height };
-
-
-	//type = PLAYER;
-	//width = 50;
-	//height = 160;
-	//score = 0;
-	////jump_vel = 7;
-	//fireball_cooldown = 0;
-	//hit_cooldown = 0;
-	//unkill_cooldown = 0;
-	//time_on_platform = -1;
-	//on_platform = false;
-	//acceleration = 3;
-	//state = new Stand;
-	//state_stack.push(state);
-	//t_ball = NULL;
 }
 
 

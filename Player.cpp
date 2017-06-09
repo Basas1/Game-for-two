@@ -82,6 +82,12 @@ Player::Player(int x, int y, int control) : Movable_object() {
 
 	arrow = new Animated_texture(arrow_texture, 1);
 	arrow->set_color(color_r, color_g, color_b);
+	tp_trail = new Animated_texture(tp_trail_texture, 1);
+	tp_line = new Animated_texture(tp_trail2_texture, 1);
+	tp_trail->set_color(color_r, color_g, color_b);
+	tp_line->set_color(color_r, color_g, color_b);
+	tp_line->set_alpha(20);
+
 
 	mark = new Animated_texture(player_mark_texture, 1);
 
@@ -220,7 +226,7 @@ void Player::render() {
 
 	}
 
-	mark->render(pos_x, pos_y - mark->height * 3 / 2 );
+	//mark->render(pos_x, pos_y - mark->height * 3 / 2 );
 
 	////Hit box rectangle
 	//double scale = camera->get_scale();
@@ -234,9 +240,9 @@ void Player::render() {
 void Player::reduce_cooldowns() {
 	int time = game_time.get_ticks();
 	if (time - fireball_cooldown >= 750) fireball_cooldown = 0;
-	if (time - teleport_cooldown >= 1000) teleport_cooldown = 0;
+	if (time - teleport_cooldown >= 500) teleport_cooldown = 0;
 	if (time - hit_cooldown >= 1000) hit_cooldown = 0;
-	if (time - unkill_cooldown >= 2000) {
+	if (time - unkill_cooldown >= 1000) {
 		unkill_cooldown = 0;
 	}
 }

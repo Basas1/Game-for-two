@@ -3,6 +3,7 @@
 #include "Texture.h"
 #include "Game_object.h"
 #include "Animated_texture.h"
+#include "Player.h"
 
 class Static_object : public Game_object {
 public:
@@ -43,19 +44,21 @@ public:
 
 class Teleport_trail : public Static_object {
 public:
-	Teleport_trail(int x, int y, double dest_x, double dest_y, Game_object* p);
-	~Teleport_trail();
+	Teleport_trail(int x, int y, double dest_x, double dest_y, Player* p);
+	~Teleport_trail() {};
+	Player* father;
 	void render();
-	Animated_texture* tp_trail;
+	double alpha;
+	double destx, desty;
 	double angle;
 };
 
 class Teleport_line : public Static_object {
 public:
-	Teleport_line(int x, int y, double dest_x, double dest_y, Game_object* p);
-	~Teleport_line();
+	Teleport_line(int x, int y, double dest_x, double dest_y, Player* p);
+	~Teleport_line() {};
 	void render();
-	Animated_texture* tp_line;
+	Player* father;
 	double angle;
 	double vx, vy;
 	double destx, desty;

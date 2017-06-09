@@ -57,6 +57,8 @@ public:
 	Animated_texture* dive_animation;
 	Animated_texture* dive_end_animation;
 	Animated_texture* arrow;
+	Animated_texture* tp_trail;
+	Animated_texture* tp_line;
 	Animated_texture* mark;
 
 	Animated_texture** player_textures[20];

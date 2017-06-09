@@ -155,20 +155,15 @@ void Help::render() {
 	help_t->render(parent->pos_x, parent->pos_y);
 }
 
-Teleport_trail::Teleport_trail(int x, int y, double dest_x, double dest_y, Game_object* p) : Static_object() {
+Teleport_trail::Teleport_trail(int x, int y, double dest_x, double dest_y, Player* p) : Static_object() {
 	parent = p;
+	father = p;
 	pos_x = x;
 	pos_y = y;
+	destx = dest_x;
+	desty = dest_y;
 	angle = 0.0;
-	tp_trail = new Animated_texture(tp_trail_texture, 1);
-	if (parent == player1) {
-		tp_trail->set_color(50,50,255);
-	}
-	else {
-		tp_trail->set_color(255, 50, 50);
-	}
-	tp_trail->set_alpha(20);
-
+	alpha = 20;
 	double dist_y, dist_x;
 	double param, result;
 	dist_x = dest_x - x;
@@ -183,35 +178,23 @@ Teleport_trail::Teleport_trail(int x, int y, double dest_x, double dest_y, Game_
 }
 
 void Teleport_trail::render() {
-	tp_trail->render(pos_x + width / 2 - 125, pos_y + height / 2 - 62, true, angle);
-	tp_trail->next_frame();
-	if (tp_trail->get_replay_count() > 2) {
-		exist = false;
-	}
-}
-
-Teleport_trail::~Teleport_trail() {
-	delete tp_trail;
-	tp_trail = NULL;
+	father->tp_trail->set_alpha((int)alpha);
+	alpha -= 0.7;
+	father->tp_trail->render(pos_x - 100, pos_y - 50, true, angle);
+	father->tp_trail->next_frame();
+	
+	if (alpha <= 0) exist = false;
 }
 
 
-
-Teleport_line::Teleport_line(int x, int y, double dest_x, double dest_y, Game_object* p) : Static_object() {
+Teleport_line::Teleport_line(int x, int y, double dest_x, double dest_y, Player* p) : Static_object() {
 	parent = p;
+	father = p;
 	pos_x = x;
 	pos_y = y;
 	destx = dest_x;
 	desty = dest_y;
 	angle = 0.0;
-	tp_line = new Animated_texture(tp_trail2_texture, 1);
-	if (parent == player1) {
-		tp_line->set_color(50, 50, 255);
-	}
-	else {
-		tp_line->set_color(255, 50, 50);
-	}
-	tp_line->set_alpha(20); 
 	double dist_y, dist_x;
 	double param, result;
 	dist_x = dest_x - x;
@@ -230,8 +213,7 @@ Teleport_line::Teleport_line(int x, int y, double dest_x, double dest_y, Game_ob
 void Teleport_line::render() {
 	double i = pos_x, j = pos_y;
 	while (fabs(destx-i) > 100 || fabs(desty - j) > 100) {
-		printf("#1\n");
-		tp_line->render(i - 100, j - 50, true, angle);
+		father->tp_line->render(i - 100, j - 50, true, angle);
 		i += vx;
 		j += vy;
 	}
@@ -240,10 +222,4 @@ void Teleport_line::render() {
 		exist = false;
 	}
 }
-
-Teleport_line::~Teleport_line() {
-	delete tp_line;
-	tp_line = NULL;
-}
-
 
