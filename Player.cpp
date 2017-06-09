@@ -27,7 +27,7 @@ Player::Player(int x, int y, int control) : Movable_object() {
 	time_on_platform = -1;
 	on_platform = false;
 	color_r = 50;
-	color_g = 50;
+	color_g = 100;
 	color_b = 255;
 
 	controller = control;
@@ -242,7 +242,7 @@ void Player::reduce_cooldowns() {
 	if (time - fireball_cooldown >= 750) fireball_cooldown = 0;
 	if (time - teleport_cooldown >= 500) teleport_cooldown = 0;
 	if (time - hit_cooldown >= 1000) hit_cooldown = 0;
-	if (time - unkill_cooldown >= 1000) {
+	if (time - unkill_cooldown >= 900) {
 		unkill_cooldown = 0;
 	}
 }

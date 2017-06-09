@@ -816,6 +816,7 @@ Teleportation::Teleportation(Player& p) {
 	horizontal = false;
 	p.jump_animation_rise->set_alpha(180);
 	p.hit_animation->set_alpha(180);
+	p.hit_animation->set_color(p.color_r, p.color_g, p.color_b);
 	start_x = p.pos_x;
 	start_y = p.pos_y;
 	std::tie(dest_x, dest_y) = teleport_to_ball(p);
@@ -882,6 +883,7 @@ void Teleportation::logic(Player& p) {
 		p.hit_animation->reset();
 		p.jump_animation_rise->set_alpha(255);
 		p.hit_animation->set_alpha(255);
+		p.hit_animation->set_color(255, 255, 255);
 		p.teleport_cooldown = game_time.get_ticks();
 		p.state_stack.pop();
 	}

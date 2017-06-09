@@ -73,6 +73,9 @@ extern SDL_Texture* digits_texture;
 extern SDL_Texture* player1_score_texture;
 extern SDL_Texture* player2_score_texture;
 
+extern SDL_Texture* platform_texture;
+extern SDL_Texture* map_texture;
+
 
 //Map surface
 extern SDL_Surface* map_surface;

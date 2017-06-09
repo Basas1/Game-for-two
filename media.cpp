@@ -73,8 +73,8 @@ SDL_Texture* digits_texture = NULL;
 SDL_Texture* player1_score_texture = NULL;
 SDL_Texture* player2_score_texture = NULL;
 
-
-
+SDL_Texture* platform_texture = NULL;
+SDL_Texture* map_texture = NULL;
 
 //Map surface 
 SDL_Surface* map_surface = NULL;
@@ -104,9 +104,13 @@ bool load_media() {
 	}
 
 	//Loading other textures
-	map = load_texture("Images/map_box_transparent.png");
-	//map = load_texture("Images/map_box.bmp");
-	if (map == NULL) {
+	map_texture = load_texture("Images/map_box_transparent.gif");
+	if (map_texture == NULL) {
+		printf("Failed to load map texture!\n");
+		success = false;
+	}
+	platform_texture = load_texture("Images/flag.gif");
+	if (platform_texture == NULL) {
 		printf("Failed to load map texture!\n");
 		success = false;
 	}

@@ -12,7 +12,7 @@ Game::Game() {
 	state = STATE_GAME;
 	game_time.start();
 	//Load the background
-	background = map;
+	background = map_texture;
 	background2 = background_texture;
  
 	//Create player object

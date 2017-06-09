@@ -53,12 +53,14 @@ Capture_platform::Capture_platform(int x, int y, int w, int h) : Static_object()
 	width = w;
 	height = h;
 	collision_box = { (int)pos_x, (int)pos_y, width, height };
+	p_texture = new Animated_texture(platform_texture, 6, 0, 0, 1, 6);
 }
 
 void Capture_platform::logic() {
 	int player_index = -1;
 	int i;
 	bool one_player = false;
+	p_texture->set_color(255, 255, 255);
 
 	std::vector<Game_object*> collision_list;
 	collision_list = get_collisions();
@@ -91,12 +93,22 @@ void Capture_platform::logic() {
 				//printf("time=%d;\ttime on platform=%d;\n", time, collision_list[player_index]->time_on_platform);
 				if (time - collision_list[player_index]->time_on_platform >= 2000) {
 					collision_list[player_index]->score += 1;
+					if (collision_list[player_index] == player1) {
+						p_texture->set_color(player1->color_r, player1->color_g, player1->color_b);
+					}
+					else if (collision_list[player_index] == player2) {
+						p_texture->set_color(player2->color_r, player2->color_g, player2->color_b);
+					}
 				}
 			}
 		}
 	}
 }
 
+void Capture_platform::render() {
+	p_texture->render(1313, 1188);
+	p_texture->next_frame();
+}
 
 
 Fireball_trail::Fireball_trail(int x, int y, Game_object* p) : Static_object() {
