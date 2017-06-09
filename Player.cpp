@@ -61,10 +61,10 @@ Player::Player(int x, int y, int control) : Movable_object() {
 	player_textures[t_num++] = &jump_animation_rise;
 	jump_animation_fall = new Animated_texture(player_jump_fall_texture, 4, -75, -40);
 	player_textures[t_num++] = &jump_animation_fall;
-	jump_effect_animation1 = new Animated_texture(player_jump_effect_texture1, 5, -75, 120);
+	jump_effect_animation1 = new Animated_texture(player_jump_effect_texture1, 6, -75, 120);
 	jump_effect_animation1->set_ticks_per_frame(10);
 	player_textures[t_num++] = &jump_effect_animation1;
-	jump_effect_animation2 = new Animated_texture(player_jump_effect_texture2, 4, -75, 120);
+	jump_effect_animation2 = new Animated_texture(player_jump_effect_texture2, 5, -75, 120);
 	jump_effect_animation2->set_ticks_per_frame(10);
 	player_textures[t_num++] = &jump_effect_animation2;
 	hit_animation = new Animated_texture(player_hit_texture, 5, -75, -40);
