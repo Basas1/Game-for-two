@@ -109,13 +109,13 @@ bool Player::kill() {
 				t_ball = NULL;
 			}
 		}
-		pos_x = 630;
-		pos_y = 606;
-		vel_x = 0;
-		vel_y = 0;
+		while (state_stack.size() > 1) {
+			state_stack.pop();
+		}
+		state = new Respawn(*this, 630, 606);
+		state_stack.push(state);
 		flip_right = true;
 		player2->score += 2500;
-		unkill_cooldown = game_time.get_ticks();
 		return true;
 	}
 	return false;

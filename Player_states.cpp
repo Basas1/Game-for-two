@@ -209,7 +209,6 @@ void Player_states::cast_teleport_ball(Player& p) {
 		}
 	}
 	else {
-		//teleport_to_ball(p);
 		Teleportation* tp_state;
 		tp_state = new Teleportation(p);
 		p.state_stack.push(tp_state);
@@ -896,6 +895,41 @@ void Teleportation::render(Player& p) {
 	else {
 		p.hit_animation->render(p.pos_x, p.pos_y, p.flip_right);
 		p.hit_animation->next_frame();
+	}
+}
+
+
+Respawn::Respawn(Player& p, double spawn_x, double spawn_y) {
+	p.vulnerable = false;
+	start_x = p.pos_x;
+	start_y = p.pos_y;
+	dest_x = spawn_x;
+	dest_y = spawn_y;
+	double dist_x = dest_x - start_x;
+	double dist_y = dest_y - start_y;
+	v_x = dist_x / 150;
+	v_y = dist_y / 150;
+	p.vel_x = v_x;
+	p.vel_y = v_y;
+}
+
+void Respawn::logic(Player& p) {
+	double compare_x, compare_y;
+	v_x == 0 ? compare_x = -1 : compare_x = fabs(v_x);
+	v_y == 0 ? compare_y = -1 : compare_y = fabs(v_y);
+
+	if (fabs(p.pos_x - dest_x) > compare_x && fabs(p.pos_y - dest_y) > compare_y && !(v_x == 0 && v_y == 0)) {
+		p.pos_x += p.vel_x;
+		p.pos_y += p.vel_y;
+	}
+	else {
+		p.pos_x = dest_x;
+		p.pos_y = dest_y;
+		p.vulnerable = true;
+		p.vel_x = 0;
+		p.vel_y = 0;
+		p.unkill_cooldown = game_time.get_ticks();
+		p.state_stack.pop();
 	}
 }
 

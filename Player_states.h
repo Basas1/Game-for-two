@@ -87,3 +87,14 @@ public:
 	double v_x, v_y;
 	bool horizontal;
 };
+
+class Respawn : public Player_states {
+public:
+	Respawn(Player& p, double spawn_x, double spawn_y);
+	void handle_events(Player& p, SDL_Event& event) {};
+	void logic(Player& p);
+	void render(Player& p) {};
+	double start_x, start_y;
+	double dest_x, dest_y;
+	double v_x, v_y;
+};
