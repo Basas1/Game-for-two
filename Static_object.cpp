@@ -2,6 +2,8 @@
 #include "Static_object.h"
 #include "media.h"
 
+#define PI 3.14159265
+
 
 Blast::Blast(int x, int y) : Static_object() {
 	blast_t = new Animated_texture(blast_texture, 4);
@@ -165,11 +167,23 @@ Teleport_trail::Teleport_trail(int x, int y, double dest_x, double dest_y, Game_
 	else {
 		tp_trail->set_color(255, 50, 50);
 	}
-	tp_trail->set_alpha(80);
+	tp_trail->set_alpha(20);
+
+	double dist_y, dist_x;
+	double param, result;
+	dist_x = dest_x - x;
+	dist_y = dest_y - y;
+	param = dist_y / dist_x;
+	result = atan(param) * 180 / PI;
+	if (dist_x < 0) {
+		result += 180;
+	}
+	angle = result;
+
 }
 
 void Teleport_trail::render() {
-	tp_trail->render(pos_x + width / 2 - 125, pos_y + height / 2 - 125, true, angle);
+	tp_trail->render(pos_x + width / 2 - 125, pos_y + height / 2 - 62, true, angle);
 	tp_trail->next_frame();
 	if (tp_trail->get_replay_count() > 2) {
 		exist = false;
@@ -181,5 +195,55 @@ Teleport_trail::~Teleport_trail() {
 	tp_trail = NULL;
 }
 
+
+
+Teleport_line::Teleport_line(int x, int y, double dest_x, double dest_y, Game_object* p) : Static_object() {
+	parent = p;
+	pos_x = x;
+	pos_y = y;
+	destx = dest_x;
+	desty = dest_y;
+	angle = 0.0;
+	tp_line = new Animated_texture(tp_trail2_texture, 1);
+	if (parent == player1) {
+		tp_line->set_color(50, 50, 255);
+	}
+	else {
+		tp_line->set_color(255, 50, 50);
+	}
+	tp_line->set_alpha(20); 
+	double dist_y, dist_x;
+	double param, result;
+	dist_x = dest_x - x;
+	dist_y = dest_y - y;
+	param = dist_y / dist_x;
+	result = atan(param) * 180 / PI;
+	if (dist_x < 0) {
+		result += 180;
+	}
+	angle = result;
+	vx = (dest_x - x) / 40;
+	vy = (dest_y - y) / 40;
+	
+}
+
+void Teleport_line::render() {
+	double i = pos_x, j = pos_y;
+	while (fabs(destx-i) > 100 || fabs(desty - j) > 100) {
+		printf("#1\n");
+		tp_line->render(i - 100, j - 50, true, angle);
+		i += vx;
+		j += vy;
+	}
+
+	if ((destx - 100 < parent->pos_x && parent->pos_x < destx + 100) && (desty - 100 < parent->pos_y && parent->pos_y< desty + 100)) {
+		exist = false;
+	}
+}
+
+Teleport_line::~Teleport_line() {
+	delete tp_line;
+	tp_line = NULL;
+}
 
 

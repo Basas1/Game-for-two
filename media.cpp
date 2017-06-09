@@ -62,6 +62,7 @@ SDL_Texture* help_texture = NULL;
 SDL_Texture* t_ball_opening_texture = NULL;
 SDL_Texture* t_ball_opened_texture = NULL;
 SDL_Texture* tp_trail_texture = NULL;
+SDL_Texture* tp_trail2_texture = NULL;
 SDL_Texture* blast_texture = NULL;
 //Enemy1 textures
 SDL_Texture* enemy_stand_texture = NULL;
@@ -348,6 +349,11 @@ bool load_media() {
 	}
 	tp_trail_texture = load_texture("Images/tp_trail.png");
 	if (tp_trail_texture == NULL) {
+		printf("Failed to load teleport texture!\n");
+		success = false;
+	}
+	tp_trail2_texture = load_texture("Images/tp_trail2.png");
+	if (tp_trail2_texture == NULL) {
 		printf("Failed to load teleport texture!\n");
 		success = false;
 	}

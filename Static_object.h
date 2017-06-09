@@ -50,6 +50,17 @@ public:
 	double angle;
 };
 
+class Teleport_line : public Static_object {
+public:
+	Teleport_line(int x, int y, double dest_x, double dest_y, Game_object* p);
+	~Teleport_line();
+	void render();
+	Animated_texture* tp_line;
+	double angle;
+	double vx, vy;
+	double destx, desty;
+};
+
 class Jump_effect : public Static_object {
 public:
 	Jump_effect(int x, int y, Animated_texture* animation);

@@ -846,6 +846,11 @@ Teleportation::Teleportation(Player& p) {
 	p.vel_y = v_y;
 	if (dist_x < 0) p.flip_right = false;
 	if (dist_x > 0) p.flip_right = true;
+
+	Teleport_line* line;
+	line = new Teleport_line(p.pos_x, p.pos_y, dest_x, dest_y, &p);
+	static_objects.insert(static_objects.end(), line);
+
 }
 
 void Teleportation::logic(Player& p) {
@@ -859,8 +864,7 @@ void Teleportation::logic(Player& p) {
 
 		Teleport_trail* trail;
 		trail = new Teleport_trail(p.pos_x, p.pos_y, dest_x, dest_y, &p);
-		//objects.insert(objects.end(), trail);
-		static_objects.insert(static_objects.end(), trail);
+		//static_objects.insert(static_objects.end(), trail);
 
 
 	}
