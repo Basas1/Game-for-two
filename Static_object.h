@@ -62,9 +62,11 @@ public:
 	void render();
 	Player* father;
 	double angle;
+	double alpha;
 	double vx, vy;
 	double destx, desty;
-	bool time_to_die;
+	int time_to_die;
+	bool its_time;
 };
 
 class Jump_effect : public Static_object {

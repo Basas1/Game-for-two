@@ -200,7 +200,8 @@ void Teleport_trail::render() {
 
 
 Teleport_line::Teleport_line(int x, int y, double dest_x, double dest_y, Player* p) : Static_object() {
-	time_to_die = false;
+	time_to_die = 40;
+	its_time = false;
 	parent = p;
 	father = p;
 	pos_x = x;
@@ -218,10 +219,10 @@ Teleport_line::Teleport_line(int x, int y, double dest_x, double dest_y, Player*
 		result += 180;
 	}
 	angle = result;
-	father->tp_line->set_alpha(20);
+	alpha = 20;
+	father->tp_line->set_alpha(alpha);
 	vx = (dest_x - x) / 40;
-	vy = (dest_y - y) / 40;
-	
+	vy = (dest_y - y) / 40;	
 }
 
 void Teleport_line::render() {
@@ -232,11 +233,13 @@ void Teleport_line::render() {
 		j += vy;
 	}
 	if ((destx - 100 < parent->pos_x && parent->pos_x < destx + 100) && (desty - 100 < parent->pos_y && parent->pos_y< desty + 100)) {
-		if (!time_to_die) {
-			time_to_die = true;
-			father->tp_line->set_alpha(10);
-		}
-		else {
+		its_time = true;
+	}
+	if (its_time) {
+		if (time_to_die-- > 0) {
+			father->tp_line->set_alpha(alpha);
+			if (alpha > 1) alpha -= 0.5;
+		} else {
 			exist = false;
 		}
 	}
