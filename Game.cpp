@@ -202,8 +202,10 @@ void Game::render() {
 
 	score1->render(25, 25);
 	render_number(240, 20, p1_score);
-	score2->render(SCREEN_WIDTH - 315,25);
-	render_number(SCREEN_WIDTH - 95, 20, p2_score);
+	int indent;
+	p2_score < 1000 ? indent = 0 : indent = 20;
+	score2->render(SCREEN_WIDTH - 315 - indent, 25);
+	render_number(SCREEN_WIDTH - 95 - indent, 20, p2_score);
 
 }
 

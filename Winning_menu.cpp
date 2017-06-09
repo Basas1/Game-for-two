@@ -32,7 +32,6 @@ Winning_menu::Winning_menu(int id) {
 	Menu_item* quit;
 
 	play_again = new Menu_item(PLAY_AGAIN, 0, 0, emenu_play_again_t);
-	play_again->toggle();
 	items[c++] = play_again;
 	quit = new Menu_item(QUIT, 0, 0, emenu_quit_t);
 	items[c++] = quit;
