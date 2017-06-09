@@ -86,7 +86,6 @@ Player::Player(int x, int y, int control) : Movable_object() {
 	tp_line = new Animated_texture(tp_trail2_texture, 1);
 	tp_trail->set_color(color_r, color_g, color_b);
 	tp_line->set_color(color_r, color_g, color_b);
-	tp_line->set_alpha(20);
 
 
 	mark = new Animated_texture(player_mark_texture, 1);

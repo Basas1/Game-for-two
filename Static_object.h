@@ -64,6 +64,7 @@ public:
 	double angle;
 	double vx, vy;
 	double destx, desty;
+	bool time_to_die;
 };
 
 class Jump_effect : public Static_object {
