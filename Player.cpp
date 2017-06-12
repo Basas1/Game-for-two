@@ -82,6 +82,10 @@ Player::Player(int x, int y, int control) : Movable_object() {
 
 	arrow = new Animated_texture(arrow_texture, 1);
 	arrow->set_color(color_r, color_g, color_b);
+	tp_ball_opening = new Animated_texture(t_ball_opening_texture, 6, -32, -32);
+	int order1[] = { 0, 0, 0, 0, 1, 2, 3, 4, 5 };
+	tp_ball_opening->set_frame_order(order1, sizeof(order1) / sizeof(int));
+	tp_ball_opened = new Animated_texture(t_ball_opened_texture, 3, -32, -32);
 	tp_trail = new Animated_texture(tp_trail_texture, 1);
 	tp_line = new Animated_texture(tp_trail2_texture, 1);
 	tp_trail->set_color(color_r, color_g, color_b);

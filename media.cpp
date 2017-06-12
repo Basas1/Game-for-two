@@ -59,6 +59,8 @@ SDL_Texture* arrow_texture = NULL;
 SDL_Texture* help_texture = NULL;
 SDL_Texture* t_ball_opening_texture = NULL;
 SDL_Texture* t_ball_opened_texture = NULL;
+SDL_Texture* t_ball_opening_texture2 = NULL;
+SDL_Texture* t_ball_opened_texture2 = NULL;
 SDL_Texture* tp_trail_texture = NULL;
 SDL_Texture* tp_trail2_texture = NULL;
 SDL_Texture* blast_texture = NULL;
@@ -235,6 +237,16 @@ bool load_media() {
 	}
 	t_ball_opened_texture = load_texture("Images/players/tp_spinning.gif");
 	if (t_ball_opened_texture == NULL) {
+		printf("Failed to load teleport texture!\n");
+		success = false;
+	}
+	t_ball_opening_texture2 = load_texture("Images/players/tp_opening.gif");
+	if (t_ball_opening_texture2 == NULL) {
+		printf("Failed to load teleport texture!\n");
+		success = false;
+	}
+	t_ball_opened_texture2 = load_texture("Images/players/tp_spinning.gif");
+	if (t_ball_opened_texture2 == NULL) {
 		printf("Failed to load teleport texture!\n");
 		success = false;
 	}

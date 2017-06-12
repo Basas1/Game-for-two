@@ -27,6 +27,8 @@ Player2::Player2(int x, int y, int control) : Player(x, y, control) {
 	fireball_cast_animation2 = new Animated_texture(player2_cast_fireball_texture2, 9, -26, 30);
 	fireball_cast_animation2->set_ticks_per_frame(2);
 	arrow->set_color(color_r, color_g, color_b);
+	tp_ball_opening = new Animated_texture(t_ball_opening_texture2, 6, -32, -32);
+	tp_ball_opened = new Animated_texture(t_ball_opened_texture2, 3, -32, -32);
 	tp_trail->set_color(color_r, color_g, color_b);
 	tp_line->set_color(color_r, color_g, color_b);
 

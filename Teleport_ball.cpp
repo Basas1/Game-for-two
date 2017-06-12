@@ -3,10 +3,10 @@
 #include "media.h"
 #include "init.h"
 #include "Static_object.h"
+#include "Player.h"
 
 
-
-Teleport_ball::Teleport_ball(int x, int y, int side) : Movable_object() {
+Teleport_ball::Teleport_ball(int x, int y, Player* p, int side) : Movable_object() {
 	int start_speed = acceleration * 4;
 	type = TELEPORT;
 	width = 0;
@@ -63,10 +63,8 @@ Teleport_ball::Teleport_ball(int x, int y, int side) : Movable_object() {
 	//vel_x = 0;
 	//vel_y = 0;
 
-	teleport_ball_opening = new Animated_texture(t_ball_opening_texture, 6, -32, -32);
-	int order1[] = { 0, 0, 0, 0, 1, 2, 3, 4, 5 };
-	teleport_ball_opening ->set_frame_order(order1, sizeof(order1) / sizeof(int));
-	teleport_ball_opened = new Animated_texture(t_ball_opened_texture, 3, -32, -32);
+	teleport_ball_opening = p->tp_ball_opening;
+	teleport_ball_opened = p->tp_ball_opened;
 	b_width = 64;
 	b_height = 64;
 	blast_rad = 128;

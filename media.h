@@ -61,6 +61,8 @@ extern SDL_Texture* help_texture;
 
 extern SDL_Texture* t_ball_opening_texture;
 extern SDL_Texture* t_ball_opened_texture;
+extern SDL_Texture* t_ball_opening_texture2;
+extern SDL_Texture* t_ball_opened_texture2;
 extern SDL_Texture* blast_texture;
 
 extern SDL_Texture* enemy_stand_texture;
