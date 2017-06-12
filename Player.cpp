@@ -158,6 +158,7 @@ void Player::logic() {
 		on_platform = false;
 	}
 
+	collision_box = { (int)pos_x, (int)pos_y, width, height };
 };
 
 void Player::handle_events(SDL_Event& event) {
