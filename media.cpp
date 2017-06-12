@@ -240,12 +240,12 @@ bool load_media() {
 		printf("Failed to load teleport texture!\n");
 		success = false;
 	}
-	t_ball_opening_texture2 = load_texture("Images/players/tp_opening.gif");
+	t_ball_opening_texture2 = load_texture("Images/players/tp_opening2.gif");
 	if (t_ball_opening_texture2 == NULL) {
 		printf("Failed to load teleport texture!\n");
 		success = false;
 	}
-	t_ball_opened_texture2 = load_texture("Images/players/tp_spinning.gif");
+	t_ball_opened_texture2 = load_texture("Images/players/tp_spinning2.gif");
 	if (t_ball_opened_texture2 == NULL) {
 		printf("Failed to load teleport texture!\n");
 		success = false;
@@ -257,12 +257,12 @@ bool load_media() {
 		printf("Failed to load arrow texture!\n");
 		success = false;
 	}
-	player_jump_effect_ground_texture = load_texture("Images/players/jump_effect1.gif");
+	player_jump_effect_ground_texture = load_texture("Images/players/jump_effect_ground.gif");
 	if (player_jump_effect_ground_texture == NULL) {
 		printf("Failed to load player texture!\n");
 		success = false;
 	}
-	player_jump_effect_air_texture = load_texture("Images/players/jump_effect2.gif");
+	player_jump_effect_air_texture = load_texture("Images/players/jump_effect_air.gif");
 	if (player_jump_effect_air_texture == NULL) {
 		printf("Failed to load player texture!\n");
 		success = false;
