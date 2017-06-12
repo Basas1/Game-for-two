@@ -54,6 +54,7 @@ Capture_platform::Capture_platform(int x, int y, int w, int h) : Static_object()
 	height = h;
 	collision_box = { (int)pos_x, (int)pos_y, width, height };
 	p_texture = new Animated_texture(platform_texture, 6, 0, 0, 1, 6);
+	p_texture2 = new Animated_texture(platform_texture, 6, 0, 0, 1, 6);
 }
 
 void Capture_platform::logic() {
@@ -95,9 +96,11 @@ void Capture_platform::logic() {
 					collision_list[player_index]->score += 1;
 					if (collision_list[player_index] == player1) {
 						p_texture->set_color(player1->color_r, player1->color_g, player1->color_b);
+						p_texture2->set_color(player1->color_r, player1->color_g, player1->color_b);
 					}
 					else if (collision_list[player_index] == player2) {
 						p_texture->set_color(player2->color_r, player2->color_g, player2->color_b);
+						p_texture2->set_color(player2->color_r, player2->color_g, player2->color_b);
 					}
 				}
 			}
@@ -107,7 +110,9 @@ void Capture_platform::logic() {
 
 void Capture_platform::render() {
 	p_texture->render(1313, 1188);
+	p_texture2->render(1313, 1188);
 	p_texture->next_frame();
+	p_texture2->next_frame();
 }
 
 
@@ -242,6 +247,35 @@ void Teleport_line::render() {
 		} else {
 			exist = false;
 		}
+	}
+}
+
+
+Tp_ball_trail::Tp_ball_trail(int x, int y, Player* p) : Static_object() {
+	parent = p;
+	starting = true;
+	pos_x = x;
+	pos_y = y;
+	tp_trail = parent->tp_ball_trail;
+	tp_trail = p->tp_ball_trail;
+	total_frame_count = tp_trail->total_frames;
+	skip = 1;
+	frame = 0;
+}
+
+void Tp_ball_trail::render() {
+	tp_trail->set_frame(frame);
+	tp_trail->render(pos_x, pos_y);
+	if (starting) {
+		starting = false;
+	}
+	else {
+		if (!(skip++ % 3)) {
+			frame++;
+		}
+	}
+	if (frame >= total_frame_count) {
+		exist = false;
 	}
 }
 

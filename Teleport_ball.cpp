@@ -9,6 +9,7 @@
 Teleport_ball::Teleport_ball(int x, int y, Player* p, int side) : Movable_object() {
 	int start_speed = acceleration * 4;
 	type = TELEPORT;
+	parent = p;
 	width = 0;
 	height = 0;
 	pos_x = x;
@@ -142,6 +143,25 @@ void Teleport_ball::logic() {
 			stage_two = true;
 		}
 	}
+
+	////Create teleport trail
+	//if (exist) {
+	//	if (last_trail == NULL) {
+	//		Tp_ball_trail* trail;
+	//		trail = new Tp_ball_trail(pos_x, pos_y, parent);
+	//		last_trail = trail;
+	//		static_objects.insert(static_objects.end(), trail);
+	//	}
+	//	else {
+	//		if (last_trail->frame != 0) {
+	//			Tp_ball_trail* trail;
+	//			trail = new Tp_ball_trail(pos_x, pos_y, parent);
+	//			last_trail = trail;
+	//			static_objects.insert(static_objects.end(), trail);
+	//		}
+	//	}
+	//}
+
 	move();
 }
 

@@ -34,6 +34,7 @@ public:
 	void logic();
 	void render();
 	Animated_texture* p_texture;
+	Animated_texture* p_texture2;
 };
 
 class Fireball_trail : public Static_object {
@@ -42,6 +43,19 @@ public:
 	~Fireball_trail();
 	void render();
 	Animated_texture* f_trail;
+};
+
+class Tp_ball_trail : public Static_object {
+public:
+	Tp_ball_trail(int x, int y, Player* p);
+	~Tp_ball_trail() {};
+	bool starting;
+	int skip;
+	int total_frame_count;
+	int frame;
+	void render();
+	Player* parent;
+	Animated_texture* tp_trail;
 };
 
 class Teleport_trail : public Static_object {

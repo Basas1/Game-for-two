@@ -3,6 +3,7 @@
 #include "Animated_texture.h"
 
 class Player;
+class Tp_ball_trail;
 
 class Teleport_ball : public Movable_object {
 public:
@@ -26,5 +27,7 @@ public:
 	Animated_texture* teleport_ball_opened;
 	int blast_rad;
 	int b_width, b_height;
+	Tp_ball_trail* last_trail;
+	Player* parent;
 };
 
