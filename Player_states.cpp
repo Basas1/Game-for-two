@@ -4,7 +4,6 @@
 #include "init.h"
 #include <vector>
 #include <tuple>
-#include "Platform.h"
 #include "Teleport_ball.h"
 
 void Player_states::change_state(Player& p, int state, int arg) {
