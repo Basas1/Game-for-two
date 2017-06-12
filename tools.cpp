@@ -32,19 +32,6 @@ SDL_Texture* load_texture(std::string path) {
 	return new_texture;
 }
 
-//Render text to screen
-void render_text(int x, int y, std::string in_text) {
-	SDL_Color textColor = { 255, 255, 255, 0 };
-	SDL_Surface* textSurface = TTF_RenderText_Solid(font1, in_text.c_str(), textColor);
-	SDL_Texture* text = SDL_CreateTextureFromSurface(main_renderer, textSurface);
-	int text_width = textSurface->w;
-	int text_height = textSurface->h;
-	SDL_FreeSurface(textSurface);
-	SDL_Rect renderQuad = { x, y, text_width, text_height };
-	SDL_RenderCopy(main_renderer, text, NULL, &renderQuad);
-	SDL_DestroyTexture(text);
-}
-
 //Copy-pasted from "http://sdl.beuc.net/sdl.wiki/Pixel_Access"
 Uint32 getpixel(SDL_Surface *surface, int x, int y)
 {

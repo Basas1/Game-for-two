@@ -14,7 +14,7 @@ Player2::Player2(int x, int y, int control) : Player(x, y, control) {
 	color_g = 50;
 	color_b = 50;
 
-	stand_animation = new Animated_texture(player2_stand_texture, 8, -75, -40);
+	stand_animation = new Animated_texture(player2_idle_texture, 8, -75, -40);
 	stand_animation->set_ticks_per_frame(25);
 	run_animation = new Animated_texture(player2_run_texture, 13, -75, -40);
 	run_animation->set_ticks_per_frame(13);
@@ -29,7 +29,6 @@ Player2::Player2(int x, int y, int control) : Player(x, y, control) {
 	arrow->set_color(color_r, color_g, color_b);
 	tp_trail->set_color(color_r, color_g, color_b);
 	tp_line->set_color(color_r, color_g, color_b);
-	mark = new Animated_texture(player2_mark_texture, 1);
 
 	collision_box = { (int)pos_x, (int)pos_y, width, height };
 }

@@ -2,7 +2,6 @@
 #include "Player_states.h"
 #include "Fireball.h"
 #include "init.h"
-#include "Enemy.h"
 #include <vector>
 #include <tuple>
 #include "Platform.h"
@@ -264,14 +263,6 @@ void Player_states::handle_events(Player& p, SDL_Event& event) {
 			}
 			case SDLK_t: {
 				blast_teleport_ball(p);
-				break;
-			}
-			case SDLK_f: {
-				Enemy* enemy;
-				enemy = new Enemy;
-				enemy->pos_x = p.pos_x + 100;
-				enemy->pos_y = p.pos_y;
-				objects.insert(objects.end(), enemy);
 				break;
 			}
 			case SDLK_y: p.pos_y -= 100; break;
