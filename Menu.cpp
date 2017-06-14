@@ -56,6 +56,12 @@ int Menu::check_if_choosed() {
 }
 
 Menu::~Menu() {
+	for (int i = 0; i < 10; i++) {
+		if (items[i] != NULL) {
+			delete items[i];
+			items[i] = NULL;
+		}
+	}
 }
 
 void Menu::up() {

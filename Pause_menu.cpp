@@ -16,7 +16,6 @@ Pause_menu::Pause_menu() {
 	game_is_paused = new Texture(pmenu_paused_t);
 	game_is_paused->set_absolute_coord();
 
-
 	int c = 0;
 	Menu_item* continue_game;
 	Menu_item* restart;
@@ -59,6 +58,14 @@ int Pause_menu::check_if_choosed() {
 }
 
 Pause_menu::~Pause_menu() {
+	for (int i = 0; i < 10; i++) {
+		if (items[i] != NULL) {
+			delete items[i];
+			items[i] = NULL;
+		}
+	}
+	delete game_is_paused;
+	game_is_paused = NULL;
 }
 
 void Pause_menu::up() {

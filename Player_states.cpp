@@ -695,10 +695,6 @@ void Hit2::logic(Player& p) {
 		if (p.vel_y <= 8) p.vel_y = 8;
 		if (p.check_map_collision_bottom()) {
 			landing = true;
-			//p.dive_animation->reset();
-			//p.hit_cooldown = game_time.get_ticks();
-			//p.vulnerable = true;
-			//p.state_stack.pop();
 		}
 		std::vector<Game_object*> collisions;
 		SDL_Rect hit_box;

@@ -66,6 +66,16 @@ int Winning_menu::check_if_choosed() {
 }
 
 Winning_menu::~Winning_menu() {
+	for (int i = 0; i < 10; i++) {
+		if (items[i] != NULL) {
+			delete items[i];
+			items[i] = NULL;
+		}
+	}
+	delete congratulations;
+	delete winner;
+	congratulations = NULL;
+	winner = NULL;
 }
 
 void Winning_menu::up() {
