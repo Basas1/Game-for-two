@@ -19,7 +19,6 @@ public:
 	void cast_teleport_ball(Player& p);
 	void blast_teleport_ball(Player& p);
 	std::tuple<double, double> teleport_to_ball(Player& p);
-	virtual ~Player_states() {};
 	virtual void handle_events(Player& p, SDL_Event& event);
 	virtual void logic(Player& p) {};
 	virtual void render(Player& p) {};

@@ -144,23 +144,23 @@ void Teleport_ball::logic() {
 		}
 	}
 
-	////Create teleport trail
-	//if (exist) {
-	//	if (last_trail == NULL) {
-	//		Tp_ball_trail* trail;
-	//		trail = new Tp_ball_trail(pos_x, pos_y, parent);
-	//		last_trail = trail;
-	//		static_objects.insert(static_objects.end(), trail);
-	//	}
-	//	else {
-	//		if (last_trail->frame != 0) {
-	//			Tp_ball_trail* trail;
-	//			trail = new Tp_ball_trail(pos_x, pos_y, parent);
-	//			last_trail = trail;
-	//			static_objects.insert(static_objects.end(), trail);
-	//		}
-	//	}
-	//}
+	//Create teleport trail
+	if (exist) {
+		if (last_trail == NULL) {
+			Tp_ball_trail* trail;
+			trail = new Tp_ball_trail(pos_x, pos_y, parent);
+			last_trail = trail;
+			static_objects.insert(static_objects.end(), trail);
+		}
+		else {
+			if (last_trail->frame != 0) {
+				Tp_ball_trail* trail;
+				trail = new Tp_ball_trail(pos_x, pos_y, parent);
+				last_trail = trail;
+				static_objects.insert(static_objects.end(), trail);
+			}
+		}
+	}
 
 	move();
 }

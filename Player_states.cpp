@@ -415,6 +415,7 @@ void Run::logic(Player& p) {
 	On_ground::logic(p);
 	if (p.acc_x == 0) {
 		p.run_animation->set_frame(0);
+		delete p.state_stack.top();
 		p.state_stack.pop();
 	}
 }
@@ -475,6 +476,7 @@ void Jump::logic(Player& p) {
 	if (p.check_map_collision_bottom()) {
 		p.jump_animation_rise->reset();
 		p.jump_animation_fall->reset();
+		delete p.state_stack.top();
 		p.state_stack.pop();
 	}
 }
@@ -621,6 +623,7 @@ void Hit1::logic(Player& p) {
 		p.vel_x = 0;
 		p.hit_cooldown = game_time.get_ticks();
 		p.vulnerable = true;
+		delete p.state_stack.top();
 		p.state_stack.pop();
 	}
 
@@ -721,6 +724,7 @@ void Hit2::logic(Player& p) {
 			p.dive_animation->reset();
 			p.hit_cooldown = game_time.get_ticks();
 			p.vulnerable = true;
+			delete p.state_stack.top();
 			p.state_stack.pop();
 		}
 		std::vector<Game_object*> collisions;
@@ -753,6 +757,7 @@ void Hit2::handle_events(Player& p, SDL_Event& event) {
 						p.hit_animation->reset();
 						p.hit_cooldown = game_time.get_ticks();
 						p.vulnerable = true;
+						delete p.state_stack.top();
 						p.state_stack.pop();
 
 						p.vel_y = -p.jump_vel;
@@ -780,6 +785,7 @@ void Hit2::handle_events(Player& p, SDL_Event& event) {
 							p.hit_animation->reset();
 							p.hit_cooldown = game_time.get_ticks();
 							p.vulnerable = true;
+							delete p.state_stack.top();
 							p.state_stack.pop();
 
 							p.vel_y = -p.jump_vel;
@@ -875,6 +881,7 @@ void Teleportation::logic(Player& p) {
 		p.hit_animation->set_alpha(255);
 		p.hit_animation->set_color(255, 255, 255);
 		p.teleport_cooldown = game_time.get_ticks();
+		delete p.state_stack.top();
 		p.state_stack.pop();
 	}
 }
@@ -921,6 +928,7 @@ void Respawn::logic(Player& p) {
 		p.vel_x = 0;
 		p.vel_y = 0;
 		p.unkill_cooldown = game_time.get_ticks();
+		delete p.state_stack.top();
 		p.state_stack.pop();
 	}
 }
