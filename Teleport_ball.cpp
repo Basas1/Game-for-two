@@ -145,21 +145,22 @@ void Teleport_ball::logic() {
 			stage_two = true;
 		}
 	}
-
-	//Create teleport trail
-	if (exist) {
-		if (last_trail == NULL) {
-			Tp_ball_trail* trail;
-			trail = new Tp_ball_trail(pos_x, pos_y, parent);
-			last_trail = trail;
-			static_objects.insert(static_objects.end(), trail);
-		}
-		else {
-			if (last_trail->frame != 0) {
+	else {
+		//Create teleport trail
+		if (exist) {
+			if (last_trail == NULL) {
 				Tp_ball_trail* trail;
 				trail = new Tp_ball_trail(pos_x, pos_y, parent);
 				last_trail = trail;
 				static_objects.insert(static_objects.end(), trail);
+			}
+			else {
+				if (last_trail->frame != 0) {
+					Tp_ball_trail* trail;
+					trail = new Tp_ball_trail(pos_x, pos_y, parent);
+					last_trail = trail;
+					static_objects.insert(static_objects.end(), trail);
+				}
 			}
 		}
 	}
