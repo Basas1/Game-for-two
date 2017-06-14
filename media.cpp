@@ -42,6 +42,8 @@ SDL_Texture* player_dive_texture = NULL;
 SDL_Texture* player_fireball_texture = NULL;
 SDL_Texture* player_fireball_trail_texture = NULL;
 SDL_Texture* player_t_ball_trail_texture = NULL;
+SDL_Texture* player_t_ball_blast_texture = NULL;
+
 
 //Player2 textures
 SDL_Texture* player2_texture = NULL;
@@ -56,6 +58,7 @@ SDL_Texture* player2_dive_texture = NULL;
 SDL_Texture* player2_fireball_texture = NULL;
 SDL_Texture* player2_fireball_trail_texture = NULL;
 SDL_Texture* player2_t_ball_trail_texture = NULL;
+SDL_Texture* player2_t_ball_blast_texture = NULL;
 
 
 SDL_Texture* arrow_texture = NULL;
@@ -99,7 +102,7 @@ bool load_media() {
 	}
 
 	//Loading other textures
-	map_texture = load_texture("Images/map/map_box_transparent.gif");
+	map_texture = load_texture("Images/map/map_box_transparent.png");
 	if (map_texture == NULL) {
 		printf("Failed to load map texture!\n");
 		success = false;
@@ -164,6 +167,11 @@ bool load_media() {
 	player_t_ball_trail_texture = load_texture("Images/players/tp_ball_trail.gif");
 	if (player_t_ball_trail_texture == NULL) {
 		printf("Failed to load fireball texture!\n");
+		success = false;
+	}
+	player_t_ball_blast_texture = load_texture("Images/players/tp_ball_blast.gif");
+	if (player_t_ball_blast_texture == NULL) {
+		printf("Failed to load tp_bal blast texture!\n");
 		success = false;
 	}
 	t_ball_opening_texture = load_texture("Images/players/tp_opening.gif");
@@ -231,6 +239,11 @@ bool load_media() {
 	player2_t_ball_trail_texture = load_texture("Images/players/tp_ball_trail2.gif");
 	if (player2_t_ball_trail_texture == NULL) {
 		printf("Failed to load fireball texture!\n");
+		success = false;
+	}
+	player2_t_ball_blast_texture = load_texture("Images/players/tp_ball_blast2.gif");
+	if (player2_t_ball_blast_texture == NULL) {
+		printf("Failed to load tp_bal blast texture!\n");
 		success = false;
 	}
 	t_ball_opening_texture = load_texture("Images/players/tp_opening.gif");

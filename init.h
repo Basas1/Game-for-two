@@ -37,10 +37,10 @@ extern Timer fps;
 extern Timer game_time;
 
 //Screen dimension constants
-const int SCREEN_WIDTH = 1920;
-const int SCREEN_HEIGHT = 1080;
-//const int SCREEN_WIDTH = 1600;
-//const int SCREEN_HEIGHT = 900;
+//const int SCREEN_WIDTH = 1920;
+//const int SCREEN_HEIGHT = 1080;
+const int SCREEN_WIDTH = 1600;
+const int SCREEN_HEIGHT = 900;
 
 
 //Fps constants
@@ -49,8 +49,8 @@ const int SCREEN_FPS = 150;
 const int SCREEN_TICKS_PER_FRAME = 1000 / SCREEN_FPS;
 
 //Window position
-const int WINDOW_START_X = (1920 - SCREEN_WIDTH) / 2;
-const int WINDOW_START_Y = (1080 - SCREEN_HEIGHT) / 2;
+const int WINDOW_START_X = 1920 - SCREEN_WIDTH;
+const int WINDOW_START_Y = 1080 - SCREEN_HEIGHT;
 
 //Analog joystick dead zone
 const int JOYSTICK_DEAD_ZONE = 16000;
