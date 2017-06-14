@@ -166,11 +166,6 @@ bool load_media() {
 		printf("Failed to load fireball texture!\n");
 		success = false;
 	}
-	blast_texture = load_texture("Images/players/blast.png");
-	if (blast_texture == NULL) {
-		printf("Failed to load blast texture!\n");
-		success = false;
-	}
 	t_ball_opening_texture = load_texture("Images/players/tp_opening.gif");
 	if (t_ball_opening_texture == NULL) {
 		printf("Failed to load teleport texture!\n");
