@@ -19,9 +19,8 @@ public:
 	virtual void handle_events(SDL_Event& event) = 0;
 	virtual void logic() = 0;
 	virtual void render() = 0;
-	virtual ~Game_object() {};
-	//Check if object exist
 
+	//Check if object exist
 	bool is_exist();
 	virtual bool kill();
 

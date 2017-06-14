@@ -38,15 +38,16 @@ Game::Game() {
 Game::~Game() {
 	if (objects.size() != 0) {
 		for (int i = objects.size() - 1; i >= 0; i--) {
+			delete objects[i];
 			objects.erase(objects.begin() + i);
 		}
 	}
 	if (static_objects.size() != 0) {
 		for (int i = static_objects.size() - 1; i >= 0; i--) {
+			delete static_objects[i];
 			static_objects.erase(static_objects.begin() + i);
 		}
 	}
-	delete player1, player2, platform;
 	game_time.stop();
 }
 
@@ -112,11 +113,13 @@ void Game::logic() {
 	//Delete not existing objects from vector
 	for (int i = objects.size() - 1; i > 0; i--) {
 		if (!objects[i]->is_exist()) {
+			delete objects[i];
 			objects.erase(objects.begin() + i);
 		}
 	}
 	for (int i = static_objects.size() - 1; i >= 0; i--) {
 		if (!static_objects[i]->is_exist()) {
+			delete static_objects[i];
 			static_objects.erase(static_objects.begin() + i);
 		}
 	}

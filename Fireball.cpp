@@ -156,6 +156,8 @@ void Fireball::reverse() {
 
 
 Fireball::~Fireball() {
-	delete fireball_animation;
-	fireball_animation = NULL;
+	delete p1_fireball_animation;
+	delete p2_fireball_animation;
+	p1_fireball_animation = NULL;
+	p2_fireball_animation = NULL;
 }

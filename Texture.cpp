@@ -69,7 +69,6 @@ void Texture::set_flip(SDL_RendererFlip change) {
 }
 
 Texture::~Texture() {
-	free();
 }
 
 void Texture::set_width(int w) {

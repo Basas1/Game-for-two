@@ -123,12 +123,40 @@ bool Player::kill() {
 }
 
 Player::~Player() {
-	//delete texture;
-	//delete stand_animation;
-	//delete run_animation;
-	//delete jump_animation_rise;
-	//delete jump_animation_fall;
-	//delete hit_animation;
+	delete stand_animation;
+	delete run_animation;
+	delete jump_animation_rise;
+	delete jump_animation_fall;
+	delete jump_effect_animation1;
+	delete jump_effect_animation2;
+	delete hit_animation;
+	delete fireball_cast_animation1;
+	delete fireball_cast_animation2;
+	delete dive_animation;
+	delete dive_end_animation;
+	delete arrow;
+	delete tp_ball_opening;
+	delete tp_ball_opened;
+	delete tp_ball_trail;
+	delete tp_trail;
+	delete tp_line;
+	stand_animation = NULL;
+	run_animation = NULL;
+	jump_animation_rise = NULL;
+	jump_animation_fall = NULL;
+	jump_effect_animation1 = NULL;
+	jump_effect_animation2 = NULL;
+	hit_animation = NULL;
+	fireball_cast_animation1 = NULL;
+	fireball_cast_animation2 = NULL;
+	dive_animation = NULL;
+	dive_end_animation = NULL;
+	arrow = NULL;
+	tp_ball_opening = NULL;
+	tp_ball_opened = NULL;
+	tp_ball_trail = NULL;
+	tp_trail = NULL;
+	tp_line = NULL;
 }
 
 int Player::get_x() {

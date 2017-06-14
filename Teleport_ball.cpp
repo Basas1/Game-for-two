@@ -182,15 +182,6 @@ void Teleport_ball::render() {
 	//SDL_RenderDrawRect(main_renderer, &renderQuad);
 }
 
-
-Teleport_ball::~Teleport_ball() {
-	delete teleport_ball_opening;
-	delete teleport_ball_opened;
-	teleport_ball_opening = NULL;
-	teleport_ball_opened = NULL;
-}
-
-
 void Teleport_ball::blast() {
 	std::vector<Game_object*> collisions;
 	SDL_Rect hit_box;

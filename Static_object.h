@@ -9,21 +9,16 @@ class Static_object : public Game_object {
 public:
 	void handle_events(SDL_Event& event) {};
 	void logic() {};
-	virtual ~Static_object() {};
 	virtual void render() {};
-
 	//True if object turn to rigrht side
 	bool flip_right;
-
-	//Object's texture
-	Texture* texture;
 };
 
 class Blast : public Static_object {
 public:
-	void logic();
 	Blast(int x, int y);
 	~Blast();
+	void logic();
 	void render();
 	Animated_texture* blast_t;
 };
@@ -31,6 +26,7 @@ public:
 class Capture_platform : public Static_object {
 public:
 	Capture_platform(int x, int y, int w, int h);
+	~Capture_platform();
 	void logic();
 	void render();
 	Animated_texture* p_texture;
@@ -48,7 +44,6 @@ public:
 class Tp_ball_trail : public Static_object {
 public:
 	Tp_ball_trail(int x, int y, Player* p);
-	~Tp_ball_trail() {};
 	bool starting;
 	int skip;
 	int total_frame_count;
@@ -61,7 +56,6 @@ public:
 class Teleport_trail : public Static_object {
 public:
 	Teleport_trail(int x, int y, double dest_x, double dest_y, Player* p);
-	~Teleport_trail() {};
 	Player* father;
 	void render();
 	double alpha;
@@ -72,7 +66,6 @@ public:
 class Teleport_line : public Static_object {
 public:
 	Teleport_line(int x, int y, double dest_x, double dest_y, Player* p);
-	~Teleport_line() {};
 	void render();
 	Player* father;
 	double angle;
@@ -86,7 +79,6 @@ public:
 class Jump_effect : public Static_object {
 public:
 	Jump_effect(int x, int y, Animated_texture* animation);
-	~Jump_effect() {};
 	void render();
 	Animated_texture* effect_animation;
 };
@@ -94,6 +86,7 @@ public:
 class Help : public Static_object {
 public:
 	Help(Game_object* p);
+	~Help();
 	Animated_texture* help_t;
 	void render();
 };

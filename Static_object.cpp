@@ -57,6 +57,13 @@ Capture_platform::Capture_platform(int x, int y, int w, int h) : Static_object()
 	p_texture2 = new Animated_texture(platform_texture, 6, 0, 0, 1, 6);
 }
 
+Capture_platform::~Capture_platform() {
+	delete p_texture;
+	delete p_texture2;
+	p_texture = NULL;
+	p_texture2 = NULL;
+}
+
 void Capture_platform::logic() {
 	int player_index = -1;
 	int i;
@@ -170,6 +177,11 @@ Help::Help(Game_object* p) {
 
 void Help::render() {
 	help_t->render(parent->pos_x, parent->pos_y);
+}
+
+Help::~Help() {
+	delete help_t;
+	help_t = NULL;
 }
 
 Teleport_trail::Teleport_trail(int x, int y, double dest_x, double dest_y, Player* p) : Static_object() {
