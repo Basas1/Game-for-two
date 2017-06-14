@@ -69,6 +69,7 @@ void Capture_platform::logic() {
 	int i;
 	bool one_player = false;
 	p_texture->set_color(255, 255, 255);
+	p_texture2->set_color(255, 255, 255);
 
 	std::vector<Game_object*> collision_list;
 	collision_list = get_collisions();
