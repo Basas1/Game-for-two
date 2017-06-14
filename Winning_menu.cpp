@@ -144,6 +144,7 @@ void Winning_menu::enter() {
 					break;
 				}
 				if (items[i]->type == QUIT) {
+					delete programm_states.top();
 					programm_states.pop();
 					current_state = new Exit_state();
 					programm_states.push(current_state);
@@ -156,6 +157,7 @@ void Winning_menu::enter() {
 
 void Winning_menu::escape() {
 	game_time.toggle();
+	delete programm_states.top();
 	programm_states.pop();
 }
 
@@ -167,6 +169,7 @@ void Winning_menu::handle_events() {
 		//If the user has Xed out the window
 		if (event.type == SDL_QUIT) {
 			//Quit the program
+			delete programm_states.top();
 			programm_states.pop();
 			current_state = new Exit_state();
 			programm_states.push(current_state);

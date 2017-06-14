@@ -124,6 +124,7 @@ void Pause_menu::enter() {
 			if (items[i]->choosen) {
 				if (items[i]->type == CONTINUE) {
 					game_time.toggle();
+					delete programm_states.top();
 					programm_states.pop();
 					break;
 				}
@@ -139,6 +140,7 @@ void Pause_menu::enter() {
 					break;
 				}
 				if (items[i]->type == EXIT) {
+					delete programm_states.top();
 					programm_states.pop();
 					current_state = new Exit_state();
 					programm_states.push(current_state);
@@ -151,6 +153,7 @@ void Pause_menu::enter() {
 
 void Pause_menu::escape() {
 	game_time.toggle();
+	delete programm_states.top();
 	programm_states.pop();
 }
 
@@ -162,6 +165,7 @@ void Pause_menu::handle_events() {
 		//If the user has Xed out the window
 		if (event.type == SDL_QUIT) {
 			//Quit the program
+			delete programm_states.top();
 			programm_states.pop();
 			current_state = new Exit_state();
 			programm_states.push(current_state);

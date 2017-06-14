@@ -66,6 +66,8 @@ Teleport_ball::Teleport_ball(int x, int y, Player* p, int side) : Movable_object
 
 	teleport_ball_opening = p->tp_ball_opening;
 	teleport_ball_opened = p->tp_ball_opened;
+	teleport_ball_opening->reset();
+	teleport_ball_opened->reset();
 	b_width = 64;
 	b_height = 64;
 	blast_rad = 128;
