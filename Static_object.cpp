@@ -170,14 +170,17 @@ void Jump_effect::render() {
 	}
 }
 
-Help::Help(Game_object* p) {
+Help::Help(Player* p) {
 	type = HELP;
 	parent = p;
+	player = p;
 	help_t = new Animated_texture(help_texture, 1, -225, -40);
 }
 
 void Help::render() {
-	help_t->render(parent->pos_x, parent->pos_y);
+	if (!player->dead) {
+		help_t->render(parent->pos_x, parent->pos_y);
+	}
 }
 
 Help::~Help() {

@@ -94,6 +94,7 @@ Player::Player(int x, int y, int control) : Movable_object() {
 
 	collision_box = { (int)pos_x, (int)pos_y, width, height };
 	vulnerable = true;
+	dead = false;
 
 	state = new Stand;
 	state_stack.push(state);
@@ -106,7 +107,9 @@ bool Player::kill() {
 		if (t_ball != NULL) {
 			if (t_ball->exist) {
 				t_ball->kill();
-				t_ball->blast();
+				if (t_ball->stage_two) {
+					t_ball->blast();
+				}
 				t_ball = NULL;
 			}
 		}
@@ -116,6 +119,7 @@ bool Player::kill() {
 		state = new Respawn(*this, 630, 606);
 		state_stack.push(state);
 		flip_right = true;
+		dead = true;
 		player2->score += 2500;
 		return true;
 	}

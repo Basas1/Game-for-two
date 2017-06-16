@@ -924,6 +924,7 @@ void Respawn::logic(Player& p) {
 		p.vel_x = 0;
 		p.vel_y = 0;
 		p.unkill_cooldown = game_time.get_ticks();
+		p.dead = false;
 		delete p.state_stack.top();
 		p.state_stack.pop();
 	}

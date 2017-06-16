@@ -85,9 +85,10 @@ public:
 
 class Help : public Static_object {
 public:
-	Help(Game_object* p);
+	Help(Player* p);
 	~Help();
 	Animated_texture* help_t;
 	void render();
+	Player* player;
 };
 

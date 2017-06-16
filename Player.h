@@ -24,6 +24,7 @@ public:
 	void render();
 
 	bool vulnerable;
+	bool dead;
 
 	bool kill();
 

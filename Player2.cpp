@@ -42,16 +42,30 @@ bool Player2::kill() {
 		if (t_ball != NULL) {
 			if (t_ball->exist) {
 				t_ball->kill();
-				t_ball->blast();
+				if (t_ball->stage_two) {
+					t_ball->blast();
+				}
 				t_ball = NULL;
 			}
 		}
+		while (state_stack.size() > 1) {
+			state_stack.pop();
+		}
 		state = new Respawn(*this, 3158, 606);
 		state_stack.push(state);
-		flip_right = false;
+		flip_right = true;
+		dead = true;
 		player1->score += 2500;
-		unkill_cooldown = game_time.get_ticks();
 		return true;
+
+
+		//state = new Respawn(*this, 3158, 606);
+		//state_stack.push(state);
+		//flip_right = false;
+		//dead = true;
+		//player1->score += 2500;
+		//unkill_cooldown = game_time.get_ticks();
+		//return true;
 	}
 	return false;
 }
