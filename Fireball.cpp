@@ -76,8 +76,8 @@ Fireball::Fireball(int x, int y, int side, Player* p) : Movable_object() {
 
 	angle = get_angle();
 
-	p1_fireball_animation = p->fireball;
-	p2_fireball_animation = p->fireball;
+	p1_fireball_animation = player1->fireball;
+	p2_fireball_animation = player2->fireball;
 
 	if (parent == player1) {
 		fireball_animation = p1_fireball_animation;
@@ -98,6 +98,14 @@ void Fireball::move() {
 }
 
 void Fireball::logic() {
+	if (parent == player1) {
+		fireball_animation = p1_fireball_animation;
+		player = player1;
+	}
+	else if (parent == player2) {
+		fireball_animation = p2_fireball_animation;
+		player = player2;
+	}
 	angle = get_angle();
 	std::vector<Game_object*> collisions;
 	collisions = get_collisions();
@@ -106,7 +114,6 @@ void Fireball::logic() {
 			if (collisions[i]->type == ENEMY || collisions[i]->type == PLAYER && collisions[i]!=parent) {
 				if (collisions[i]->kill()) {
 					exist = false; 
-					//delete this;
 				}
 			}
 		}
@@ -134,12 +141,6 @@ void Fireball::logic() {
 }
 
 void Fireball::render() {
-	if (parent == player1) {
-		fireball_animation = p1_fireball_animation;
-	}
-	else {
-		fireball_animation = p2_fireball_animation;
-	}
 	fireball_animation->render(pos_x, pos_y, true, angle);
 	fireball_animation->next_frame();
 

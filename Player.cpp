@@ -84,8 +84,10 @@ Player::Player(int x, int y, int control) : Movable_object() {
 	arrow->set_color(color_r, color_g, color_b);
 	death = new Animated_texture(death_texture, 7, -35, 60);
 	death->set_color(color_r, color_g, color_b);
-	fireball = new Animated_texture(player_fireball_texture, 4, -17, -17);
-	fireball_trail = new Animated_texture(player_fireball_trail_texture, 9, -25, -15);
+	//fireball = new Animated_texture(player_fireball_texture, 4, -17, -17);
+	//fireball_trail = new Animated_texture(player_fireball_trail_texture, 9, -25, -15);
+	fireball = new Animated_texture(player_fireball_texture, 3, -25, -25);
+	fireball_trail = new Animated_texture(player_fireball_trail_texture, 9, -35, -35);
 	fireball_trail->set_ticks_per_frame(2);
 	tp_ball_opening = new Animated_texture(t_ball_opening_texture, 6, -32, -32);
 	int order1[] = { 0, 0, 0, 0, 1, 2, 3, 4, 5 };

@@ -29,7 +29,9 @@ Player2::Player2(int x, int y, int control) : Player(x, y, control) {
 	arrow->set_color(color_r, color_g, color_b);
 	death->set_color(color_r, color_g, color_b);
 	fireball = new Animated_texture(player2_fireball_texture, 4, -17, -17);
-	fireball_trail = new Animated_texture(player_fireball_trail_texture, 9, -25, -15);
+	fireball_trail = new Animated_texture(player2_fireball_trail_texture, 9, -25, -15);
+	//fireball = new Animated_texture(player2_fireball_texture, 3, -25, -25);
+	//fireball_trail = new Animated_texture(player2_fireball_trail_texture, 9, -35, -35);
 	tp_ball_opening = new Animated_texture(t_ball_opening_texture2, 6, -32, -32);
 	tp_ball_opened = new Animated_texture(t_ball_opened_texture2, 3, -32, -32);
 	tp_ball_trail = new Animated_texture(player2_t_ball_trail_texture, 9, -35, -35);
