@@ -18,15 +18,23 @@ Blast::Blast(int x, int y, Player* p) : Static_object() {
 	pos_x = x - width / 2;
 	pos_y = y - height / 2;
 
-	collision_box = { (int)pos_x, (int)pos_y, width, height };
+	hit_box1 = { (int)pos_x + 12, (int)pos_y + 60, 264, 168 };
+	hit_box2 = { (int)pos_x + 60, (int)pos_y + 12, 168, 264 };
 }
 
 void Blast::logic() {
 	if (!stage_two) {
 		if (blast_t->get_replay_count() < 1) {
 			std::vector<Game_object*> collisions;
-			SDL_Rect hit_box = collision_box;
-			collisions = get_collisions(&hit_box);
+			collisions = get_collisions(&hit_box1);
+			if (collisions.size() != 0) {
+				for (int i = 0; i < collisions.size(); i++) {
+					if (collisions[i]->type == ENEMY || collisions[i]->type == PLAYER) {
+						collisions[i]->kill();
+					}
+				}
+			}
+			collisions = get_collisions(&hit_box2);
 			if (collisions.size() != 0) {
 				for (int i = 0; i < collisions.size(); i++) {
 					if (collisions[i]->type == ENEMY || collisions[i]->type == PLAYER) {

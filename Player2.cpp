@@ -55,19 +55,10 @@ bool Player2::kill() {
 		}
 		state = new Respawn(*this, 3158, 606);
 		state_stack.push(state);
-		flip_right = true;
+		flip_right = false;
 		dead = true;
 		player1->score += 2500;
 		return true;
-
-
-		//state = new Respawn(*this, 3158, 606);
-		//state_stack.push(state);
-		//flip_right = false;
-		//dead = true;
-		//player1->score += 2500;
-		//unkill_cooldown = game_time.get_ticks();
-		//return true;
 	}
 	return false;
 }

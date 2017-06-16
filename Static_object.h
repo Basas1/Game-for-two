@@ -22,6 +22,8 @@ public:
 	Animated_texture* blast_t;
 	Animated_texture* blast_smoke_t;
 	bool stage_two;
+	SDL_Rect hit_box1;
+	SDL_Rect hit_box2;
 };
 
 class Capture_platform : public Static_object {
