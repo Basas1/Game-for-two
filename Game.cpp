@@ -109,6 +109,11 @@ void Game::logic() {
 			objects[i]->logic();
 		}
 	}
+	for (int i = 0; i < static_objects.size(); i++) {
+		if (static_objects[i]->is_exist()) {
+			static_objects[i]->logic();
+		}
+	}
 
 	//Delete not existing objects from vector
 	for (int i = objects.size() - 1; i > 0; i--) {

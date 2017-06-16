@@ -14,6 +14,15 @@ public:
 	bool flip_right;
 };
 
+class Simple_animation : public Static_object {
+public:
+	Simple_animation(int x, int y, Animated_texture* a_texture, int replay_count = 1);
+	void logic();
+	void render();
+	Animated_texture* animation;
+	int replays;
+};
+
 class Blast : public Static_object {
 public:
 	Blast(int x, int y, Player* p);

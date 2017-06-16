@@ -180,21 +180,8 @@ void Teleport_ball::render() {
 }
 
 void Teleport_ball::blast() {
-	std::vector<Game_object*> collisions;
-	SDL_Rect hit_box;
-	hit_box = { (int)pos_x - blast_rad, (int)pos_y - blast_rad, blast_rad * 2, blast_rad * 2 };
-	collisions = get_collisions(&hit_box);
-	if (collisions.size() != 0) {
-		for (int i = 0; i < collisions.size(); i++) {
-			if (collisions[i]->type == ENEMY || collisions[i]->type == PLAYER) {
-				collisions[i]->kill();
-			}
-		}
-	}
-
 	Blast* blast;
 	blast = new Blast((int)pos_x, (int)pos_y, parent);
 	objects.insert(objects.end(), blast);
-
 }
 

@@ -17,7 +17,7 @@ bool Game_object::is_exist() {
 	return exist;
 }
 
-bool Game_object::kill() {
+bool Game_object::kill(int change) {
 	exist = false;
 	return true;
 }

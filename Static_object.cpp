@@ -4,8 +4,28 @@
 
 #define PI 3.14159265
 
+Simple_animation::Simple_animation(int x, int y, Animated_texture* a_texture, int replay_count) : Static_object() {
+	pos_x = x;
+	pos_y = y;
+	animation = a_texture;
+	animation->reset();
+	replays = replay_count;
+}
+
+void Simple_animation::logic() {
+	if (animation->get_replay_count() >= replays) {
+		exist = false;
+	}
+}
+
+void Simple_animation::render() {
+	animation->render(pos_x, pos_y);
+	animation->next_frame();
+}
+
 
 Blast::Blast(int x, int y, Player* p) : Static_object() {
+	parent = p;
 	blast_t = p->tp_ball_blast;
 	blast_smoke_t = p->tp_blast_smoke;
 	blast_t->reset();
@@ -30,7 +50,7 @@ void Blast::logic() {
 			if (collisions.size() != 0) {
 				for (int i = 0; i < collisions.size(); i++) {
 					if (collisions[i]->type == ENEMY || collisions[i]->type == PLAYER) {
-						collisions[i]->kill();
+						collisions[i] == parent ? collisions[i]->kill() : collisions[i]->kill(50);
 					}
 				}
 			}
@@ -38,7 +58,7 @@ void Blast::logic() {
 			if (collisions.size() != 0) {
 				for (int i = 0; i < collisions.size(); i++) {
 					if (collisions[i]->type == ENEMY || collisions[i]->type == PLAYER) {
-						collisions[i]->kill();
+						collisions[i] == parent ? collisions[i]->kill() : collisions[i]->kill(50);
 					}
 				}
 			}

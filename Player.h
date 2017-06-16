@@ -26,7 +26,7 @@ public:
 	bool vulnerable;
 	bool dead;
 
-	bool kill();
+	bool kill(int change);
 
 	int get_x();
 	int get_y();
@@ -67,6 +67,7 @@ public:
 	Animated_texture* tp_blast_smoke;
 	Animated_texture* tp_trail;
 	Animated_texture* tp_line;
+	Animated_texture* death;
 
 	Animated_texture** player_textures[20];
 	bool texture_color_toggled;

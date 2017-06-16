@@ -46,6 +46,9 @@ SDL_Texture* player_fireball_trail_texture = NULL;
 SDL_Texture* player_t_ball_trail_texture = NULL;
 SDL_Texture* player_t_ball_blast_texture = NULL;
 SDL_Texture* player_blast_smoke_texture = NULL;
+SDL_Texture* t_ball_opening_texture = NULL;
+SDL_Texture* t_ball_opened_texture = NULL;
+SDL_Texture* tp_trail_texture = NULL;
 
 
 //Player2 textures
@@ -63,16 +66,14 @@ SDL_Texture* player2_fireball_trail_texture = NULL;
 SDL_Texture* player2_t_ball_trail_texture = NULL;
 SDL_Texture* player2_t_ball_blast_texture = NULL;
 SDL_Texture* player2_blast_smoke_texture = NULL;
+SDL_Texture* t_ball_opening_texture2 = NULL;
+SDL_Texture* t_ball_opened_texture2 = NULL;
+SDL_Texture* tp_trail2_texture = NULL;
 
 
 SDL_Texture* arrow_texture = NULL;
 SDL_Texture* help_texture = NULL;
-SDL_Texture* t_ball_opening_texture = NULL;
-SDL_Texture* t_ball_opened_texture = NULL;
-SDL_Texture* t_ball_opening_texture2 = NULL;
-SDL_Texture* t_ball_opened_texture2 = NULL;
-SDL_Texture* tp_trail_texture = NULL;
-SDL_Texture* tp_trail2_texture = NULL;
+SDL_Texture* death_texture = NULL;
 SDL_Texture* blast_texture = NULL;
 
 SDL_Texture* digits_texture = NULL;
@@ -319,6 +320,16 @@ bool load_media() {
 		printf("Failed to load blast texture!\n");
 		success = false;
 	}
+	help_texture = load_texture("Images/Texts_and_menus/help.gif");
+	if (help_texture == NULL) {
+		printf("Failed to load help texture!\n");
+		success = false;
+	}
+	death_texture = load_texture("Images/players/ded.gif");
+	if (death_texture == NULL) {
+		printf("Failed to load blast texture!\n");
+		success = false;
+	}
 
 
 	//Menu textures
@@ -390,12 +401,6 @@ bool load_media() {
 	player1_score_texture = load_texture("Images/Texts_and_menus/player1score.png");
 	player2_score_texture = load_texture("Images/Texts_and_menus/player2score.png");
 	digits_texture = load_texture("Images/Texts_and_menus/digits.png");
-
-	help_texture = load_texture("Images/Texts_and_menus/help.gif");
-	if (help_texture == NULL) {
-		printf("Failed to load help texture!\n");
-		success = false;
-	}
 
 
 	//Load music samples

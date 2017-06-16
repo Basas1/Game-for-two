@@ -82,6 +82,8 @@ Player::Player(int x, int y, int control) : Movable_object() {
 
 	arrow = new Animated_texture(arrow_texture, 1);
 	arrow->set_color(color_r, color_g, color_b);
+	death = new Animated_texture(death_texture, 7, -35, 60);
+	death->set_color(color_r, color_g, color_b);
 	fireball = new Animated_texture(player_fireball_texture, 4, -17, -17);
 	fireball_trail = new Animated_texture(player_fireball_trail_texture, 9, -25, -15);
 	fireball_trail->set_ticks_per_frame(2);
@@ -107,7 +109,9 @@ Player::Player(int x, int y, int control) : Movable_object() {
 	t_ball = NULL;
 }
 
-bool Player::kill() {
+bool Player::kill(int change) {
+	int score_change = 25;
+	if (change) score_change = change;
 	if (vulnerable && unkill_cooldown == 0) {
 		if (t_ball != NULL) {
 			if (t_ball->exist) {
@@ -125,7 +129,10 @@ bool Player::kill() {
 		state_stack.push(state);
 		flip_right = true;
 		dead = true;
-		player2->score += 2500;
+		player2->score += score_change * 100;
+		Simple_animation* ded;
+		ded = new Simple_animation(pos_x, pos_y, death);
+		static_objects.push_back(ded);
 		return true;
 	}
 	return false;
@@ -139,6 +146,8 @@ Player::~Player() {
 	delete jump_effect_animation1;
 	delete jump_effect_animation2;
 	delete hit_animation;
+	delete fireball;
+	delete fireball_trail;
 	delete fireball_cast_animation1;
 	delete fireball_cast_animation2;
 	delete dive_animation;
@@ -147,8 +156,11 @@ Player::~Player() {
 	delete tp_ball_opening;
 	delete tp_ball_opened;
 	delete tp_ball_trail;
+	delete tp_ball_blast;
+	delete tp_blast_smoke;
 	delete tp_trail;
 	delete tp_line;
+	delete death;
 	stand_animation = NULL;
 	run_animation = NULL;
 	jump_animation_rise = NULL;
@@ -156,6 +168,8 @@ Player::~Player() {
 	jump_effect_animation1 = NULL;
 	jump_effect_animation2 = NULL;
 	hit_animation = NULL;
+	fireball = NULL;
+	fireball_trail = NULL;
 	fireball_cast_animation1 = NULL;
 	fireball_cast_animation2 = NULL;
 	dive_animation = NULL;
@@ -164,8 +178,11 @@ Player::~Player() {
 	tp_ball_opening = NULL;
 	tp_ball_opened = NULL;
 	tp_ball_trail = NULL;
+	tp_ball_blast = NULL;
+	tp_blast_smoke = NULL;
 	tp_trail = NULL;
 	tp_line = NULL;
+	death = NULL;
 }
 
 int Player::get_x() {

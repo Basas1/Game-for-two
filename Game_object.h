@@ -22,7 +22,7 @@ public:
 
 	//Check if object exist
 	bool is_exist();
-	virtual bool kill();
+	virtual bool kill(int change = 0);
 
 	bool collidable;
 	//Collision box

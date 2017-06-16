@@ -27,6 +27,7 @@ Player2::Player2(int x, int y, int control) : Player(x, y, control) {
 	fireball_cast_animation2 = new Animated_texture(player2_cast_fireball_texture2, 9, -26, 30);
 	fireball_cast_animation2->set_ticks_per_frame(2);
 	arrow->set_color(color_r, color_g, color_b);
+	death->set_color(color_r, color_g, color_b);
 	fireball = new Animated_texture(player2_fireball_texture, 4, -17, -17);
 	fireball_trail = new Animated_texture(player_fireball_trail_texture, 9, -25, -15);
 	tp_ball_opening = new Animated_texture(t_ball_opening_texture2, 6, -32, -32);
@@ -41,7 +42,9 @@ Player2::Player2(int x, int y, int control) : Player(x, y, control) {
 }
 
 
-bool Player2::kill() {
+bool Player2::kill(int change) {
+	int score_change = 25;
+	if (change) score_change = change;
 	if (vulnerable && unkill_cooldown == 0) {
 		if (t_ball != NULL) {
 			if (t_ball->exist) {
@@ -59,7 +62,10 @@ bool Player2::kill() {
 		state_stack.push(state);
 		flip_right = false;
 		dead = true;
-		player1->score += 2500;
+		player1->score += score_change * 100;
+		Simple_animation* ded;
+		ded = new Simple_animation(pos_x, pos_y, death);
+		static_objects.push_back(ded);
 		return true;
 	}
 	return false;
