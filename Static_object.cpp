@@ -143,32 +143,34 @@ void Capture_platform::render() {
 }
 
 
-Fireball_trail::Fireball_trail(int x, int y, Game_object* p) : Static_object() {
+Fireball_trail::Fireball_trail(int x, int y, Player* p, double trail_angle) : Static_object() {
 	parent = p;
+	player = p;
 	pos_x = x;
 	pos_y = y;
-	if (parent == player1) {
-		f_trail = new Animated_texture(player_fireball_trail_texture, 9, -35, -35);
-	}
-	else {
-		f_trail = new Animated_texture(player2_fireball_trail_texture, 9, -35, -35);
-	}
-	f_trail->set_ticks_per_frame(2);
+	angle = trail_angle;
+	f_trail = p->fireball_trail;
+	
+	starting = true;
+	total_frame_count = f_trail->total_frames;
+	skip = 1;
+	frame = 0;
 }
 
 void Fireball_trail::render() {
-	if (f_trail->get_replay_count() > 0) {
-		exist = false;
+	f_trail->set_frame(frame);
+	f_trail->render(pos_x, pos_y, true, angle);
+	if (starting) {
+		starting = false;
 	}
 	else {
-		f_trail->render(pos_x, pos_y);
-		f_trail->next_frame();
+		if (!(skip++ % 2)) {
+			frame++;
+		}
 	}
-}
-
-Fireball_trail::~Fireball_trail() {
-	delete f_trail;
-	f_trail = NULL;
+	if (frame >= total_frame_count) {
+		exist = false;
+	}
 }
 
 Jump_effect::Jump_effect(int x, int y, Animated_texture* animation) {
@@ -291,7 +293,6 @@ Tp_ball_trail::Tp_ball_trail(int x, int y, Player* p) : Static_object() {
 	pos_x = x;
 	pos_y = y;
 	tp_trail = parent->tp_ball_trail;
-	tp_trail = p->tp_ball_trail;
 	total_frame_count = tp_trail->total_frames;
 	skip = 1;
 	frame = 0;

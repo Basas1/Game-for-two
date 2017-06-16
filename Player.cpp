@@ -82,6 +82,9 @@ Player::Player(int x, int y, int control) : Movable_object() {
 
 	arrow = new Animated_texture(arrow_texture, 1);
 	arrow->set_color(color_r, color_g, color_b);
+	fireball = new Animated_texture(player_fireball_texture, 4, -17, -17);
+	fireball_trail = new Animated_texture(player_fireball_trail_texture, 9, -25, -15);
+	fireball_trail->set_ticks_per_frame(2);
 	tp_ball_opening = new Animated_texture(t_ball_opening_texture, 6, -32, -32);
 	int order1[] = { 0, 0, 0, 0, 1, 2, 3, 4, 5 };
 	tp_ball_opening->set_frame_order(order1, sizeof(order1) / sizeof(int));

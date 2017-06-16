@@ -177,12 +177,6 @@ void Teleport_ball::render() {
 		teleport_ball_opening->render(pos_x, pos_y);
 		teleport_ball_opening->next_frame();
 	}
-
-	//double scale = camera->get_scale();
-	//SDL_Rect renderQuad = { (pos_x - camera->get_x()) * camera->get_scale(), (pos_y - camera->get_y()) * camera->get_scale(), width * scale, height * scale };
-	////Outline of rectangle of texture
-	//SDL_SetRenderDrawColor(main_renderer, 255, 255, 255, 175);
-	//SDL_RenderDrawRect(main_renderer, &renderQuad);
 }
 
 void Teleport_ball::blast() {

@@ -2,11 +2,13 @@
 #include "Fireball.h"
 #include "media.h"
 
+#define PI 3.14159265
 
 
-Fireball::Fireball(int x, int y, int side, Game_object* p) : Movable_object() {
+Fireball::Fireball(int x, int y, int side, Player* p) : Movable_object() {
 	type = FIREBALL;
 	parent = p;
+	player = p;
 	int start_speed = acceleration * 4;
 	width = 14;
 	height = 14;
@@ -72,11 +74,10 @@ Fireball::Fireball(int x, int y, int side, Game_object* p) : Movable_object() {
 	}
 	}
 
+	angle = get_angle();
 
-	p1_fireball_animation = new Animated_texture(player_fireball_texture, 3, -25, -25);
-	p1_fireball_animation->set_clips();
-	p2_fireball_animation = new Animated_texture(player2_fireball_texture, 3, -25, -25);
-	p2_fireball_animation->set_clips();
+	p1_fireball_animation = p->fireball;
+	p2_fireball_animation = p->fireball;
 
 	if (parent == player1) {
 		fireball_animation = p1_fireball_animation;
@@ -97,6 +98,7 @@ void Fireball::move() {
 }
 
 void Fireball::logic() {
+	angle = get_angle();
 	std::vector<Game_object*> collisions;
 	collisions = get_collisions();
 	if (collisions.size() != 0) {
@@ -112,7 +114,7 @@ void Fireball::logic() {
 	if (exist) {
 		if (last_trail == NULL) {
 			Fireball_trail* trail;
-			trail = new Fireball_trail(pos_x, pos_y, parent);
+			trail = new Fireball_trail(pos_x, pos_y, player, angle);
 			last_trail = trail;
 			//objects.insert(objects.end(), trail);
 			static_objects.insert(static_objects.end(), trail);
@@ -121,7 +123,7 @@ void Fireball::logic() {
 			//if (last_trail->f_trail->get_frame_number() != last_trail->f_trail->total_frames - 1) {
 			if (last_trail->f_trail->get_frame_number() != 0) {
 				Fireball_trail* trail;
-				trail = new Fireball_trail(pos_x, pos_y, parent);
+				trail = new Fireball_trail(pos_x, pos_y, player, angle);
 				last_trail = trail;
 				//objects.insert(objects.end(), trail);
 				static_objects.insert(static_objects.end(), trail);
@@ -138,7 +140,7 @@ void Fireball::render() {
 	else {
 		fireball_animation = p2_fireball_animation;
 	}
-	fireball_animation->render(pos_x, pos_y);
+	fireball_animation->render(pos_x, pos_y, true, angle);
 	fireball_animation->next_frame();
 
 	////Set rendering space
@@ -154,10 +156,20 @@ void Fireball::reverse() {
 	vel_y = -vel_y;
 }
 
-
-Fireball::~Fireball() {
-	delete p1_fireball_animation;
-	delete p2_fireball_animation;
-	p1_fireball_animation = NULL;
-	p2_fireball_animation = NULL;
+double Fireball::get_angle() {
+	double x1, x2, y1, y2;
+	x1 = pos_x;
+	x2 = pos_x + vel_x;
+	y1 = pos_y;
+	y2 = pos_y + vel_y;
+	double dist_y, dist_x;
+	double param, result;
+	dist_x = x2 - x1;
+	dist_y = y2 - y1;
+	param = dist_y / dist_x;
+	result = atan(param) * 180 / PI;
+	if (dist_x < 0) {
+		result += 180;
+	}
+	return result;
 }
