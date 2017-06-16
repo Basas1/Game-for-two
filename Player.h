@@ -61,6 +61,8 @@ public:
 	Animated_texture* tp_ball_opening;
 	Animated_texture* tp_ball_opened;
 	Animated_texture* tp_ball_trail;
+	Animated_texture* tp_ball_blast;
+	Animated_texture* tp_blast_smoke;
 	Animated_texture* tp_trail;
 	Animated_texture* tp_line;
 

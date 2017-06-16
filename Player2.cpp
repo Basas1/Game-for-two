@@ -30,6 +30,8 @@ Player2::Player2(int x, int y, int control) : Player(x, y, control) {
 	tp_ball_opening = new Animated_texture(t_ball_opening_texture2, 6, -32, -32);
 	tp_ball_opened = new Animated_texture(t_ball_opened_texture2, 3, -32, -32);
 	tp_ball_trail = new Animated_texture(player2_t_ball_trail_texture, 9, -35, -35);
+	tp_ball_blast = new Animated_texture(player2_t_ball_blast_texture, 5);
+	tp_blast_smoke = new Animated_texture(player2_blast_smoke_texture, 4);
 	tp_trail->set_color(color_r, color_g, color_b);
 	tp_line->set_color(color_r, color_g, color_b);
 

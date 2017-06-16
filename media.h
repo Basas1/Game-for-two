@@ -40,6 +40,7 @@ extern SDL_Texture* player_fireball_texture;
 extern SDL_Texture* player_fireball_trail_texture;
 extern SDL_Texture* player_t_ball_trail_texture;
 extern SDL_Texture* player_t_ball_blast_texture;
+extern SDL_Texture* player_blast_smoke_texture;
 
 
 extern SDL_Texture* player2_texture;
@@ -55,6 +56,8 @@ extern SDL_Texture* player2_fireball_texture;
 extern SDL_Texture* player2_fireball_trail_texture;
 extern SDL_Texture* player2_t_ball_trail_texture;
 extern SDL_Texture* player2_t_ball_blast_texture;
+extern SDL_Texture* player2_blast_smoke_texture;
+
 
 
 extern SDL_Texture* arrow_texture;

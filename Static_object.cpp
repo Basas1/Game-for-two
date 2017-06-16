@@ -5,8 +5,13 @@
 #define PI 3.14159265
 
 
-Blast::Blast(int x, int y) : Static_object() {
-	blast_t = new Animated_texture(blast_texture, 4);
+Blast::Blast(int x, int y, Player* p) : Static_object() {
+	blast_t = p->tp_ball_blast;
+	blast_smoke_t = p->tp_blast_smoke;
+	blast_t->reset();
+	blast_smoke_t->reset();
+	stage_two = false;
+
 	width = blast_t->get_width();
 	height = blast_t->get_height();
 
@@ -17,34 +22,40 @@ Blast::Blast(int x, int y) : Static_object() {
 }
 
 void Blast::logic() {
-	if (blast_t->get_replay_count() < 1) {
-		std::vector<Game_object*> collisions;
-		SDL_Rect hit_box = collision_box;
-		collisions = get_collisions(&hit_box);
-		if (collisions.size() != 0) {
-			for (int i = 0; i < collisions.size(); i++) {
-				if (collisions[i]->type == ENEMY || collisions[i]->type == PLAYER) {
-					collisions[i]->kill();
+	if (!stage_two) {
+		if (blast_t->get_replay_count() < 1) {
+			std::vector<Game_object*> collisions;
+			SDL_Rect hit_box = collision_box;
+			collisions = get_collisions(&hit_box);
+			if (collisions.size() != 0) {
+				for (int i = 0; i < collisions.size(); i++) {
+					if (collisions[i]->type == ENEMY || collisions[i]->type == PLAYER) {
+						collisions[i]->kill();
+					}
 				}
 			}
 		}
+		else {
+			stage_two = true;
+		}
 	}
 	else {
-		exist = false;
-		//delete this;
+		if (blast_smoke_t->get_replay_count() >= 1) {
+			exist = false;
+		}
 	}
 }
 
 void Blast :: render() {
-	blast_t->render(pos_x, pos_y);
-	blast_t->next_frame();
+	if (!stage_two) {
+		blast_t->render(pos_x, pos_y);
+		blast_t->next_frame();
+	}
+	else {
+		blast_smoke_t->render(pos_x, pos_y);
+		blast_smoke_t->next_frame();
+	}
 }
-
-Blast::~Blast() {
-	delete blast_t;
-	blast_t = NULL;
-}
-
 
 Capture_platform::Capture_platform(int x, int y, int w, int h) : Static_object() {
 	type = PLATFORM;
@@ -140,7 +151,6 @@ Fireball_trail::Fireball_trail(int x, int y, Game_object* p) : Static_object() {
 void Fireball_trail::render() {
 	if (f_trail->get_replay_count() > 0) {
 		exist = false;
-		//delete this;
 	}
 	else {
 		f_trail->render(pos_x, pos_y);

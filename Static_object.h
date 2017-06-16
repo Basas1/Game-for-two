@@ -16,11 +16,12 @@ public:
 
 class Blast : public Static_object {
 public:
-	Blast(int x, int y);
-	~Blast();
+	Blast(int x, int y, Player* p);
 	void logic();
 	void render();
 	Animated_texture* blast_t;
+	Animated_texture* blast_smoke_t;
+	bool stage_two;
 };
 
 class Capture_platform : public Static_object {

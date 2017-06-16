@@ -199,7 +199,7 @@ void Teleport_ball::blast() {
 	}
 
 	Blast* blast;
-	blast = new Blast((int)pos_x, (int)pos_y);
+	blast = new Blast((int)pos_x, (int)pos_y, parent);
 	objects.insert(objects.end(), blast);
 
 }
