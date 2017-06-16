@@ -73,7 +73,7 @@ Capture_platform::Capture_platform(int x, int y, int w, int h) : Static_object()
 	height = h;
 	collision_box = { (int)pos_x, (int)pos_y, width, height };
 	p_texture = new Animated_texture(platform_texture, 6, 0, 0, 1, 6);
-	p_texture2 = new Animated_texture(platform_texture, 6, 0, 0, 1, 6);
+	p_texture2 = new Animated_texture(platform_diamond_texture, 6);
 }
 
 Capture_platform::~Capture_platform() {
@@ -137,7 +137,7 @@ void Capture_platform::logic() {
 
 void Capture_platform::render() {
 	p_texture->render(1313, 1188);
-	p_texture2->render(1313, 1188);
+	p_texture2->render(1174, 1180);
 	p_texture->next_frame();
 	p_texture2->next_frame();
 }

@@ -8,6 +8,7 @@ extern SDL_Texture* menu_background_texture;
 //Globally used textures
 extern SDL_Texture* map;
 extern SDL_Texture* platform_texture;
+extern SDL_Texture* platform_diamond_texture;
 
 //Menu textures
 extern SDL_Texture* menu_play_t;

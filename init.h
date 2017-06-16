@@ -37,15 +37,15 @@ extern Timer fps;
 extern Timer game_time;
 
 //Screen dimension constants
-//const int SCREEN_WIDTH = 1920;
-//const int SCREEN_HEIGHT = 1080;
-const int SCREEN_WIDTH = 1600;
-const int SCREEN_HEIGHT = 900;
+const int SCREEN_WIDTH = 1920;
+const int SCREEN_HEIGHT = 1080;
+//const int SCREEN_WIDTH = 1600;
+//const int SCREEN_HEIGHT = 900;
 
 
 //Fps constants
-//const int SCREEN_FPS = 150;
-const int SCREEN_FPS = 50;
+const int SCREEN_FPS = 150;
+//const int SCREEN_FPS = 50;
 const int SCREEN_TICKS_PER_FRAME = 1000 / SCREEN_FPS;
 
 //Window position

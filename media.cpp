@@ -11,6 +11,8 @@ SDL_Texture* menu_background_texture = NULL;
 //Globally used textures
 SDL_Texture* map = NULL;
 SDL_Texture* platform_texture = NULL;
+SDL_Texture* platform_diamond_texture = NULL;
+
 
 //Menu textures
 SDL_Texture* menu_play_t = NULL;
@@ -112,6 +114,11 @@ bool load_media() {
 	platform_texture = load_texture("Images/map/platform.gif");
 	if (platform_texture == NULL) {
 		printf("Failed to load platform texture!\n");
+		success = false;
+	}
+	platform_diamond_texture = load_texture("Images/map/diamond.gif");
+	if (platform_diamond_texture == NULL) {
+		printf("Failed to load platform_diamond texture!\n");
 		success = false;
 	}
 
