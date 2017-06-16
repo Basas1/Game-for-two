@@ -15,9 +15,7 @@ Player2::Player2(int x, int y, int control) : Player(x, y, control) {
 	color_b = 50;
 
 	stand_animation = new Animated_texture(player2_idle_texture, 8, -75, -40);
-	stand_animation->set_ticks_per_frame(25);
 	run_animation = new Animated_texture(player2_run_texture, 13, -75, -40);
-	run_animation->set_ticks_per_frame(13);
 	jump_animation_rise = new Animated_texture(player2_jump_rise_texture, 4, -75, -40);
 	jump_animation_fall = new Animated_texture(player2_jump_fall_texture, 4, -75, -40);
 	hit_animation = new Animated_texture(player2_hit_texture, 5, -75, -40);
@@ -25,7 +23,6 @@ Player2::Player2(int x, int y, int control) : Player(x, y, control) {
 	dive_end_animation = new Animated_texture(blast_texture, 4, -100, -40);
 	fireball_cast_animation1 = new Animated_texture(player2_cast_fireball_texture1, 3, -60, 30);
 	fireball_cast_animation2 = new Animated_texture(player2_cast_fireball_texture2, 9, -26, 30);
-	fireball_cast_animation2->set_ticks_per_frame(2);
 	arrow->set_color(color_r, color_g, color_b);
 	death->set_color(color_r, color_g, color_b);
 	fireball = new Animated_texture(player2_fireball_texture, 4, -17, -17);
@@ -33,12 +30,25 @@ Player2::Player2(int x, int y, int control) : Player(x, y, control) {
 	//fireball = new Animated_texture(player2_fireball_texture, 3, -25, -25);
 	//fireball_trail = new Animated_texture(player2_fireball_trail_texture, 9, -35, -35);
 	tp_ball_opening = new Animated_texture(t_ball_opening_texture2, 6, -32, -32);
+	int order1[] = { 0, 0, 0, 0, 1, 2, 3, 4, 5 };
+	tp_ball_opening->set_frame_order(order1, sizeof(order1) / sizeof(int));
 	tp_ball_opened = new Animated_texture(t_ball_opened_texture2, 3, -32, -32);
 	tp_ball_trail = new Animated_texture(player2_t_ball_trail_texture, 9, -35, -35);
 	tp_ball_blast = new Animated_texture(player2_t_ball_blast_texture, 5);
 	tp_blast_smoke = new Animated_texture(player2_blast_smoke_texture, 4);
 	tp_trail->set_color(color_r, color_g, color_b);
 	tp_line->set_color(color_r, color_g, color_b);
+	stand_animation->set_ticks_per_frame(11);
+	run_animation->set_ticks_per_frame(3);
+	jump_effect_animation1->set_ticks_per_frame(3);
+	jump_effect_animation2->set_ticks_per_frame(3);
+	fireball_cast_animation1->set_ticks_per_frame(3);
+	fireball_cast_animation2->set_ticks_per_frame(1);
+	fireball_trail->set_ticks_per_frame(2);
+	tp_ball_opening->set_ticks_per_frame(5);
+
+
+
 
 	collision_box = { (int)pos_x, (int)pos_y, width, height };
 }

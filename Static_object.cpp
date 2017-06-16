@@ -183,7 +183,7 @@ void Fireball_trail::render() {
 		starting = false;
 	}
 	else {
-		if (!(skip++ % 2)) {
+		if (!(skip++ % 1)) {
 			frame++;
 		}
 	}
@@ -324,7 +324,7 @@ void Tp_ball_trail::render() {
 		starting = false;
 	}
 	else {
-		if (!(skip++ % 3)) {
+		if (!(skip++ % 1)) {
 			frame++;
 		}
 	}

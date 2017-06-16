@@ -128,7 +128,8 @@ void Fireball::logic() {
 		}
 		else {
 			//if (last_trail->f_trail->get_frame_number() != last_trail->f_trail->total_frames - 1) {
-			if (last_trail->f_trail->get_frame_number() != 0) {
+			//if (last_trail->f_trail->get_frame_number() != 0) {
+			if (last_trail->frame != 0) {
 				Fireball_trail* trail;
 				trail = new Fireball_trail(pos_x, pos_y, player, angle);
 				last_trail = trail;

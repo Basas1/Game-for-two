@@ -460,13 +460,13 @@ void Jump::logic(Player& p) {
 	}
 	 
 	if (p.acc_x == 0) {
-		if (p.vel_x > -0.1 && p.vel_x < 0.1) p.vel_x = 0; else {
-			p.vel_x -= (p.vel_x / fabs(p.vel_x) ) * 0.05;
+		if (p.vel_x > -0.3 && p.vel_x < 0.3) p.vel_x = 0; else {
+			p.vel_x -= (p.vel_x / fabs(p.vel_x) ) * 0.15;
 		}
 	}
 	else {
 		if (fabs(p.vel_x) <= fabs(p.max_vel_x)) {
-			p.vel_x += (p.acc_x / fabs(p.acc_x)) * 0.25;
+			p.vel_x += (p.acc_x / fabs(p.acc_x)) * 0.75;
 			if (p.vel_x > p.max_vel_x) p.vel_x = p.max_vel_x;
 			if (p.vel_x < -p.max_vel_x) p.vel_x = -p.max_vel_x;
 		}
@@ -819,10 +819,10 @@ Teleportation::Teleportation(Player& p) {
 	double x_part = fabs(dist_x) / (fabs(dist_x) + fabs(dist_y));
 	
 	if (fabs(dist_x) > 0) {
-		if (fabs(dist) < 990) v_x = 18; else v_x = dist / 55;
+		if (fabs(dist) < 990) v_x = 56; else v_x = dist / 55 * 3;
 	}
 	if (fabs(dist_y) > 0) {
-		if (fabs(dist) < 990) v_y = 18; else v_y = dist / 55;
+		if (fabs(dist) < 990) v_y = 56; else v_y = dist / 55 * 3;
 	}
 
 	if (fabs(dist_x) == 0) v_x = 0; else {
@@ -902,8 +902,8 @@ Respawn::Respawn(Player& p, double spawn_x, double spawn_y) {
 	dest_y = spawn_y;
 	double dist_x = dest_x - start_x;
 	double dist_y = dest_y - start_y;
-	v_x = dist_x / 150;
-	v_y = dist_y / 150;
+	v_x = dist_x / 60;
+	v_y = dist_y / 60;
 	p.vel_x = v_x;
 	p.vel_y = v_y;
 }
