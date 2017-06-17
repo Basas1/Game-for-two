@@ -17,8 +17,8 @@ Player::Player(int x, int y, int control) : Movable_object() {
 	score = 0;
 	width = 50;
 	height = 160;
-	acceleration = 3;
-	jump_vel = 7.5;
+	acceleration = 9.5;
+	jump_vel = 20;
 	flip_right = true;
 	fireball_cooldown = 0;
 	teleport_cooldown = 0;
@@ -52,20 +52,16 @@ Player::Player(int x, int y, int control) : Movable_object() {
 	int t_num = 0;
 
 	stand_animation = new Animated_texture(player_idle_texture, 8, -75, -40);
-	stand_animation->set_ticks_per_frame(25);
 	player_textures[t_num++] = &stand_animation;
 	run_animation = new Animated_texture(player_run_texture, 13, -75, -40);
-	run_animation->set_ticks_per_frame(13);
 	player_textures[t_num++] = &run_animation;
 	jump_animation_rise = new Animated_texture(player_jump_rise_texture, 4, -75, -40);
 	player_textures[t_num++] = &jump_animation_rise;
 	jump_animation_fall = new Animated_texture(player_jump_fall_texture, 4, -75, -40);
 	player_textures[t_num++] = &jump_animation_fall;
 	jump_effect_animation1 = new Animated_texture(player_jump_effect_ground_texture, 6, -75, 120);
-	jump_effect_animation1->set_ticks_per_frame(10);
 	player_textures[t_num++] = &jump_effect_animation1;
 	jump_effect_animation2 = new Animated_texture(player_jump_effect_air_texture, 5, -75, 120);
-	jump_effect_animation2->set_ticks_per_frame(10);
 	player_textures[t_num++] = &jump_effect_animation2;
 	hit_animation = new Animated_texture(player_charge_texture, 5, -75, -40);
 	player_textures[t_num++] = &hit_animation;
@@ -76,8 +72,13 @@ Player::Player(int x, int y, int control) : Movable_object() {
 	fireball_cast_animation1 = new Animated_texture(player_cast_fireball_texture1, 3, -60, 30);
 	player_textures[t_num++] = &fireball_cast_animation1;
 	fireball_cast_animation2 = new Animated_texture(player_cast_fireball_texture2, 9, -26, 30);
-	fireball_cast_animation2->set_ticks_per_frame(2);
 	player_textures[t_num++] = &fireball_cast_animation2;
+	stand_animation->set_ticks_per_frame(11);
+	run_animation->set_ticks_per_frame(3);
+	jump_effect_animation1->set_ticks_per_frame(3);
+	jump_effect_animation2->set_ticks_per_frame(3);
+	fireball_cast_animation1->set_ticks_per_frame(3);
+	fireball_cast_animation2->set_ticks_per_frame(1);
 	texture_color_toggled = false;
 
 	arrow = new Animated_texture(arrow_texture, 1);
@@ -92,6 +93,7 @@ Player::Player(int x, int y, int control) : Movable_object() {
 	tp_ball_opening = new Animated_texture(t_ball_opening_texture, 6, -32, -32);
 	int order1[] = { 0, 0, 0, 0, 1, 2, 3, 4, 5 };
 	tp_ball_opening->set_frame_order(order1, sizeof(order1) / sizeof(int));
+	tp_ball_opening->set_ticks_per_frame(5);
 	tp_ball_opened = new Animated_texture(t_ball_opened_texture, 3, -32, -32);
 	tp_ball_trail = new Animated_texture(player_t_ball_trail_texture, 9, -32, -32);
 	tp_ball_blast = new Animated_texture(player_t_ball_blast_texture, 5);
@@ -125,6 +127,7 @@ bool Player::kill(int change) {
 			}
 		}
 		while (state_stack.size() > 1) {
+			delete state_stack.top();
 			state_stack.pop();
 		}
 		state = new Respawn(*this, 630, 606);

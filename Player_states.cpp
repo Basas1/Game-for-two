@@ -460,16 +460,14 @@ void Jump::logic(Player& p) {
 	}
 	 
 	if (p.acc_x == 0) {
-		if (p.vel_x > -0.1 && p.vel_x < 0.1) p.vel_x = 0; else {
-			p.vel_x -= (p.vel_x / fabs(p.vel_x) ) * 0.05;
+		if (p.vel_x > -0.3 && p.vel_x < 0.3) p.vel_x = 0; else {
+			p.vel_x -= (p.vel_x / fabs(p.vel_x) ) * 0.15;
 		}
 	}
 	else {
-		if (fabs(p.vel_x) <= fabs(p.max_vel_x)) {
-			p.vel_x += (p.acc_x / fabs(p.acc_x)) * 0.25;
-			if (p.vel_x > p.max_vel_x) p.vel_x = p.max_vel_x;
-			if (p.vel_x < -p.max_vel_x) p.vel_x = -p.max_vel_x;
-		}
+		p.vel_x += (p.acc_x / fabs(p.acc_x)) * 0.75;
+		if (p.vel_x > p.max_vel_x) p.vel_x = p.max_vel_x;
+		if (p.vel_x < -p.max_vel_x) p.vel_x = -p.max_vel_x;
 	}
 	p.move();
 
@@ -626,6 +624,13 @@ void Hit1::logic(Player& p) {
 		delete p.state_stack.top();
 		p.state_stack.pop();
 	}
+	if (p.flip_right) {
+		p.vel_x = p.acceleration * 2;
+	}
+	else {
+		p.vel_x = -p.acceleration * 2;
+	}
+	p.vel_y = 0;
 
 	std::vector<Game_object*> collisions;
 	SDL_Rect hit_box;
@@ -642,21 +647,23 @@ void Hit1::logic(Player& p) {
 			if (collisions[i]->type == ENEMY || collisions[i]->type == PLAYER) {
 				collisions[i]->kill();
 			}
-			if (collisions[i]->type == FIREBALL && collisions[i]->parent!=&p) {
-				collisions[i]->parent = &p;
-				collisions[i]->vel_x = -collisions[i]->vel_x * 7 / 5;
-				collisions[i]->vel_y = -collisions[i]->vel_y * 7 / 5;
+			if (collisions[i]->type == FIREBALL && collisions[i]->parent != &p) {
+				if (collisions[i]->vel_x == 0 || (collisions[i]->vel_x / p.vel_x < 0)) {
+					collisions[i]->parent = &p;
+					collisions[i]->vel_x = -collisions[i]->vel_x * 7 / 5;
+					collisions[i]->vel_y = -collisions[i]->vel_y * 7 / 5;
+				}
+				else {
+					p.hit_animation->reset();
+					p.hit_cooldown = game_time.get_ticks();
+					p.vulnerable = true;
+					p.kill(0);
+					collisions[i]->kill();
+					return;
+				}
 			}
 		}
 	}
-
-	if (p.flip_right) {
-		p.vel_x = p.acceleration * 2;
-	}
-	else {
-		p.vel_x = -p.acceleration * 2;
-	}
-	p.vel_y = 0;
 	p.move();
 }
 
@@ -692,7 +699,7 @@ void Hit2::render(Player& p) {
 void Hit2::logic(Player& p) {
 	if (!landing) {
 		p.vel_x = 0;
-		if (p.vel_y <= 8) p.vel_y = 8;
+		if (p.vel_y <= 22) p.vel_y = 22;
 		if (p.check_map_collision_bottom()) {
 			landing = true;
 		}
@@ -733,9 +740,7 @@ void Hit2::logic(Player& p) {
 					collisions[i]->kill();
 				}
 				if (collisions[i]->type == FIREBALL && collisions[i]->parent != &p) {
-					collisions[i]->parent = &p;
-					collisions[i]->vel_x = -collisions[i]->vel_x * 7 / 5;
-					collisions[i]->vel_y = -collisions[i]->vel_y * 7 / 5;
+					collisions[i]->kill();
 				}
 			}
 		}
@@ -819,10 +824,10 @@ Teleportation::Teleportation(Player& p) {
 	double x_part = fabs(dist_x) / (fabs(dist_x) + fabs(dist_y));
 	
 	if (fabs(dist_x) > 0) {
-		if (fabs(dist) < 990) v_x = 18; else v_x = dist / 55;
+		if (fabs(dist) < 990) v_x = 56; else v_x = dist / 55 * 3;
 	}
 	if (fabs(dist_y) > 0) {
-		if (fabs(dist) < 990) v_y = 18; else v_y = dist / 55;
+		if (fabs(dist) < 990) v_y = 56; else v_y = dist / 55 * 3;
 	}
 
 	if (fabs(dist_x) == 0) v_x = 0; else {
@@ -852,7 +857,7 @@ void Teleportation::logic(Player& p) {
 
 	if (fabs(p.pos_x - dest_x) > compare_x && fabs(p.pos_y - dest_y) > compare_y && !(v_x == 0 && v_y == 0)) {
 		Teleport_trail* trail;
-		trail = new Teleport_trail(p.pos_x - 6 * v_x + v_x/2, p.pos_y - 6 * v_y + v_y / 2, dest_x, dest_y, &p);
+		trail = new Teleport_trail(p.pos_x - 2 * v_x + v_x/2, p.pos_y - 2 * v_y + v_y / 2, dest_x, dest_y, &p);
 		static_objects.insert(static_objects.end(), trail);
 
 
@@ -860,7 +865,7 @@ void Teleportation::logic(Player& p) {
 		p.pos_y += p.vel_y;
 
 		//Teleport_trail* trail;
-		trail = new Teleport_trail(p.pos_x - 6*v_x, p.pos_y - 6*v_y, dest_x, dest_y, &p);
+		trail = new Teleport_trail(p.pos_x - 2*v_x, p.pos_y - 2*v_y, dest_x, dest_y, &p);
 		static_objects.insert(static_objects.end(), trail);
 
 
@@ -902,8 +907,8 @@ Respawn::Respawn(Player& p, double spawn_x, double spawn_y) {
 	dest_y = spawn_y;
 	double dist_x = dest_x - start_x;
 	double dist_y = dest_y - start_y;
-	v_x = dist_x / 150;
-	v_y = dist_y / 150;
+	v_x = dist_x / 60;
+	v_y = dist_y / 60;
 	p.vel_x = v_x;
 	p.vel_y = v_y;
 }
