@@ -624,6 +624,13 @@ void Hit1::logic(Player& p) {
 		delete p.state_stack.top();
 		p.state_stack.pop();
 	}
+	if (p.flip_right) {
+		p.vel_x = p.acceleration * 2;
+	}
+	else {
+		p.vel_x = -p.acceleration * 2;
+	}
+	p.vel_y = 0;
 
 	std::vector<Game_object*> collisions;
 	SDL_Rect hit_box;
@@ -657,14 +664,6 @@ void Hit1::logic(Player& p) {
 			}
 		}
 	}
-
-	if (p.flip_right) {
-		p.vel_x = p.acceleration * 2;
-	}
-	else {
-		p.vel_x = -p.acceleration * 2;
-	}
-	p.vel_y = 0;
 	p.move();
 }
 
