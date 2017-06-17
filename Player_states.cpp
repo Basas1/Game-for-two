@@ -650,8 +650,6 @@ void Hit1::logic(Player& p) {
 					p.hit_animation->reset();
 					p.hit_cooldown = game_time.get_ticks();
 					p.vulnerable = true;
-					delete p.state_stack.top();
-					p.state_stack.pop();
 					p.kill(0);
 					collisions[i]->kill();
 					return;
