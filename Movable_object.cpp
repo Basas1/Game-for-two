@@ -19,7 +19,7 @@ Movable_object::Movable_object() : Game_object() {
 	acc_y = 0;
 
 	acceleration = 5;
-	gravity = 0.5;
+	gravity = 0.75;
 	friction = 0.14;
 	can_rise = 45;
 }

@@ -465,11 +465,9 @@ void Jump::logic(Player& p) {
 		}
 	}
 	else {
-		if (fabs(p.vel_x) <= fabs(p.max_vel_x)) {
-			p.vel_x += (p.acc_x / fabs(p.acc_x)) * 0.75;
-			if (p.vel_x > p.max_vel_x) p.vel_x = p.max_vel_x;
-			if (p.vel_x < -p.max_vel_x) p.vel_x = -p.max_vel_x;
-		}
+		p.vel_x += (p.acc_x / fabs(p.acc_x)) * 0.75;
+		if (p.vel_x > p.max_vel_x) p.vel_x = p.max_vel_x;
+		if (p.vel_x < -p.max_vel_x) p.vel_x = -p.max_vel_x;
 	}
 	p.move();
 
@@ -692,7 +690,7 @@ void Hit2::render(Player& p) {
 void Hit2::logic(Player& p) {
 	if (!landing) {
 		p.vel_x = 0;
-		if (p.vel_y <= 8) p.vel_y = 8;
+		if (p.vel_y <= 22) p.vel_y = 22;
 		if (p.check_map_collision_bottom()) {
 			landing = true;
 		}
@@ -852,7 +850,7 @@ void Teleportation::logic(Player& p) {
 
 	if (fabs(p.pos_x - dest_x) > compare_x && fabs(p.pos_y - dest_y) > compare_y && !(v_x == 0 && v_y == 0)) {
 		Teleport_trail* trail;
-		trail = new Teleport_trail(p.pos_x - 6 * v_x + v_x/2, p.pos_y - 6 * v_y + v_y / 2, dest_x, dest_y, &p);
+		trail = new Teleport_trail(p.pos_x - 2 * v_x + v_x/2, p.pos_y - 2 * v_y + v_y / 2, dest_x, dest_y, &p);
 		static_objects.insert(static_objects.end(), trail);
 
 
@@ -860,7 +858,7 @@ void Teleportation::logic(Player& p) {
 		p.pos_y += p.vel_y;
 
 		//Teleport_trail* trail;
-		trail = new Teleport_trail(p.pos_x - 6*v_x, p.pos_y - 6*v_y, dest_x, dest_y, &p);
+		trail = new Teleport_trail(p.pos_x - 2*v_x, p.pos_y - 2*v_y, dest_x, dest_y, &p);
 		static_objects.insert(static_objects.end(), trail);
 
 

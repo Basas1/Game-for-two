@@ -17,8 +17,8 @@ Player::Player(int x, int y, int control) : Movable_object() {
 	score = 0;
 	width = 50;
 	height = 160;
-	acceleration = 8;
-	jump_vel = 16.5;
+	acceleration = 9.5;
+	jump_vel = 20;
 	flip_right = true;
 	fireball_cooldown = 0;
 	teleport_cooldown = 0;
