@@ -640,10 +640,22 @@ void Hit1::logic(Player& p) {
 			if (collisions[i]->type == ENEMY || collisions[i]->type == PLAYER) {
 				collisions[i]->kill();
 			}
-			if (collisions[i]->type == FIREBALL && collisions[i]->parent!=&p) {
-				collisions[i]->parent = &p;
-				collisions[i]->vel_x = -collisions[i]->vel_x * 7 / 5;
-				collisions[i]->vel_y = -collisions[i]->vel_y * 7 / 5;
+			if (collisions[i]->type == FIREBALL && collisions[i]->parent != &p) {
+				if (collisions[i]->vel_x == 0 || (collisions[i]->vel_x / p.vel_x < 0)) {
+					collisions[i]->parent = &p;
+					collisions[i]->vel_x = -collisions[i]->vel_x * 7 / 5;
+					collisions[i]->vel_y = -collisions[i]->vel_y * 7 / 5;
+				}
+				else {
+					p.hit_animation->reset();
+					p.hit_cooldown = game_time.get_ticks();
+					p.vulnerable = true;
+					delete p.state_stack.top();
+					p.state_stack.pop();
+					p.kill(0);
+					collisions[i]->kill();
+					return;
+				}
 			}
 		}
 	}
@@ -729,11 +741,6 @@ void Hit2::logic(Player& p) {
 			for (int i = 0; i < collisions.size(); i++) {
 				if (collisions[i]->type == ENEMY || collisions[i]->type == PLAYER) {
 					collisions[i]->kill();
-				}
-				if (collisions[i]->type == FIREBALL && collisions[i]->parent != &p) {
-					collisions[i]->parent = &p;
-					collisions[i]->vel_x = -collisions[i]->vel_x * 7 / 5;
-					collisions[i]->vel_y = -collisions[i]->vel_y * 7 / 5;
 				}
 			}
 		}

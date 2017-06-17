@@ -9,7 +9,7 @@ Fireball::Fireball(int x, int y, int side, Player* p) : Movable_object() {
 	type = FIREBALL;
 	parent = p;
 	player = p;
-	int start_speed = acceleration * 4;
+	int start_speed = acceleration * 6;
 	width = 14;
 	height = 14;
 	pos_x = x;

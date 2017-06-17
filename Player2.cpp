@@ -68,6 +68,7 @@ bool Player2::kill(int change) {
 			}
 		}
 		while (state_stack.size() > 1) {
+			delete state_stack.top();
 			state_stack.pop();
 		}
 		state = new Respawn(*this, 3158, 606);
