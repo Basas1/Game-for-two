@@ -19,7 +19,7 @@ Animated_texture::Animated_texture(SDL_Texture* original_texture, int frames, in
 	total_frames = clip_col*clip_line;
 	current_frame = 0;
 	replay_counter = 0;
-	ticks_per_frame = 15;
+	ticks_per_frame = 4;
 	ticks_counter = ticks_per_frame;
 	set_clips();
 	int i;

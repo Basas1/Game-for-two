@@ -12,15 +12,15 @@ Movable_object::Movable_object() : Game_object() {
 	vel_x = 0;
 	vel_y = 0;
 
-	max_vel_x = 3;
-	max_vel_y = 20;
+	max_vel_x = 8;
+	max_vel_y = 40;
 
 	acc_x = 0;
 	acc_y = 0;
 
-	acceleration = 2;
-	gravity = 0.1;
-	friction = 0.5;
+	acceleration = 5;
+	gravity = 0.75;
+	friction = 0.14;
 	can_rise = 45;
 }
 

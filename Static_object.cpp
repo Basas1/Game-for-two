@@ -139,8 +139,8 @@ void Capture_platform::logic() {
 			}
 			if (collision_list[player_index]->on_platform) {
 				//printf("time=%d;\ttime on platform=%d;\n", time, collision_list[player_index]->time_on_platform);
-				if (time - collision_list[player_index]->time_on_platform >= 300) {
-					collision_list[player_index]->score += 1;
+				if (time - collision_list[player_index]->time_on_platform >= 500) {
+					collision_list[player_index]->score += 3;
 					if (collision_list[player_index] == player1) {
 						p_texture->set_color(player1->color_r, player1->color_g, player1->color_b);
 						p_texture2->set_color(player1->color_r, player1->color_g, player1->color_b);
@@ -183,7 +183,7 @@ void Fireball_trail::render() {
 		starting = false;
 	}
 	else {
-		if (!(skip++ % 2)) {
+		if (!(skip++ % 1)) {
 			frame++;
 		}
 	}
@@ -324,7 +324,7 @@ void Tp_ball_trail::render() {
 		starting = false;
 	}
 	else {
-		if (!(skip++ % 3)) {
+		if (!(skip++ % 1)) {
 			frame++;
 		}
 	}

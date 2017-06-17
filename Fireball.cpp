@@ -9,7 +9,7 @@ Fireball::Fireball(int x, int y, int side, Player* p) : Movable_object() {
 	type = FIREBALL;
 	parent = p;
 	player = p;
-	int start_speed = acceleration * 4;
+	int start_speed = acceleration * 6;
 	width = 14;
 	height = 14;
 	pos_x = x;
@@ -128,7 +128,8 @@ void Fireball::logic() {
 		}
 		else {
 			//if (last_trail->f_trail->get_frame_number() != last_trail->f_trail->total_frames - 1) {
-			if (last_trail->f_trail->get_frame_number() != 0) {
+			//if (last_trail->f_trail->get_frame_number() != 0) {
+			if (last_trail->frame != 0) {
 				Fireball_trail* trail;
 				trail = new Fireball_trail(pos_x, pos_y, player, angle);
 				last_trail = trail;
