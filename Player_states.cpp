@@ -740,6 +740,9 @@ void Hit2::logic(Player& p) {
 				if (collisions[i]->type == ENEMY || collisions[i]->type == PLAYER) {
 					collisions[i]->kill();
 				}
+				if (collisions[i]->type == FIREBALL && collisions[i]->parent != &p) {
+					collisions[i]->kill();
+				}
 			}
 		}
 	}
