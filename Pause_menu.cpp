@@ -45,6 +45,9 @@ Pause_menu::Pause_menu() {
 			start_y += items[i]->height;
 		}
 	}
+	
+	Mix_Pause(1);
+	//Mix_PlayChannel(2, pause_music, -1);
 
 }
 
@@ -58,6 +61,7 @@ int Pause_menu::check_if_choosed() {
 }
 
 Pause_menu::~Pause_menu() {
+	Mix_Pause(2);
 	for (int i = 0; i < 10; i++) {
 		if (items[i] != NULL) {
 			delete items[i];
@@ -124,6 +128,8 @@ void Pause_menu::enter() {
 			if (items[i]->choosen) {
 				if (items[i]->type == CONTINUE) {
 					game_time.toggle();
+					//Mix_Pause(2);
+					Mix_Resume(1);
 					delete programm_states.top();
 					programm_states.pop();
 					break;
@@ -137,6 +143,7 @@ void Pause_menu::enter() {
 					}
 					current_state = new Game();
 					programm_states.push(current_state);
+					Mix_Pause(2);
 					break;
 				}
 				if (items[i]->type == EXIT) {
@@ -152,6 +159,8 @@ void Pause_menu::enter() {
 }
 
 void Pause_menu::escape() {
+	//Mix_Pause(2);
+	Mix_Resume(1);
 	game_time.toggle();
 	delete programm_states.top();
 	programm_states.pop();

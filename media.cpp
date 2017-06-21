@@ -85,7 +85,7 @@ SDL_Texture* map_texture = NULL;
 //Map surface 
 SDL_Surface* map_surface = NULL;
 
-//Globally used audio samples
+//Globally used audio
 Mix_Chunk* charge_sound = NULL;
 Mix_Chunk* death_sound = NULL;
 Mix_Chunk* dive_attack_sound = NULL;
@@ -96,6 +96,9 @@ Mix_Chunk* jump_sound = NULL;
 Mix_Chunk* teleport_blast_sound = NULL;
 Mix_Chunk* teleportation_sound = NULL;
 Mix_Chunk* winning_sound = NULL;
+Mix_Chunk* pause_music = NULL;
+Mix_Chunk* game_music = NULL;
+
 
 
 
@@ -462,6 +465,17 @@ bool load_media() {
 	winning_sound = Mix_LoadWAV("Audio/win.wav");
 	if (winning_sound == NULL) {
 		printf("Failed to load win sound sample!\n");
+		success = false;
+	}
+	//Load music
+	game_music = Mix_LoadWAV("Audio/game_music.wav");
+	if (game_music == NULL) {
+		printf("Failed to load game_loop music! SDL_mixer Error: %s\n", Mix_GetError());
+		success = false;
+	}
+	pause_music = Mix_LoadWAV("Audio/pause_music.wav");
+	if (pause_music == NULL) {
+		printf("Failed to load pause_loop music! SDL_mixer Error: %s\n", Mix_GetError());
 		success = false;
 	}
 

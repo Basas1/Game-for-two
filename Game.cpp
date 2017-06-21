@@ -32,6 +32,8 @@ Game::Game() {
 	objects.insert(objects.end(), player1);
 	objects.insert(objects.end(), player2);
 	objects.insert(objects.end(), platform);
+
+	Mix_FadeInChannel(1, game_music, -1, 500);
 }
 
 

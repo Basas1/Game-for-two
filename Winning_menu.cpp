@@ -54,6 +54,7 @@ Winning_menu::Winning_menu(int id) {
 		}
 	}
 
+	Mix_FadeOutChannel(1, 500);
 	Mix_PlayChannel(-1, winning_sound, 0);
 }
 

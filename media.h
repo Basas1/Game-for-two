@@ -88,7 +88,7 @@ extern SDL_Surface* map_surface;
 
 // -= AUDIO =-
 
-//Globaly used audio samples
+//Globaly used audio
 extern Mix_Chunk* charge_sound;
 extern Mix_Chunk* death_sound;
 extern Mix_Chunk* dive_attack_sound;
@@ -99,6 +99,8 @@ extern Mix_Chunk* jump_sound;
 extern Mix_Chunk* teleport_blast_sound;
 extern Mix_Chunk* teleportation_sound;
 extern Mix_Chunk* winning_sound;
+extern Mix_Chunk* pause_music;
+extern Mix_Chunk* game_music;
 
 
 bool load_media();

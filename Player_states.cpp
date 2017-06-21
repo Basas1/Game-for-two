@@ -766,7 +766,8 @@ void Hit2::handle_events(Player& p, SDL_Event& event) {
 				switch (event.key.keysym.sym) {
 				case SDLK_SPACE: {
 					if (can_cancel) {
-						p.hit_animation->reset();
+						p.dive_end_animation->reset();
+						p.dive_animation->reset();
 						p.hit_cooldown = game_time.get_ticks();
 						p.vulnerable = true;
 						delete p.state_stack.top();
@@ -795,7 +796,8 @@ void Hit2::handle_events(Player& p, SDL_Event& event) {
 					switch (event.jbutton.button) {
 					case 0: {
 						if (can_cancel) {
-							p.hit_animation->reset();
+							p.dive_end_animation->reset();
+							p.dive_animation->reset();
 							p.hit_cooldown = game_time.get_ticks();
 							p.vulnerable = true;
 							delete p.state_stack.top();
