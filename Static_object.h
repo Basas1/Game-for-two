@@ -19,8 +19,11 @@ public:
 	Simple_animation(int x, int y, Animated_texture* a_texture, int replay_count = 1);
 	void logic();
 	void render();
+	void set_offset(int x, int y);
 	Animated_texture* animation;
 	int replays;
+	int off_x;
+	int off_y;
 };
 
 class Blast : public Static_object {

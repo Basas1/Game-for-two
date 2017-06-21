@@ -7,6 +7,8 @@
 Simple_animation::Simple_animation(int x, int y, Animated_texture* a_texture, int replay_count) : Static_object() {
 	pos_x = x;
 	pos_y = y;
+	off_x = 0;
+	off_y = 0;
 	animation = a_texture;
 	animation->reset();
 	replays = replay_count;
@@ -18,11 +20,15 @@ void Simple_animation::logic() {
 	}
 }
 
-void Simple_animation::render() {
-	animation->render(pos_x, pos_y);
-	animation->next_frame();
+void Simple_animation::set_offset(int x, int y) {
+	off_x = x;
+	off_y = y;
 }
 
+void Simple_animation::render() {
+	animation->render(pos_x + off_x, pos_y + off_y);
+	animation->next_frame();
+}
 
 Blast::Blast(int x, int y, Player* p) : Static_object() {
 	parent = p;

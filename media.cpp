@@ -41,6 +41,8 @@ SDL_Texture* player_charge_texture = NULL;
 SDL_Texture* player_cast_fireball_texture1 = NULL;
 SDL_Texture* player_cast_fireball_texture2 = NULL;
 SDL_Texture* player_dive_texture = NULL;
+SDL_Texture* player_dive_end_texture = NULL;
+SDL_Texture* player_dive_smoke_texture = NULL;
 SDL_Texture* player_fireball_texture = NULL;
 SDL_Texture* player_fireball_trail_texture = NULL;
 SDL_Texture* player_t_ball_trail_texture = NULL;
@@ -61,6 +63,8 @@ SDL_Texture* player2_cast_fireball_texture1 = NULL;
 SDL_Texture* player2_cast_fireball_texture2 = NULL;
 SDL_Texture* player2_hit_texture = NULL;
 SDL_Texture* player2_dive_texture = NULL;
+SDL_Texture* player2_dive_end_texture = NULL;
+SDL_Texture* player2_dive_smoke_texture = NULL;
 SDL_Texture* player2_fireball_texture = NULL;
 SDL_Texture* player2_fireball_trail_texture = NULL;
 SDL_Texture* player2_t_ball_trail_texture = NULL;
@@ -177,6 +181,16 @@ bool load_media() {
 		printf("Failed to load player texture!\n");
 		success = false;
 	}
+	player_dive_end_texture = load_texture("Images/players/blast.png");
+	if (player_dive_end_texture == NULL) {
+		printf("Failed to load player texture!\n");
+		success = false;
+	}
+	player_dive_smoke_texture = load_texture("Images/players/blast_smoke.gif");
+	if (player_dive_smoke_texture == NULL) {
+		printf("Failed to load player texture!\n");
+		success = false;
+	}
 	player_fireball_texture = load_texture("Images/players/fireball.gif");
 	if (player_fireball_texture == NULL) {
 		printf("Failed to load fireball texture!\n");
@@ -251,6 +265,16 @@ bool load_media() {
 	}
 	player2_dive_texture = load_texture("Images/players/diveattack.gif");
 	if (player2_dive_texture == NULL) {
+		printf("Failed to load player texture!\n");
+		success = false;
+	}
+	player2_dive_end_texture = load_texture("Images/players/blast.png");
+	if (player2_dive_end_texture == NULL) {
+		printf("Failed to load player texture!\n");
+		success = false;
+	}
+	player2_dive_smoke_texture = load_texture("Images/players/blast_smoke2.gif");
+	if (player2_dive_smoke_texture == NULL) {
 		printf("Failed to load player texture!\n");
 		success = false;
 	}

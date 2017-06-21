@@ -59,6 +59,7 @@ public:
 	Animated_texture* fireball_cast_animation2;
 	Animated_texture* dive_animation;
 	Animated_texture* dive_end_animation;
+	Animated_texture* dive_smoke_animation;
 	Animated_texture* arrow;
 	Animated_texture* tp_ball_opening;
 	Animated_texture* tp_ball_opened;

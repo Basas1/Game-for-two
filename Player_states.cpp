@@ -738,6 +738,9 @@ void Hit2::logic(Player& p) {
 			p.dive_animation->reset();
 			p.hit_cooldown = game_time.get_ticks();
 			p.vulnerable = true;
+			Simple_animation* dive_smoke;
+			dive_smoke = new Simple_animation(p.pos_x, p.pos_y, p.dive_smoke_animation);
+			static_objects.push_back(dive_smoke);
 			delete p.state_stack.top();
 			p.state_stack.pop();
 		}
