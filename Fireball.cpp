@@ -93,6 +93,7 @@ void Fireball::move() {
 	if (exist) {
 		if (Movable_object::move()) {
 			exist = false;
+			Mix_PlayChannel(-1, fireball_destruction_sound, 0);
 		}
 	}
 }
@@ -113,6 +114,7 @@ void Fireball::logic() {
 		for (int i = 0; i < collisions.size(); i++) {
 			if (collisions[i]->type == ENEMY || collisions[i]->type == PLAYER && collisions[i]!=parent) {
 				if (collisions[i]->kill()) {
+					Mix_PlayChannel(-1, fireball_destruction_sound, 0);
 					exist = false; 
 				}
 			}

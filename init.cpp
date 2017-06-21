@@ -67,8 +67,10 @@ bool init() {
 		joystick2 = SDL_GameControllerGetJoystick(gamepad2);
 
 		//Create window
-		main_window = SDL_CreateWindow("Epic AAA-game", WINDOW_START_X, WINDOW_START_Y, SCREEN_WIDTH, SCREEN_HEIGHT, SDL_WINDOW_SHOWN);
-		//SDL_SetWindowFullscreen(main_window, SDL_WINDOW_FULLSCREEN);
+		main_window = SDL_CreateWindow("Game 42", WINDOW_START_X, WINDOW_START_Y, SCREEN_WIDTH, SCREEN_HEIGHT, SDL_WINDOW_SHOWN);
+		if (fullscreen) {
+			SDL_SetWindowFullscreen(main_window, SDL_WINDOW_FULLSCREEN);
+		}
 		if (main_window == NULL) {
 			printf("Window could not be created! SDL Error: %s\n", SDL_GetError());
 			success = false;
@@ -121,8 +123,6 @@ bool init() {
 	camera = new Camera;
 
 	//Set start programm state
-	//current_state = new Exit_state();
-	//programm_states.push(current_state);
 	current_state = new Menu();
 	programm_states.push(current_state);
 	SDL_ShowCursor(SDL_DISABLE);

@@ -135,6 +135,7 @@ void Player_states::cast_fireball(Player& p) {
 				}
 			}
 		}
+		Mix_PlayChannel(-1, fireball_cast_sound, 0);
 	}
 }
 
@@ -324,6 +325,7 @@ void On_ground::handle_events(Player& p, SDL_Event& event) {
 				j_effect = new Jump_effect((int)p.pos_x, (int)p.pos_y, p.jump_effect_animation1);
 				objects.insert(objects.end(), j_effect);
 				p.vel_y = -p.jump_vel; 
+				Mix_PlayChannel(-1, jump_sound, 0);
 				break;
 			}
 			}
@@ -367,6 +369,7 @@ void On_ground::handle_events(Player& p, SDL_Event& event) {
 					j_effect = new Jump_effect((int)p.pos_x, (int)p.pos_y, p.jump_effect_animation1);
 					objects.insert(objects.end(), j_effect);
 					p.vel_y = -p.jump_vel;
+					Mix_PlayChannel(-1, jump_sound, 0);
 					break;
 				}
 				case 3: {
@@ -508,6 +511,7 @@ void Jump::handle_events(Player& p, SDL_Event& event) {
 					objects.insert(objects.end(), j_effect);
 					p.vel_y = -p.jump_vel;
 					jump_count--;
+					Mix_PlayChannel(-1, jump_sound, 0);
 				}
 				break;
 			}
@@ -556,6 +560,7 @@ void Jump::handle_events(Player& p, SDL_Event& event) {
 						objects.insert(objects.end(), j_effect);
 						p.vel_y = -p.jump_vel;
 						jump_count--;
+						Mix_PlayChannel(-1, jump_sound, 0);
 					}
 					break;
 				}
@@ -614,6 +619,10 @@ void Jump::render(Player& p) {
 	}
 }
 
+Hit1::Hit1() {
+	type = HIT1_STATE;
+	Mix_PlayChannel(-1, charge_sound, 0);
+}
 
 void Hit1::logic(Player& p) {
 	if (p.hit_animation->get_replay_count() > 0) {
@@ -682,6 +691,7 @@ Hit2::Hit2(int jump) {
 	else {
 		can_cancel = true;
 	}
+	Mix_PlayChannel(-1, dive_attack_sound, 0);
 }
 
 
@@ -701,7 +711,8 @@ void Hit2::logic(Player& p) {
 		p.vel_x = 0;
 		if (p.vel_y <= 22) p.vel_y = 22;
 		if (p.check_map_collision_bottom()) {
-			landing = true;
+			landing = true; 
+			Mix_PlayChannel(-1, dive_attack_finish_sound, 0);
 		}
 		std::vector<Game_object*> collisions;
 		SDL_Rect hit_box;
@@ -770,6 +781,7 @@ void Hit2::handle_events(Player& p, SDL_Event& event) {
 						Jump_effect* j_effect;
 						j_effect = new Jump_effect((int)p.pos_x, (int)p.pos_y, p.jump_effect_animation2);
 						objects.insert(objects.end(), j_effect);
+						Mix_PlayChannel(-1, jump_sound, 0);
 					}
 					break;
 				}
@@ -798,6 +810,7 @@ void Hit2::handle_events(Player& p, SDL_Event& event) {
 							Jump_effect* j_effect;
 							j_effect = new Jump_effect((int)p.pos_x, (int)p.pos_y, p.jump_effect_animation2);
 							objects.insert(objects.end(), j_effect);
+							Mix_PlayChannel(-1, jump_sound, 0);
 						}
 						break;
 					}
@@ -848,6 +861,7 @@ Teleportation::Teleportation(Player& p) {
 	line = new Teleport_line(p.pos_x, p.pos_y, dest_x, dest_y, &p);
 	static_objects.insert(static_objects.end(), line);
 
+	Mix_PlayChannel(-1, teleportation_sound, 0);
 }
 
 void Teleportation::logic(Player& p) {

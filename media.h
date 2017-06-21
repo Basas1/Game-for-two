@@ -1,6 +1,8 @@
 #pragma once
 #include "init.h"
 
+// -= TEXTURES =-
+
 //Current displayed texture
 extern SDL_Texture* background_texture;
 extern SDL_Texture* menu_background_texture;
@@ -24,7 +26,6 @@ extern SDL_Texture* emenu_p2w_t;
 extern SDL_Texture* emenu_play_again_t;
 extern SDL_Texture* emenu_quit_t;
 
-
 //Players textures
 extern SDL_Texture* player_texture;
 extern SDL_Texture* player_idle_texture;
@@ -42,7 +43,6 @@ extern SDL_Texture* player_fireball_trail_texture;
 extern SDL_Texture* player_t_ball_trail_texture;
 extern SDL_Texture* player_t_ball_blast_texture;
 extern SDL_Texture* player_blast_smoke_texture;
-
 
 extern SDL_Texture* player2_texture;
 extern SDL_Texture* player2_idle_texture;
@@ -83,12 +83,22 @@ extern SDL_Texture* player2_score_texture;
 
 extern SDL_Texture* map_texture;
 
-
 //Map surface
 extern SDL_Surface* map_surface;
 
+// -= AUDIO =-
+
 //Globaly used audio samples
-//extern Mix_Chunk *sound;
+extern Mix_Chunk* charge_sound;
+extern Mix_Chunk* death_sound;
+extern Mix_Chunk* dive_attack_sound;
+extern Mix_Chunk* dive_attack_finish_sound;
+extern Mix_Chunk* fireball_cast_sound;
+extern Mix_Chunk* fireball_destruction_sound;
+extern Mix_Chunk* jump_sound;
+extern Mix_Chunk* teleport_blast_sound;
+extern Mix_Chunk* teleportation_sound;
+extern Mix_Chunk* winning_sound;
 
 
 bool load_media();

@@ -59,7 +59,7 @@ public:
 
 class Hit1 : public Player_states {
 public:
-	Hit1() { type = HIT1_STATE; };
+	Hit1();
 	void handle_events(Player& p, SDL_Event& event) {};
 	void logic(Player& p);
 	void render(Player& p);

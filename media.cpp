@@ -86,7 +86,17 @@ SDL_Texture* map_texture = NULL;
 SDL_Surface* map_surface = NULL;
 
 //Globally used audio samples
-//Mix_Chunk *sound = NULL;
+Mix_Chunk* charge_sound = NULL;
+Mix_Chunk* death_sound = NULL;
+Mix_Chunk* dive_attack_sound = NULL;
+Mix_Chunk* dive_attack_finish_sound = NULL;
+Mix_Chunk* fireball_cast_sound = NULL;
+Mix_Chunk* fireball_destruction_sound = NULL;
+Mix_Chunk* jump_sound = NULL;
+Mix_Chunk* teleport_blast_sound = NULL;
+Mix_Chunk* teleportation_sound = NULL;
+Mix_Chunk* winning_sound = NULL;
+
 
 
 bool load_media() {
@@ -165,13 +175,11 @@ bool load_media() {
 		success = false;
 	}
 	player_fireball_texture = load_texture("Images/players/fireball.gif");
-	//player_fireball_texture = load_texture("Images/players/fireball.png");
 	if (player_fireball_texture == NULL) {
 		printf("Failed to load fireball texture!\n");
 		success = false;
 	}
 	player_fireball_trail_texture = load_texture("Images/players/fireball_trail.gif");
-	//player_fireball_trail_texture = load_texture("Images/players/fireball_trail.png");
 	if (player_fireball_trail_texture == NULL) {
 		printf("Failed to load fireball texture!\n");
 		success = false;
@@ -402,17 +410,61 @@ bool load_media() {
 	player2_score_texture = load_texture("Images/Texts_and_menus/player2score.png");
 	digits_texture = load_texture("Images/Texts_and_menus/digits.png");
 
-
-	//Load music samples
-	//sound = Mix_LoadWAV("Audio/sound.wav");
-	//if (sound == NULL) {
-	//	printf("Failed to load music samples!\n");
-	//	success = false;
-	//}
-	
 	//Load map surface
 	map_surface = IMG_Load("Images/map/map_box.bmp");
 	
+	//Load music samples
+	charge_sound = Mix_LoadWAV("Audio/charge.wav");
+	if (charge_sound == NULL) {
+		printf("Failed to load charge sound sample!\n");
+		success = false;
+	}
+	death_sound = Mix_LoadWAV("Audio/death.wav");
+	if (death_sound == NULL) {
+		printf("Failed to load death sound sample!\n");
+		success = false;
+	}
+	dive_attack_sound = Mix_LoadWAV("Audio/dive_attack.wav");
+	if (dive_attack_sound == NULL) {
+		printf("Failed to load dive attack sound sample!\n");
+		success = false;
+	}
+	dive_attack_finish_sound = Mix_LoadWAV("Audio/dive_attack_finish.wav");
+	if (dive_attack_finish_sound == NULL) {
+		printf("Failed to load dive attack sound sample!\n");
+		success = false;
+	}
+	fireball_cast_sound = Mix_LoadWAV("Audio/fireball_cast.wav");
+	if (fireball_cast_sound == NULL) {
+		printf("Failed to load fireball cast sound sample!\n");
+		success = false;
+	}
+	fireball_destruction_sound = Mix_LoadWAV("Audio/fireball_destruction.wav");
+	if (fireball_destruction_sound == NULL) {
+		printf("Failed to load fireball destruction sound sample!\n");
+		success = false;
+	}
+	jump_sound = Mix_LoadWAV("Audio/jump.wav");
+	if (jump_sound == NULL) {
+		printf("Failed to load jump sound sample!\n");
+		success = false;
+	}
+	teleport_blast_sound = Mix_LoadWAV("Audio/teleport_blast.wav");
+	if (teleport_blast_sound == NULL) {
+		printf("Failed to load teleport blast sound sample!\n");
+		success = false;
+	}
+	teleportation_sound = Mix_LoadWAV("Audio/teleportation.wav");
+	if (teleportation_sound == NULL) {
+		printf("Failed to load teleportation sound sample!\n");
+		success = false;
+	}
+	winning_sound = Mix_LoadWAV("Audio/win.wav");
+	if (winning_sound == NULL) {
+		printf("Failed to load win sound sample!\n");
+		success = false;
+	}
+
 	return success;
 }
 
@@ -424,8 +476,4 @@ void free_loaded_media() {
 	//Free the music samples
 	//Mix_FreeChunk(sound);
 	//sound = NULL;
-
-	//Free fonts
-	//TTF_CloseFont(font1);
-	//font1 = NULL;
 }

@@ -54,6 +54,7 @@ Winning_menu::Winning_menu(int id) {
 		}
 	}
 
+	Mix_PlayChannel(-1, winning_sound, 0);
 }
 
 int Winning_menu::check_if_choosed() {

@@ -79,6 +79,7 @@ bool Player2::kill(int change) {
 		Simple_animation* ded;
 		ded = new Simple_animation(pos_x, pos_y, death);
 		static_objects.push_back(ded);
+		Mix_PlayChannel(-1, death_sound, 0);
 		return true;
 	}
 	return false;

@@ -183,5 +183,6 @@ void Teleport_ball::blast() {
 	Blast* blast;
 	blast = new Blast((int)pos_x, (int)pos_y, parent);
 	objects.insert(objects.end(), blast);
+	Mix_PlayChannel(-1, teleport_blast_sound, 0);
 }
 

@@ -1,6 +1,5 @@
 #pragma once
 #include <SDL.h>
-#include <SDL_ttf.h>
 #include <string>
 #include <SDL_mixer.h>
 #include "init.h"
