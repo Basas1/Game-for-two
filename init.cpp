@@ -4,7 +4,6 @@
 #include <string>
 #include <SDL.h>
 #include <SDL_image.h>
-#include <SDL_ttf.h>
 #include <SDL_mixer.h>
 #include "Menu.h"
 #include "Game.h"
@@ -101,11 +100,6 @@ bool init() {
 				}
 				Mix_AllocateChannels(3);
 				//Initialize SDL_ttf
-				if (TTF_Init() == -1) {
-					printf("SDL_ttf could not initialize! SDL_ttf Error: %s\n", TTF_GetError());
-					success = false;
-				}
-
 			}
 		}
 	}

@@ -176,17 +176,17 @@ bool load_media() {
 		printf("Failed to load player texture!\n");
 		success = false;
 	}
-	player_dive_texture = load_texture("Images/players/diveattack.gif");
+	player_dive_texture = load_texture("Images/players/dive.gif");
 	if (player_dive_texture == NULL) {
 		printf("Failed to load player texture!\n");
 		success = false;
 	}
-	player_dive_end_texture = load_texture("Images/players/blast.png");
+	player_dive_end_texture = load_texture("Images/players/dive_end.gif");
 	if (player_dive_end_texture == NULL) {
 		printf("Failed to load player texture!\n");
 		success = false;
 	}
-	player_dive_smoke_texture = load_texture("Images/players/blast_smoke.gif");
+	player_dive_smoke_texture = load_texture("Images/players/dive_end_smoke.gif");
 	if (player_dive_smoke_texture == NULL) {
 		printf("Failed to load player texture!\n");
 		success = false;
@@ -263,17 +263,17 @@ bool load_media() {
 		printf("Failed to load player texture!\n");
 		success = false;
 	}
-	player2_dive_texture = load_texture("Images/players/diveattack.gif");
+	player2_dive_texture = load_texture("Images/players/dive2.gif");
 	if (player2_dive_texture == NULL) {
 		printf("Failed to load player texture!\n");
 		success = false;
 	}
-	player2_dive_end_texture = load_texture("Images/players/blast.png");
+	player2_dive_end_texture = load_texture("Images/players/dive_end2.gif");
 	if (player2_dive_end_texture == NULL) {
 		printf("Failed to load player texture!\n");
 		success = false;
 	}
-	player2_dive_smoke_texture = load_texture("Images/players/blast_smoke2.gif");
+	player2_dive_smoke_texture = load_texture("Images/players/dive_end_smoke2.gif");
 	if (player2_dive_smoke_texture == NULL) {
 		printf("Failed to load player texture!\n");
 		success = false;
@@ -348,11 +348,6 @@ bool load_media() {
 	tp_trail2_texture = load_texture("Images/players/tp_trail2.png");
 	if (tp_trail2_texture == NULL) {
 		printf("Failed to load teleport texture!\n");
-		success = false;
-	}
-	blast_texture = load_texture("Images/players/blast.png");
-	if (blast_texture == NULL) {
-		printf("Failed to load blast texture!\n");
 		success = false;
 	}
 	help_texture = load_texture("Images/Texts_and_menus/help.gif");

@@ -19,9 +19,9 @@ Player2::Player2(int x, int y, int control) : Player(x, y, control) {
 	jump_animation_rise = new Animated_texture(player2_jump_rise_texture, 4, -75, -40);
 	jump_animation_fall = new Animated_texture(player2_jump_fall_texture, 4, -75, -40);
 	hit_animation = new Animated_texture(player2_hit_texture, 5, -75, -40);
-	dive_animation = new Animated_texture(player2_dive_texture, 1, -75, -40);
-	dive_end_animation = new Animated_texture(player2_dive_end_texture, 4, -100, -40);
-	dive_smoke_animation = new Animated_texture(player2_dive_smoke_texture, 4);
+	dive_animation = new Animated_texture(player2_dive_texture, 4, -75, -40);
+	dive_end_animation = new Animated_texture(player2_dive_end_texture, 4, -75, -40);
+	dive_smoke_animation = new Animated_texture(player2_dive_smoke_texture, 3, -75, -40);
 	fireball_cast_animation1 = new Animated_texture(player2_cast_fireball_texture1, 3, -60, 30);
 	fireball_cast_animation2 = new Animated_texture(player2_cast_fireball_texture2, 9, -26, 30);
 	arrow->set_color(color_r, color_g, color_b);

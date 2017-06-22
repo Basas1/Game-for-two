@@ -65,11 +65,11 @@ Player::Player(int x, int y, int control) : Movable_object() {
 	player_textures[t_num++] = &jump_effect_animation2;
 	hit_animation = new Animated_texture(player_charge_texture, 5, -75, -40);
 	player_textures[t_num++] = &hit_animation;
-	dive_animation = new Animated_texture(player_dive_texture, 1, -75, -40);
+	dive_animation = new Animated_texture(player_dive_texture, 4, -75, -40);
 	player_textures[t_num++] = &dive_animation;
-	dive_end_animation = new Animated_texture(player_dive_end_texture, 4, -100, -40);
+	dive_end_animation = new Animated_texture(player_dive_end_texture, 4, -75, -40);
 	player_textures[t_num++] = &dive_end_animation;
-	dive_smoke_animation = new Animated_texture(player_dive_smoke_texture, 4);
+	dive_smoke_animation = new Animated_texture(player_dive_smoke_texture, 3, -75, -40);
 	fireball_cast_animation1 = new Animated_texture(player_cast_fireball_texture1, 3, -60, 30);
 	player_textures[t_num++] = &fireball_cast_animation1;
 	fireball_cast_animation2 = new Animated_texture(player_cast_fireball_texture2, 9, -26, 30);
