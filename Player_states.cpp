@@ -716,7 +716,9 @@ void Hit2::logic(Player& p) {
 		}
 		std::vector<Game_object*> collisions;
 		SDL_Rect hit_box;
-		hit_box = { (int)p.pos_x - (int)(p.width / 2), (int)p.pos_y, (int)(p.width) * 2, (int)(p.height) };
+
+		//Reflect fireballs
+		hit_box = { (int)p.pos_x - (int)(p.width / 2), (int)p.pos_y + (int)p.height, (int)(p.width) * 2, 1};
 		collisions = p.get_collisions(&hit_box);
 		if (collisions.size() != 0) {
 			for (int i = 0; i < collisions.size(); i++) {
@@ -727,6 +729,18 @@ void Hit2::logic(Player& p) {
 					collisions[i]->parent = &p;
 					collisions[i]->vel_x = -collisions[i]->vel_x * 7 / 5;
 					collisions[i]->vel_y = -collisions[i]->vel_y * 7 / 5;
+				}
+			}
+		}
+		hit_box = { (int)p.pos_x - (int)(p.width / 2), (int)p.pos_y, (int)(p.width) * 2, (int)(p.height) - 3 };
+		collisions = p.get_collisions(&hit_box);
+		if (collisions.size() != 0) {
+			for (int i = 0; i < collisions.size(); i++) {
+				if (collisions[i]->type == ENEMY || collisions[i]->type == PLAYER) {
+					collisions[i]->kill();
+				}
+				if (collisions[i]->type == FIREBALL && collisions[i]->parent != &p) {
+					collisions[i]->kill();
 				}
 			}
 		}
@@ -771,7 +785,7 @@ void Hit2::handle_events(Player& p, SDL_Event& event) {
 					if (can_cancel) {
 						p.dive_end_animation->reset();
 						p.dive_animation->reset();
-						p.hit_cooldown = game_time.get_ticks();
+						//p.hit_cooldown = game_time.get_ticks();
 						p.vulnerable = true;
 						delete p.state_stack.top();
 						p.state_stack.pop();
@@ -801,7 +815,7 @@ void Hit2::handle_events(Player& p, SDL_Event& event) {
 						if (can_cancel) {
 							p.dive_end_animation->reset();
 							p.dive_animation->reset();
-							p.hit_cooldown = game_time.get_ticks();
+							//p.hit_cooldown = game_time.get_ticks();
 							p.vulnerable = true;
 							delete p.state_stack.top();
 							p.state_stack.pop();
