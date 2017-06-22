@@ -83,6 +83,9 @@ void Texture::set_absolute_coord() {
 	relative_coord = false;
 }
 
+void Texture::set_relatable_coord() {
+	relative_coord = true;
+}
 
 int Texture::get_width() {
 	return width;

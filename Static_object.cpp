@@ -30,6 +30,40 @@ void Simple_animation::render() {
 	animation->next_frame();
 }
 
+Points_gained::Points_gained(int x, int y, Player* p, int gain) {
+	pos_x = x;
+	pos_y = y;
+	player = p;
+	points = gain;
+	replay = 60;
+	if (player == player1) {
+		color_r = player2->color_r;
+		color_g = player2->color_g;
+		color_b = player2->color_b;
+	}
+	else {
+		color_r = player1->color_r;
+		color_g = player1->color_g;
+		color_b = player1->color_b;
+	}
+}
+
+void Points_gained::render() {
+	digits->set_relatable_coord();
+	digits->set_color(color_r, color_g, color_b);
+	if (replay-- >= 0) {
+		digits->set_frame(10);
+		digits->render(pos_x, pos_y);
+		render_number(pos_x + 28, pos_y, points);
+		pos_y -= 2;
+	}
+	else {
+		exist = false;
+	}
+	digits->set_absolute_coord();
+	digits->set_color(255, 255, 255);
+}
+
 Blast::Blast(int x, int y, Player* p) : Static_object() {
 	parent = p;
 	blast_t = p->tp_ball_blast;

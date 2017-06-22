@@ -211,12 +211,14 @@ void Game::render() {
 	//printf("P1 SCORE: %d;\tP2 SCORE: %d;\n", p1_score, p2_score);
 
 	score1->render(25, 25);
+	digits->set_color(player1->color_r, player1->color_g, player1->color_b);
 	render_number(240, 20, p1_score);
 	int indent;
 	p2_score < 1000 ? indent = 0 : indent = 20;
 	score2->render(SCREEN_WIDTH - 315 - indent, 25);
+	digits->set_color(player2->color_r, player2->color_g, player2->color_b);
 	render_number(SCREEN_WIDTH - 95 - indent, 20, p2_score);
-
+	digits->set_color(255, 255, 255);
 }
 
 void Game::toggle() {

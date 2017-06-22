@@ -26,6 +26,18 @@ public:
 	int off_y;
 };
 
+class Points_gained : public Static_object {
+public:
+	Points_gained(int x, int y, Player* p, int gain);
+	void render();
+	int points;
+	int replay;
+	Uint8 color_r;
+	Uint8 color_g;
+	Uint8 color_b;
+	Player* player;
+};
+
 class Blast : public Static_object {
 public:
 	Blast(int x, int y, Player* p);

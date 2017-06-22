@@ -34,6 +34,9 @@ public:
 	//Set absolute coordinate system
 	void set_absolute_coord();
 
+	//Set relatable coordinate system
+	void set_relatable_coord();
+
 	//Deallocates texture
 	void free();
 

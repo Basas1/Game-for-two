@@ -77,9 +77,9 @@ bool Player2::kill(int change) {
 		flip_right = false;
 		dead = true;
 		player1->score += score_change * 100;
-		Simple_animation* ded;
-		ded = new Simple_animation(pos_x, pos_y, death);
-		static_objects.push_back(ded);
+		Points_gained* points;
+		points = new Points_gained(pos_x, pos_y, this, score_change);
+		objects.push_back(points);
 		Mix_PlayChannel(-1, death_sound, 0);
 		return true;
 	}

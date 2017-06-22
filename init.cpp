@@ -108,7 +108,7 @@ bool init() {
 		success = false;
 	}
 
-	digits = new Animated_texture(digits_texture, 10);
+	digits = new Animated_texture(digits_texture, 11);
 	digits->set_absolute_coord();
 	score1 = new Texture(player1_score_texture);
 	score1->set_absolute_coord();
