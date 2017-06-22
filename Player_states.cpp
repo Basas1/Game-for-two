@@ -645,10 +645,12 @@ void Hit1::logic(Player& p) {
 	SDL_Rect hit_box;
 
 	if (p.flip_right) {
-		hit_box = { (int)p.pos_x + (int)p.width / 2, (int)p.pos_y, (int)(p.width), (int)(p.height) };
+		//hit_box = { (int)p.pos_x + (int)p.width / 2, (int)p.pos_y, (int)(p.width), (int)(p.height) };
+		hit_box = { (int)p.pos_x + (int)p.width * 2 / 3, (int)p.pos_y, (int)(p.width) / 3, (int)(p.height) };
 	}
 	else {
-		hit_box = { (int)p.pos_x - (int)(p.width / 2), (int)p.pos_y, (int)(p.width), (int)(p.height) };
+		//hit_box = { (int)p.pos_x - (int)(p.width / 2), (int)p.pos_y, (int)(p.width), (int)(p.height) };
+		hit_box = { (int)p.pos_x - (int)(p.width / 2) * 2 / 3, (int)p.pos_y, (int)(p.width) / 3, (int)(p.height) };
 	}
 	collisions = p.get_collisions(&hit_box);
 	if (collisions.size() != 0) {

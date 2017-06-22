@@ -45,8 +45,8 @@ const int SCREEN_HEIGHT = 1080;
 const bool fullscreen = false;
 
 //Fps constants
-//const int SCREEN_FPS = 150;
 const int SCREEN_FPS = 60;
+//const int SCREEN_FPS = 10;
 const int SCREEN_TICKS_PER_FRAME = 1000 / SCREEN_FPS;
 
 //Window position
