@@ -42,7 +42,6 @@ public:
 	int teleport_cooldown;
 	int hit_cooldown;
 	int unkill_cooldown;
-
 	void reduce_cooldowns();
 
 	//Object's textures
