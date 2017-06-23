@@ -756,7 +756,7 @@ void Hit2::logic(Player& p) {
 			p.vulnerable = true;
 
 			//Unkillable for 0.3 sec
-			p.unkill_cooldown = game_time.get_ticks() - 600;
+			p.unkill_cooldown = game_time.get_ticks() - 800;
 
 			Simple_animation* dive_smoke;
 			dive_smoke = new Simple_animation(p.pos_x, p.pos_y, p.dive_smoke_animation);
