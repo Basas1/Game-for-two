@@ -7,6 +7,10 @@
 #include <SDL_mixer.h>
 #include "Menu.h"
 #include "Game.h"
+#include <iostream>
+#include <fstream>
+#include <ctype.h>
+#include "wtypes.h"
 
 Player* player1 = NULL;
 Player2* player2 = NULL;
@@ -44,14 +48,69 @@ SDL_Window* main_window = NULL;
 //The window renderer
 SDL_Renderer* main_renderer = NULL;
 
+int SCREEN_WIDTH;
+int SCREEN_HEIGHT;
+bool fullscreen;
+int WINDOW_START_X;
+int WINDOW_START_Y;
+
+bool is_number(const std::string& s) {
+	std::string::const_iterator it = s.begin();
+	while (it != s.end() && isdigit(*it)) ++it;
+	return !s.empty() && it == s.end();
+}
+
 bool init() {
 	//Initialization flag
 	bool success = true;
-	//SDL_SetHint(SDL_HINT_JOYSTICK_ALLOW_BACKGROUND_EVENTS, "1");
+
+	// Get the size of screen
+	RECT desktop;
+	const HWND hDesktop = GetDesktopWindow();
+	
+	GetWindowRect(hDesktop, &desktop);
+		// The top left corner will have coordinates (0,0)
+		// and the bottom right corner will have coordinates
+		// (horizontal, vertical)
+	int NATIVE_WIDTH = desktop.right;
+	int NATIVE_HEIGHT = desktop.bottom;
+
+	//Read settings from .ini file
+	std::string line;
+	std::ifstream file("config.ini");
+
+	bool config_succ = true;
+	if (file.is_open())
+	{
+		int k = 0;
+		while (getline(file, line)) {
+			if ((k == 1) && (is_number(line))) { SCREEN_WIDTH = std::stoi(line); std::cout << "Screen width = " << SCREEN_WIDTH << '\n'; }
+			else config_succ = false;
+			if ((k == 2) && (is_number(line))) { SCREEN_HEIGHT = std::stoi(line); std::cout <<"Screen height = " << SCREEN_HEIGHT << '\n'; }
+			else config_succ = false;
+			if ((k == 4) && (is_number(line))) { fullscreen = std::stoi(line); std::cout<< "Full screen? -> " << fullscreen << '\n'; }
+			else config_succ = false;
+			k++;
+		}
+	file.close();
+	}
+	else config_succ = false;
+	if (!config_succ) {
+		//Set defaults
+		SCREEN_WIDTH = NATIVE_WIDTH;
+		SCREEN_HEIGHT = NATIVE_HEIGHT;
+		fullscreen = false;
+		//"Error reading config.ini file! Using defaults instead. , windowed"
+		std::cout << "Error reading config.ini file! Using defaults instead: " << SCREEN_WIDTH << "x" << SCREEN_HEIGHT << ", windowed\n";
+	}
+
+	WINDOW_START_X = (NATIVE_WIDTH - SCREEN_WIDTH) / 2;
+	WINDOW_START_Y = (NATIVE_HEIGHT - SCREEN_HEIGHT) / 2;
+
 	//Initialize SDL
 	if (SDL_Init(SDL_INIT_VIDEO | SDL_INIT_AUDIO | SDL_INIT_GAMECONTROLLER) < 0) {
 		printf("SDL could not initialize! SDL Error: %s\n", SDL_GetError());
-		//success = false;
+		success = false;
 	}
 	else {
 		//Set texture filtering to linear
@@ -98,8 +157,7 @@ bool init() {
 					printf("SDL_mixer could not initialize! SDL_mixer Error: %s\n", Mix_GetError());
 					success = false;
 				}
-				Mix_AllocateChannels(3);
-				//Initialize SDL_ttf
+				Mix_AllocateChannels(8);
 			}
 		}
 	}
