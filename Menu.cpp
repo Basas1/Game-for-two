@@ -8,6 +8,7 @@
 
 Menu::Menu() {
 	state = STATE_MENU;
+	operating = false;
 	//Load the background
 	background = menu_background_texture;
 
@@ -115,25 +116,29 @@ void Menu::down() {
 }
 
 void Menu::enter() {
-	for (int i = 0; i < 10; i++) {
-		if (items[i] != NULL) {
-			if (items[i]->choosen) {
-				if (items[i]->type == PLAY) {
-					delete programm_states.top();
-					programm_states.pop();
-					current_state = new Game();
-					programm_states.push(current_state);
-					break;
-				}
-				if (items[i]->type == LEAVE) {
-					delete programm_states.top();
-					programm_states.pop();
-					current_state = new Exit_state();
-					programm_states.push(current_state);
-					break;
+	if (!operating) {
+		operating = true;
+		for (int i = 0; i < 10; i++) {
+			if (items[i] != NULL) {
+				if (items[i]->choosen) {
+					if (items[i]->type == PLAY) {
+						delete programm_states.top();
+						programm_states.pop();
+						current_state = new Game();
+						programm_states.push(current_state);
+						break;
+					}
+					if (items[i]->type == LEAVE) {
+						delete programm_states.top();
+						programm_states.pop();
+						current_state = new Exit_state();
+						programm_states.push(current_state);
+						break;
+					}
 				}
 			}
 		}
+		operating = false;
 	}
 }
 
