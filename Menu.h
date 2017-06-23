@@ -22,6 +22,7 @@ public:
 	void enter();
 
 private:
+	bool operating;
 	SDL_Texture* background;
 	Menu_item* items[10];
 
