@@ -788,7 +788,7 @@ void Hit2::handle_events(Player& p, SDL_Event& event) {
 					if (can_cancel) {
 						p.dive_end_animation->reset();
 						p.dive_animation->reset();
-						//p.hit_cooldown = game_time.get_ticks();
+						p.hit_cooldown = game_time.get_ticks();
 						p.vulnerable = true;
 						delete p.state_stack.top();
 						p.state_stack.pop();
@@ -818,7 +818,7 @@ void Hit2::handle_events(Player& p, SDL_Event& event) {
 						if (can_cancel) {
 							p.dive_end_animation->reset();
 							p.dive_animation->reset();
-							//p.hit_cooldown = game_time.get_ticks();
+							p.hit_cooldown = game_time.get_ticks();
 							p.vulnerable = true;
 							delete p.state_stack.top();
 							p.state_stack.pop();

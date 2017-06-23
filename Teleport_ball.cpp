@@ -121,11 +121,16 @@ void Teleport_ball::move() {
 				}
 			}
 
-			if (check_map_collision(pos_x + x_iter, pos_y + y_iter - 2) && check_map_collision(pos_x + x_iter, pos_y + y_iter + 2)) {
+			if (check_map_collision(pos_x + x_iter, pos_y) && check_map_collision(pos_x, pos_y + y_iter)) {
+				vel_x = -vel_x;
+				vel_y = -vel_y;
+				break;
+			}
+			if (check_map_collision(pos_x + x_iter, pos_y + y_iter) && (!check_map_collision(pos_x, pos_y + y_iter) || !check_map_collision(pos_x + x_iter * 2, pos_y + y_iter))) {
 				vel_x = -vel_x;
 				break;
 			}
-			if (check_map_collision(pos_x + x_iter - 2, pos_y + y_iter) && check_map_collision(pos_x + x_iter + 2, pos_y + y_iter)) {
+			if (check_map_collision(pos_x + x_iter, pos_y + y_iter) && (!check_map_collision(pos_x + x_iter, pos_y) || !check_map_collision(pos_x + x_iter, pos_y + y_iter * 2))) {
 				vel_y = -vel_y;
 				break;
 			}
