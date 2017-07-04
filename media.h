@@ -29,6 +29,7 @@ extern SDL_Texture* emenu_quit_t;
 //Players textures
 extern SDL_Texture* player_texture;
 extern SDL_Texture* player_idle_texture;
+extern SDL_Texture* player_squat_texture;
 extern SDL_Texture* player_run_texture;
 extern SDL_Texture* player_jump_rise_texture;
 extern SDL_Texture* player_jump_fall_texture;
@@ -48,6 +49,7 @@ extern SDL_Texture* player_blast_smoke_texture;
 
 extern SDL_Texture* player2_texture;
 extern SDL_Texture* player2_idle_texture;
+extern SDL_Texture* player2_squat_texture;
 extern SDL_Texture* player2_run_texture;
 extern SDL_Texture* player2_jump_rise_texture;
 extern SDL_Texture* player2_jump_fall_texture;

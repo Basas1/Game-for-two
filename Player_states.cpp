@@ -37,31 +37,45 @@ void Player_states::change_state(Player& p, int state, int arg) {
 		break;
 	case FIRE_STATE:
 		break;
+	case SQUAT_STATE:
+		Squat* squat_state;
+		squat_state = new Squat(p);
+		p.state_stack.push(squat_state);
+		break;
+	default:
+		printf("Error occured while changing Player states.\n");
+		break;
 	}
 }
 
-void Player_states::create_fireball(Player& p, int side) {
+void Player_states::create_fireball(Player& p, int side, int start_x, int start_y) {
+	int cast_x, cast_y;
+	cast_x = p.pos_x;
+	cast_y = p.pos_y;
+	if (start_x != -1) cast_x = start_x;
+	if (start_y != -1) cast_y = start_y;
+
 	p.fireball_casting = true;
 	Fireball *ball = NULL;
 
 	if (side == UP || side == DOWN) {
-		ball = new Fireball(p.pos_x + p.width / 2, p.pos_y + p.height / 2, side, &p);
+		ball = new Fireball(cast_x + p.width / 2, cast_y + p.height / 2, side, &p);
 	}
 	else {
 		if (p.flip_right) {
 			if (p.state_stack.top()->type == STAND_STATE || p.state_stack.top()->type == JUMP_STATE) {
-				ball = new Fireball(p.pos_x + p.width + 1, p.pos_y + p.height / 2, side, &p);
+				ball = new Fireball(cast_x + p.width + 1, cast_y + p.height / 2, side, &p);
 			}
 			else {
-				ball = new Fireball(p.pos_x + p.width + 1, p.pos_y + p.height / 3, side, &p);
+				ball = new Fireball(cast_x + p.width + 1, cast_y + p.height / 3, side, &p);
 			}
 		}
 		else {
 			if (p.state_stack.top()->type == STAND_STATE || p.state_stack.top()->type == JUMP_STATE) {
-				ball = new Fireball(p.pos_x - 1, p.pos_y + p.height / 2, side, &p);
+				ball = new Fireball(cast_x - 1, cast_y + p.height / 2, side, &p);
 			}
 			else {
-				ball = new Fireball(p.pos_x - 1, p.pos_y + p.height / 3, side, &p);
+				ball = new Fireball(cast_x - 1, cast_y + p.height / 3, side, &p);
 			}
 		}
 	}
@@ -70,35 +84,40 @@ void Player_states::create_fireball(Player& p, int side) {
 }
 
 
-void Player_states::cast_fireball(Player& p) {
+void Player_states::cast_fireball(Player& p, int start_x, int start_y) {
+	int cast_x, cast_y;
+	cast_x = p.pos_x;
+	cast_y = p.pos_y;
+	if (start_x != -1) cast_x = start_x;
+	if (start_y != -1) cast_y = start_y;
 	if (p.fireball_cooldown <= 0) {
 		p.fireball_casting = true;
 		if (p.controller == NULL) {
 			const Uint8* currentKeyStates = SDL_GetKeyboardState(NULL);
 			if (currentKeyStates[SDL_SCANCODE_UP] && !currentKeyStates[SDL_SCANCODE_RIGHT] && !currentKeyStates[SDL_SCANCODE_LEFT] && !currentKeyStates[SDL_SCANCODE_DOWN]) {
-				create_fireball(p, UP);
+				create_fireball(p, UP, cast_x, cast_y);
 			}
 			else if (!currentKeyStates[SDL_SCANCODE_UP] && !currentKeyStates[SDL_SCANCODE_RIGHT] && !currentKeyStates[SDL_SCANCODE_LEFT] && currentKeyStates[SDL_SCANCODE_DOWN]) {
-				create_fireball(p, DOWN);
+				create_fireball(p, DOWN, cast_x, cast_y);
 			}
 			else if (currentKeyStates[SDL_SCANCODE_UP] && currentKeyStates[SDL_SCANCODE_RIGHT] && !currentKeyStates[SDL_SCANCODE_LEFT] && !currentKeyStates[SDL_SCANCODE_DOWN]) {
-				create_fireball(p, UP_RIGHT);
+				create_fireball(p, UP_RIGHT, cast_x, cast_y);
 			}
 			else if (currentKeyStates[SDL_SCANCODE_UP] && !currentKeyStates[SDL_SCANCODE_RIGHT] && currentKeyStates[SDL_SCANCODE_LEFT] && !currentKeyStates[SDL_SCANCODE_DOWN]) {
-				create_fireball(p, UP_LEFT);
+				create_fireball(p, UP_LEFT, cast_x, cast_y);
 			}
 			else if (!currentKeyStates[SDL_SCANCODE_UP] && currentKeyStates[SDL_SCANCODE_RIGHT] && !currentKeyStates[SDL_SCANCODE_LEFT] && currentKeyStates[SDL_SCANCODE_DOWN]) {
-				create_fireball(p, DOWN_RIGHT);
+				create_fireball(p, DOWN_RIGHT, cast_x, cast_y);
 			}
 			else if (!currentKeyStates[SDL_SCANCODE_UP] && !currentKeyStates[SDL_SCANCODE_RIGHT] && currentKeyStates[SDL_SCANCODE_LEFT] && currentKeyStates[SDL_SCANCODE_DOWN]) {
-				create_fireball(p, DOWN_LEFT);
+				create_fireball(p, DOWN_LEFT, cast_x, cast_y);
 			}
 			else {
 				if (p.flip_right) {
-					create_fireball(p, RIGHT);
+					create_fireball(p, RIGHT, cast_x, cast_y);
 				}
 				else {
-					create_fireball(p, LEFT);
+					create_fireball(p, LEFT, cast_x, cast_y);
 				}
 			}
 		}
@@ -108,30 +127,30 @@ void Player_states::cast_fireball(Player& p) {
 			ox = SDL_GameControllerGetAxis(p.gamepad, SDL_CONTROLLER_AXIS_LEFTX);
 			oy = SDL_GameControllerGetAxis(p.gamepad, SDL_CONTROLLER_AXIS_LEFTY);
 			if (oy < -dz && ox < dz && ox > -dz) {
-				create_fireball(p, UP);
+				create_fireball(p, UP, cast_x, cast_y);
 			}
 			else if (oy > dz && ox < dz && ox > -dz) {
-				create_fireball(p, DOWN);
+				create_fireball(p, DOWN, cast_x, cast_y);
 			}
 			else if (oy < -dz && ox > dz / 2) {
-				create_fireball(p, UP_RIGHT);
+				create_fireball(p, UP_RIGHT, cast_x, cast_y);
 			}
 			else if (oy < -dz && ox < -dz / 2) {
-				create_fireball(p, UP_LEFT);
+				create_fireball(p, UP_LEFT, cast_x, cast_y);
 			}
 			else if (oy > dz && ox > dz / 2) {
-				create_fireball(p, DOWN_RIGHT);
+				create_fireball(p, DOWN_RIGHT, cast_x, cast_y);
 			}
 			else if (oy > dz && ox < -dz / 2) {
-				create_fireball(p, DOWN_LEFT);
+				create_fireball(p, DOWN_LEFT, cast_x, cast_y);
 			}
 
 			else {
 				if (p.flip_right) {
-					create_fireball(p, RIGHT);
+					create_fireball(p, RIGHT, cast_x, cast_y);
 				}
 				else {
-					create_fireball(p, LEFT);
+					create_fireball(p, LEFT, cast_x, cast_y);
 				}
 			}
 		}
@@ -139,35 +158,41 @@ void Player_states::cast_fireball(Player& p) {
 	}
 }
 
-void Player_states::cast_teleport_ball(Player& p) {
+void Player_states::cast_teleport_ball(Player& p, int start_x, int start_y) {
+	int cast_x, cast_y;
+	cast_x = p.pos_x;
+	cast_y = p.pos_y;
+	if (start_x != -1) cast_x = start_x;
+	if (start_y != -1) cast_y = start_y;
+
 	if (p.t_ball == NULL) {
 		if (p.teleport_cooldown <= 0) {
 			if (p.controller == NULL) {
 				const Uint8* currentKeyStates = SDL_GetKeyboardState(NULL);
 				if (currentKeyStates[SDL_SCANCODE_UP] && !currentKeyStates[SDL_SCANCODE_RIGHT] && !currentKeyStates[SDL_SCANCODE_LEFT] && !currentKeyStates[SDL_SCANCODE_DOWN]) {
-					p.t_ball = new Teleport_ball(p.pos_x + p.width / 2, p.pos_y + p.height / 2, &p, UP);
+					p.t_ball = new Teleport_ball(cast_x + p.width / 2, cast_y + p.height / 2, &p, UP);
 				}
 				else if (!currentKeyStates[SDL_SCANCODE_UP] && !currentKeyStates[SDL_SCANCODE_RIGHT] && !currentKeyStates[SDL_SCANCODE_LEFT] && currentKeyStates[SDL_SCANCODE_DOWN]) {
-					p.t_ball = new Teleport_ball(p.pos_x + p.width / 2, p.pos_y + p.height / 2, &p, DOWN);
+					p.t_ball = new Teleport_ball(cast_x + p.width / 2, cast_y + p.height / 2, &p, DOWN);
 				}
 				else if (currentKeyStates[SDL_SCANCODE_UP] && currentKeyStates[SDL_SCANCODE_RIGHT] && !currentKeyStates[SDL_SCANCODE_LEFT] && !currentKeyStates[SDL_SCANCODE_DOWN]) {
-					p.t_ball = new Teleport_ball(p.pos_x + p.width / 2, p.pos_y + p.height / 2, &p, UP_RIGHT);
+					p.t_ball = new Teleport_ball(cast_x + p.width / 2, cast_y + p.height / 2, &p, UP_RIGHT);
 				}
 				else if (currentKeyStates[SDL_SCANCODE_UP] && !currentKeyStates[SDL_SCANCODE_RIGHT] && currentKeyStates[SDL_SCANCODE_LEFT] && !currentKeyStates[SDL_SCANCODE_DOWN]) {
-					p.t_ball = new Teleport_ball(p.pos_x + p.width / 2, p.pos_y + p.height / 2, &p, UP_LEFT);
+					p.t_ball = new Teleport_ball(cast_x + p.width / 2, cast_y + p.height / 2, &p, UP_LEFT);
 				}
 				else if (!currentKeyStates[SDL_SCANCODE_UP] && currentKeyStates[SDL_SCANCODE_RIGHT] && !currentKeyStates[SDL_SCANCODE_LEFT] && currentKeyStates[SDL_SCANCODE_DOWN]) {
-					p.t_ball = new Teleport_ball(p.pos_x + p.width / 2, p.pos_y + p.height / 2, &p, DOWN_RIGHT);
+					p.t_ball = new Teleport_ball(cast_x + p.width / 2, cast_y + p.height / 2, &p, DOWN_RIGHT);
 				}
 				else if (!currentKeyStates[SDL_SCANCODE_UP] && !currentKeyStates[SDL_SCANCODE_RIGHT] && currentKeyStates[SDL_SCANCODE_LEFT] && currentKeyStates[SDL_SCANCODE_DOWN]) {
-					p.t_ball = new Teleport_ball(p.pos_x + p.width / 2, p.pos_y + p.height / 2, &p, DOWN_LEFT);
+					p.t_ball = new Teleport_ball(cast_x + p.width / 2, cast_y + p.height / 2, &p, DOWN_LEFT);
 				}
 				else {
 					if (p.flip_right) {
-						p.t_ball = new Teleport_ball(p.pos_x + p.width / 2, p.pos_y + p.height / 2, &p, RIGHT);
+						p.t_ball = new Teleport_ball(cast_x + p.width / 2, cast_y + p.height / 2, &p, RIGHT);
 					}
 					else {
-						p.t_ball = new Teleport_ball(p.pos_x + p.width / 2, p.pos_y + p.height / 2, &p, LEFT);
+						p.t_ball = new Teleport_ball(cast_x + p.width / 2, cast_y + p.height / 2, &p, LEFT);
 					}
 				}
 			}
@@ -177,29 +202,29 @@ void Player_states::cast_teleport_ball(Player& p) {
 				ox = SDL_GameControllerGetAxis(p.gamepad, SDL_CONTROLLER_AXIS_LEFTX);
 				oy = SDL_GameControllerGetAxis(p.gamepad, SDL_CONTROLLER_AXIS_LEFTY);
 				if (oy < -dz && ox < dz && ox > -dz) {
-					p.t_ball = new Teleport_ball(p.pos_x + p.width / 2, p.pos_y + p.height / 2, &p, UP);
+					p.t_ball = new Teleport_ball(cast_x + p.width / 2, cast_y + p.height / 2, &p, UP);
 				}
 				else if (oy > dz && ox < dz && ox > -dz) {
-					p.t_ball = new Teleport_ball(p.pos_x + p.width / 2, p.pos_y + p.height / 2, &p, DOWN);
+					p.t_ball = new Teleport_ball(cast_x + p.width / 2, cast_y + p.height / 2, &p, DOWN);
 				}
 				else if (oy < -dz && ox > dz / 2) {
-					p.t_ball = new Teleport_ball(p.pos_x + p.width / 2, p.pos_y + p.height / 2, &p, UP_RIGHT);
+					p.t_ball = new Teleport_ball(cast_x + p.width / 2, cast_y + p.height / 2, &p, UP_RIGHT);
 				}
 				else if (oy < -dz && ox < -dz / 2) {
-					p.t_ball = new Teleport_ball(p.pos_x + p.width / 2, p.pos_y + p.height / 2, &p, UP_LEFT);
+					p.t_ball = new Teleport_ball(cast_x + p.width / 2, cast_y + p.height / 2, &p, UP_LEFT);
 				}
 				else if (oy > dz && ox > dz / 2) {
-					p.t_ball = new Teleport_ball(p.pos_x + p.width / 2, p.pos_y + p.height / 2, &p, DOWN_RIGHT);
+					p.t_ball = new Teleport_ball(cast_x + p.width / 2, cast_y + p.height / 2, &p, DOWN_RIGHT);
 				}
 				else if (oy > dz && ox < -dz / 2) {
-					p.t_ball = new Teleport_ball(p.pos_x + p.width / 2, p.pos_y + p.height / 2, &p, DOWN_LEFT);
+					p.t_ball = new Teleport_ball(cast_x + p.width / 2, cast_y + p.height / 2, &p, DOWN_LEFT);
 				}
 				else {
 					if (p.flip_right) {
-						p.t_ball = new Teleport_ball(p.pos_x + p.width / 2, p.pos_y + p.height / 2, &p, RIGHT);
+						p.t_ball = new Teleport_ball(cast_x + p.width / 2, cast_y + p.height / 2, &p, RIGHT);
 					}
 					else {
-						p.t_ball = new Teleport_ball(p.pos_x + p.width / 2, p.pos_y + p.height / 2, &p, LEFT);
+						p.t_ball = new Teleport_ball(cast_x + p.width / 2, cast_y + p.height / 2, &p, LEFT);
 					}
 				}
 			}
@@ -317,6 +342,11 @@ void On_ground::handle_events(Player& p, SDL_Event& event) {
 		}
 		p.acc_x = a_x;
 
+		if (currentKeyStates[SDL_SCANCODE_LSHIFT]) {
+			change_state(p, SQUAT_STATE);
+		}
+
+
 		//If a key was pressed
 		if (event.type == SDL_KEYDOWN && event.key.repeat == 0) {
 			switch (event.key.keysym.sym) {
@@ -342,6 +372,10 @@ void On_ground::handle_events(Player& p, SDL_Event& event) {
 				}
 				break;
 			}
+			//case SDLK_LSHIFT: {
+			//	change_state(p, SQUAT_STATE);
+			//	break;
+			//}
 			default:
 				Player_states::handle_events(p, event);
 			}
@@ -413,6 +447,143 @@ void Stand::render(Player& p) {
 		}
 	}
 }
+
+Squat::Squat(Player& p) {
+	type = SQUAT_STATE;
+	p.vel_x = 0;
+}
+
+void Squat::logic(Player& p) {
+	p.collision_box = { (int)p.pos_x, (int)p.pos_y + p.height / 2, p.width, p.height / 2 };
+
+	if (p.acc_x < 0) {
+		p.flip_right = false;
+	}
+	else if (p.acc_x > 0) {
+		p.flip_right = true;
+	}
+	if (p.vel_y != 0) {
+		delete p.state_stack.top();
+		p.state_stack.pop();
+		change_state(p, JUMP_STATE);
+	}
+}
+
+void Squat::handle_events(Player& p, SDL_Event& event) {
+	bool state_changed = false;
+	if (p.controller == NULL) {
+		//If a key is pressed
+		int a_x = 0;
+		const Uint8* currentKeyStates = SDL_GetKeyboardState(NULL);
+		if (currentKeyStates[SDL_SCANCODE_LEFT]) {
+			a_x -= p.acceleration;
+		}
+		if (currentKeyStates[SDL_SCANCODE_RIGHT]) {
+			a_x += p.acceleration;
+		}
+		p.acc_x = a_x;
+
+		//If a key was pressed
+		if (event.type == SDL_KEYDOWN && event.key.repeat == 0) {
+			switch (event.key.keysym.sym) {
+			case SDLK_SPACE: {
+				Jump_effect* j_effect;
+				j_effect = new Jump_effect((int)p.pos_x, (int)p.pos_y, p.jump_effect_animation1);
+				objects.insert(objects.end(), j_effect);
+				p.vel_y = -p.jump_vel;
+				Mix_PlayChannel(-1, jump_sound, 0);
+				delete p.state_stack.top();
+				p.state_stack.pop();
+				change_state(p, JUMP_STATE);
+				state_changed = true;
+				break;
+			}
+			}
+		}
+		if (event.type == SDL_KEYDOWN) {
+			switch (event.key.keysym.sym) {
+			case SDLK_w: {
+				cast_fireball(p, p.pos_x, p.pos_y + p.height / 2.25);
+				break;
+			}
+			case SDLK_e: {
+				if (p.hit_cooldown == 0) {
+					delete p.state_stack.top();
+					p.state_stack.pop();
+					change_state(p, HIT1_STATE);
+					state_changed = true;
+				}
+				break;
+			}
+			case SDLK_r: {
+				cast_teleport_ball(p, p.pos_x, p.pos_y + p.height / 5);
+				break;
+			}
+			case SDLK_t: {
+				blast_teleport_ball(p);
+				break;
+			}
+			//default:
+			//	Player_states::handle_events(p, event);
+			}
+		}
+
+		if (event.type == SDL_KEYUP) {
+			if (event.key.keysym.sym == SDLK_LSHIFT) {
+				if (!state_changed) {
+					delete p.state_stack.top();
+					p.state_stack.pop();
+				}
+			}
+		}
+	}
+	else {
+		//If a key was pressed
+		if (event.type == SDL_CONTROLLERBUTTONDOWN) {
+			if (event.cbutton.which == p.gamepad_id) {
+				switch (event.cbutton.button) {
+				case 0: {
+					Jump_effect* j_effect;
+					j_effect = new Jump_effect((int)p.pos_x, (int)p.pos_y, p.jump_effect_animation1);
+					objects.insert(objects.end(), j_effect);
+					p.vel_y = -p.jump_vel;
+					Mix_PlayChannel(-1, jump_sound, 0);
+					break;
+				}
+				case 3: {
+					cast_fireball(p);
+					break;
+				}
+				case 2: {
+					if (p.hit_cooldown == 0) {
+						change_state(p, HIT1_STATE);
+					}
+					break;
+				}
+				default:
+					Player_states::handle_events(p, event);
+				}
+			}
+		}
+
+	}
+}
+
+void Squat::render(Player& p) {
+	p.squat_animation->render(p.pos_x, p.pos_y, p.flip_right);
+	p.squat_animation->next_frame();
+
+	if (p.fireball_casting) {
+		p.fireball_cast_animation2->render(p.pos_x, p.pos_y  + p.height / 4, p.flip_right);
+		p.fireball_cast_animation2->next_frame();
+		if (p.fireball_cast_animation2->get_replay_count() > 0) {
+			p.fireball_casting = false;
+			p.fireball_cast_animation1->reset();
+			p.fireball_cast_animation2->reset();
+		}
+	}
+}
+
 
 void Run::logic(Player& p) {
 	On_ground::logic(p);

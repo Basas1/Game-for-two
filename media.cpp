@@ -32,6 +32,7 @@ SDL_Texture* emenu_quit_t = NULL;
 //Player textures
 SDL_Texture* player_texture = NULL;
 SDL_Texture* player_idle_texture = NULL;
+SDL_Texture* player_squat_texture = NULL;
 SDL_Texture* player_run_texture = NULL;
 SDL_Texture* player_jump_rise_texture = NULL;
 SDL_Texture* player_jump_fall_texture = NULL;
@@ -56,6 +57,7 @@ SDL_Texture* tp_trail_texture = NULL;
 //Player2 textures
 SDL_Texture* player2_texture = NULL;
 SDL_Texture* player2_idle_texture = NULL;
+SDL_Texture* player2_squat_texture = NULL;
 SDL_Texture* player2_run_texture = NULL;
 SDL_Texture* player2_jump_rise_texture = NULL;
 SDL_Texture* player2_jump_fall_texture = NULL;
@@ -146,6 +148,11 @@ bool load_media() {
 		printf("Failed to load player texture!\n");
 		success = false;
 	}
+	player_squat_texture = load_texture("Images/players/squat.gif");
+	if (player_squat_texture == NULL) {
+		printf("Failed to load player texture!\n");
+		success = false;
+	}
 	player_run_texture = load_texture("Images/players/run.gif");
 	if (player_run_texture == NULL) {
 		printf("Failed to load player texture!\n");
@@ -230,6 +237,11 @@ bool load_media() {
 	//PLAYER2 TEXTURES
 	player2_idle_texture = load_texture("Images/players/idle2.gif");
 	if (player2_idle_texture == NULL) {
+		printf("Failed to load player texture!\n");
+		success = false;
+	}
+	player2_squat_texture = load_texture("Images/players/squat2.gif");
+	if (player2_squat_texture == NULL) {
 		printf("Failed to load player texture!\n");
 		success = false;
 	}

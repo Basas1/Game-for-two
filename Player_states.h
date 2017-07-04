@@ -6,6 +6,7 @@ class Player_states {
 public:
 	enum states {
 		STAND_STATE,
+		SQUAT_STATE,
 		RUN_STATE,
 		FIRE_STATE,
 		JUMP_STATE,
@@ -14,9 +15,9 @@ public:
 		TELEPORTATION_STATE,
 	};
 	void change_state(Player& p, int state, int arg=0);
-	void cast_fireball(Player& p);
-	void create_fireball(Player& p, int side);
-	void cast_teleport_ball(Player& p);
+	void cast_fireball(Player& p, int start_x=-1, int start_y=-1);
+	void create_fireball(Player& p, int side, int start_x=-1, int start_y=-1);
+	void cast_teleport_ball(Player& p, int start_x = -1, int start_y = -1);
 	void blast_teleport_ball(Player& p);
 	std::tuple<double, double> teleport_to_ball(Player& p);
 	virtual void handle_events(Player& p, SDL_Event& event);
@@ -37,7 +38,14 @@ public:
 	Stand() { type = STAND_STATE; };
 	void logic(Player& p);
 	void render(Player& p);
+};
 
+class Squat : public On_ground {
+public:
+	Squat(Player& p);
+	void logic(Player& p);
+	void handle_events(Player& p, SDL_Event& event);
+	void render(Player& p);
 };
 
 class Run : public On_ground {

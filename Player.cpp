@@ -53,6 +53,8 @@ Player::Player(int x, int y, int control) : Movable_object() {
 
 	stand_animation = new Animated_texture(player_idle_texture, 8, -75, -40);
 	player_textures[t_num++] = &stand_animation;
+	squat_animation = new Animated_texture(player_squat_texture, 3, -75, -40);
+	player_textures[t_num++] = &squat_animation;
 	run_animation = new Animated_texture(player_run_texture, 13, -75, -40);
 	player_textures[t_num++] = &run_animation;
 	jump_animation_rise = new Animated_texture(player_jump_rise_texture, 4, -75, -40);
@@ -203,6 +205,8 @@ int Player::get_y() {
 void Player::logic() {
 	//printf("vel_x=%f; vel_y=%f\n", vel_x, vel_y);
 	//printf("x=%f; y=%f\n", pos_x, pos_y);
+	collision_box = { (int)pos_x, (int)pos_y, width, height };
+
 	reduce_cooldowns();
 	state_stack.top()->logic(*this);
 
@@ -221,7 +225,6 @@ void Player::logic() {
 		on_platform = false;
 	}
 
-	collision_box = { (int)pos_x, (int)pos_y, width, height };
 };
 
 void Player::handle_events(SDL_Event& event) {
