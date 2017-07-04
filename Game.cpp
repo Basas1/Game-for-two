@@ -102,6 +102,7 @@ void Game::handle_events() {
 	}
 	SDL_PollEvent(&event);
 	player1->handle_events(event);
+	player2->handle_events(event);
 
 }
 

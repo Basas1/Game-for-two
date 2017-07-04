@@ -63,16 +63,22 @@ void Player_states::create_fireball(Player& p, int side, int start_x, int start_
 	}
 	else {
 		if (p.flip_right) {
-			if (p.state_stack.top()->type == STAND_STATE || p.state_stack.top()->type == JUMP_STATE) {
+			if (p.state_stack.top()->type == JUMP_STATE) {
 				ball = new Fireball(cast_x + p.width + 1, cast_y + p.height / 2, side, &p);
+			}
+			else if (p.state_stack.top()->type == STAND_STATE) {
+				ball = new Fireball(cast_x + p.width + 1, cast_y + p.height / 3, side, &p);
 			}
 			else {
 				ball = new Fireball(cast_x + p.width + 1, cast_y + p.height / 3, side, &p);
 			}
 		}
 		else {
-			if (p.state_stack.top()->type == STAND_STATE || p.state_stack.top()->type == JUMP_STATE) {
+			if (p.state_stack.top()->type == JUMP_STATE) {
 				ball = new Fireball(cast_x - 1, cast_y + p.height / 2, side, &p);
+			}
+			else if (p.state_stack.top()->type == STAND_STATE) {
+				ball = new Fireball(cast_x - 1, cast_y + p.height / 3, side, &p);
 			}
 			else {
 				ball = new Fireball(cast_x - 1, cast_y + p.height / 3, side, &p);
@@ -372,10 +378,6 @@ void On_ground::handle_events(Player& p, SDL_Event& event) {
 				}
 				break;
 			}
-			//case SDLK_LSHIFT: {
-			//	change_state(p, SQUAT_STATE);
-			//	break;
-			//}
 			default:
 				Player_states::handle_events(p, event);
 			}
@@ -393,6 +395,11 @@ void On_ground::handle_events(Player& p, SDL_Event& event) {
 			a_x -= p.acceleration;
 		}
 		p.acc_x = a_x;
+
+		Uint8 is_L1_pressed = SDL_GameControllerGetButton(p.gamepad, SDL_CONTROLLER_BUTTON_LEFTSHOULDER);
+		if (is_L1_pressed) {
+			change_state(p, SQUAT_STATE);
+		}
 
 		//If a key was pressed
 		if (event.type == SDL_CONTROLLERBUTTONDOWN) {
@@ -438,7 +445,7 @@ void Stand::render(Player& p) {
 	p.stand_animation->next_frame();
 
 	if (p.fireball_casting) {
-		p.fireball_cast_animation2->render(p.pos_x, p.pos_y, p.flip_right);
+		p.fireball_cast_animation2->render(p.pos_x, p.pos_y - p.height / 8, p.flip_right);
 		p.fireball_cast_animation2->next_frame();
 		if (p.fireball_cast_animation2->get_replay_count() > 0) {
 			p.fireball_casting = false;
@@ -523,8 +530,6 @@ void Squat::handle_events(Player& p, SDL_Event& event) {
 				blast_teleport_ball(p);
 				break;
 			}
-			//default:
-			//	Player_states::handle_events(p, event);
 			}
 		}
 
@@ -538,6 +543,18 @@ void Squat::handle_events(Player& p, SDL_Event& event) {
 		}
 	}
 	else {
+		int a_x = 0;
+		int ox, oy;
+		ox = SDL_GameControllerGetAxis(p.gamepad, SDL_CONTROLLER_AXIS_LEFTX);
+		oy = SDL_GameControllerGetAxis(p.gamepad, SDL_CONTROLLER_AXIS_LEFTY);
+		if (ox > JOYSTICK_DEAD_ZONE) {
+			a_x += p.acceleration;
+		}
+		if (ox < -JOYSTICK_DEAD_ZONE) {
+			a_x -= p.acceleration;
+		}
+		p.acc_x = a_x;
+
 		//If a key was pressed
 		if (event.type == SDL_CONTROLLERBUTTONDOWN) {
 			if (event.cbutton.which == p.gamepad_id) {
@@ -548,24 +565,45 @@ void Squat::handle_events(Player& p, SDL_Event& event) {
 					objects.insert(objects.end(), j_effect);
 					p.vel_y = -p.jump_vel;
 					Mix_PlayChannel(-1, jump_sound, 0);
+					delete p.state_stack.top();
+					p.state_stack.pop();
+					change_state(p, JUMP_STATE);
+					state_changed = true;
 					break;
 				}
 				case 3: {
-					cast_fireball(p);
+					cast_fireball(p, p.pos_x, p.pos_y + p.height / 2.25);
 					break;
 				}
 				case 2: {
 					if (p.hit_cooldown == 0) {
+						delete p.state_stack.top();
+						p.state_stack.pop();
 						change_state(p, HIT1_STATE);
+						state_changed = true;
 					}
 					break;
 				}
-				default:
-					Player_states::handle_events(p, event);
+				case 1: {
+					cast_teleport_ball(p, p.pos_x, p.pos_y + p.height / 5);
+					break;
+				}
+				case 10: {
+					blast_teleport_ball(p);
+					break;
+				}
 				}
 			}
 		}
 
+		if (event.type == SDL_CONTROLLERBUTTONUP) {
+			if (event.cbutton.which == p.gamepad_id) {
+				if (event.cbutton.button == 9) {
+					delete p.state_stack.top();
+					p.state_stack.pop();
+				}
+			}
+		}
 	}
 }
 
@@ -611,6 +649,8 @@ void Run::render(Player& p) {
 }
 
 Jump::Jump(Player& p) {
+	p.jump_animation_rise->reset();
+	p.jump_animation_fall->reset();
 	type = JUMP_STATE;
 	jump_count = 1;
 	if (p.vel_y <= 0) {
@@ -663,11 +703,9 @@ void Jump::handle_events(Player& p, SDL_Event& event) {
 		if (currentKeyStates[SDL_SCANCODE_DOWN]) {
 		}
 		if (currentKeyStates[SDL_SCANCODE_LEFT]) {
-			//a_x -= p.acceleration / 20;
 			a_x -= p.acceleration;
 		}
 		if (currentKeyStates[SDL_SCANCODE_RIGHT]) {
-			//a_x += p.acceleration / 20;
 			a_x += p.acceleration;
 		}
 		p.acc_x = a_x;
